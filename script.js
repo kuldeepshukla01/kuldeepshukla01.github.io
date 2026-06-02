@@ -13,47 +13,209 @@ const pageLoadTime = Date.now();
 
 // ── IP & LOCATION & VPN DETECT API ──
 function runFingerprinting() {
+  // WebGL query
+  const gpu = (() => {
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (!gl) return 'WebGL Blocked';
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      if (!debugInfo) return 'Supported (No info)';
+      const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+      return renderer ? renderer.replace(/ANGLE \([^\)]+\)/g, '').trim() : 'Unknown GPU';
+    } catch (e) {
+      return 'Restricted';
+    }
+  })();
+
+  // Canvas signature
+  const canvasHash = (() => {
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 150;
+      canvas.height = 30;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return 'Not supported';
+      ctx.textBaseline = "top";
+      ctx.font = "12px 'Fira Code', monospace";
+      ctx.fillStyle = "#00f0ff";
+      ctx.fillRect(5, 5, 140, 2);
+      ctx.fillStyle = "#ff007a";
+      ctx.fillText("1day_crew.dev", 10, 10);
+      ctx.fillText("🕵️🔐", 100, 8);
+      const dataUrl = canvas.toDataURL();
+      let hash = 0;
+      for (let i = 0; i < dataUrl.length; i++) {
+        hash = ((hash << 5) - hash) + dataUrl.charCodeAt(i);
+        hash |= 0;
+      }
+      return Math.abs(hash).toString(16).toUpperCase();
+    } catch (e) {
+      return 'Blocked';
+    }
+  })();
+
+  // User agent parsing
+  const uaParsed = (() => {
+    const ua = navigator.userAgent;
+    let os = 'Unknown OS';
+    let browser = 'Unknown Browser';
+
+    if (ua.indexOf('Win') !== -1) os = 'Windows';
+    else if (ua.indexOf('Mac') !== -1 && !('ontouchend' in document)) os = 'macOS';
+    else if (ua.indexOf('Linux') !== -1) os = 'Linux';
+    else if (ua.indexOf('Android') !== -1) os = 'Android';
+    else if (/iPad|iPhone|iPod/.test(ua) || (ua.indexOf('Mac') !== -1 && 'ontouchend' in document)) os = 'iOS';
+
+    if (ua.indexOf('Firefox') !== -1) browser = 'Firefox';
+    else if (ua.indexOf('SamsungBrowser') !== -1) browser = 'Samsung Browser';
+    else if (ua.indexOf('Opera') !== -1 || ua.indexOf('OPR') !== -1) browser = 'Opera';
+    else if (ua.indexOf('Edge') !== -1 || ua.indexOf('Edg') !== -1) browser = 'Edge';
+    else if (ua.indexOf('Chrome') !== -1) browser = 'Chrome';
+    else if (ua.indexOf('Safari') !== -1) browser = 'Safari';
+
+    const deviceType = /Mobi|Android|iPhone|iPad/i.test(ua) ? 'Mobile / Tablet' : 'Desktop';
+    return { os, browser, deviceType };
+  })();
+
+  // Fetch IP details
   fetch('https://ipapi.co/json/')
     .then(r => r.json())
     .then(data => {
+      const ipText = `${data.ip} | ${data.city}, ${data.region}, ${data.country_name} | ISP: ${data.org}`;
+      const vpn = (data.org || '').match(
+        /vpn|proxy|hosting|cloud|digitalocean|aws|azure|linode|vultr|ovh|tor/i
+      ) ? '⚠ POSSIBLE VPN/PROXY' : '✓ CLEAN';
+
+      // Populate hidden inputs for contact form
       const ipField = document.getElementById('fp_ip');
       const vpnField = document.getElementById('fp_vpn');
-      if (ipField) {
-        ipField.value = `${data.ip} | ${data.city}, ${data.region}, ${data.country_name} | ISP: ${data.org}`;
-      }
-      if (vpnField) {
-        const vpn = (data.org || '').match(
-          /vpn|proxy|hosting|cloud|digitalocean|aws|azure|linode|vultr|ovh|tor/i
-        ) ? '⚠ POSSIBLE VPN/PROXY' : '✓ CLEAN';
-        vpnField.value = vpn;
+      if (ipField) ipField.value = ipText;
+      if (vpnField) vpnField.value = vpn;
+
+      // Populate Threat Intel tab UI Elements
+      const intelIp = document.getElementById('intel-ip');
+      const intelVpn = document.getElementById('intel-vpn');
+      if (intelIp) intelIp.innerText = ipText;
+      if (intelVpn) {
+        intelVpn.innerText = vpn;
+        intelVpn.style.color = vpn.includes('CLEAN') ? 'var(--accent-green)' : '#ff5f56';
       }
     })
     .catch(() => {
       const ipField = document.getElementById('fp_ip');
       const vpnField = document.getElementById('fp_vpn');
-      if (ipField) ipField.value  = 'Could not fetch IP';
+      if (ipField) ipField.value = 'Could not fetch IP';
       if (vpnField) vpnField.value = 'Unknown';
+
+      const intelIp = document.getElementById('intel-ip');
+      const intelVpn = document.getElementById('intel-vpn');
+      if (intelIp) intelIp.innerText = 'Could not fetch IP';
+      if (intelVpn) intelVpn.innerText = 'Unknown';
     });
 
-  // Static browser details (No permissions required)
+  // Battery Status initialization
+  const batteryField = document.getElementById('intel-battery');
+  if (batteryField) {
+    if (typeof navigator.getBattery === 'function') {
+      navigator.getBattery().then(battery => {
+        const updateBattery = () => {
+          const pct = Math.round(battery.level * 100);
+          const chg = battery.charging ? '⚡ Charging' : '🔌 Discharging';
+          batteryField.innerText = `${pct}% (${chg})`;
+        };
+        updateBattery();
+        battery.addEventListener('levelchange', updateBattery);
+        battery.addEventListener('chargingchange', updateBattery);
+      }).catch(() => {
+        batteryField.innerText = 'API Blocked';
+      });
+    } else {
+      batteryField.innerText = 'Not Supported';
+    }
+  }
+
+  // Network connection data
+  const connField = document.getElementById('intel-conn');
+  if (connField) {
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (conn) {
+      const speed = conn.downlink ? `${conn.downlink} Mbps` : 'Unknown Speed';
+      const rtt = conn.rtt ? `${conn.rtt}ms RTT` : 'Unknown Latency';
+      const type = conn.effectiveType ? conn.effectiveType.toUpperCase() : 'Cellular/WiFi';
+      connField.innerText = `${type} (${speed} | ${rtt})`;
+    } else {
+      connField.innerText = 'Not Supported';
+    }
+  }
+
+  // Static browser details
+  const ua = navigator.userAgent;
+  const screenText = `${screen.width}x${screen.height} | ${screen.colorDepth}bit | ratio: ${window.devicePixelRatio}x`;
+  const tz = `${Intl.DateTimeFormat().resolvedOptions().timeZone} | UTC${-(new Date().getTimezoneOffset() / 60)}`;
+  const lang = `${navigator.language} | ${navigator.languages.join(', ')}`;
+  const ref = document.referrer || 'Direct / No referrer';
+
+  // Fill contact form hidden inputs
   const uaField = document.getElementById('fp_ua');
   const screenField = document.getElementById('fp_screen');
   const tzField = document.getElementById('fp_tz');
   const langField = document.getElementById('fp_lang');
   const refField = document.getElementById('fp_ref');
 
-  if (uaField) uaField.value = navigator.userAgent;
-  if (screenField) {
-    screenField.value = `${screen.width}x${screen.height} | ${screen.colorDepth}bit | ratio: ${window.devicePixelRatio}x`;
+  if (uaField) uaField.value = ua;
+  if (screenField) screenField.value = screenText;
+  if (tzField) tzField.value = tz;
+  if (langField) langField.value = lang;
+  if (refField) refField.value = ref;
+
+  // Fill Threat Intel tab UI
+  const intelDevice = document.getElementById('intel-device');
+  const intelOs = document.getElementById('intel-os');
+  const intelBrowser = document.getElementById('intel-browser');
+  const intelTz = document.getElementById('intel-tz');
+  const intelCores = document.getElementById('intel-cores');
+  const intelRam = document.getElementById('intel-ram');
+  const intelGpu = document.getElementById('intel-gpu');
+  const intelScreen = document.getElementById('intel-screen');
+  const intelCanvas = document.getElementById('intel-canvas');
+  const intelBot = document.getElementById('intel-bot');
+  const intelRef = document.getElementById('intel-ref');
+
+  if (intelDevice) intelDevice.innerText = uaParsed.deviceType;
+  if (intelOs) intelOs.innerText = uaParsed.os;
+  if (intelBrowser) intelBrowser.innerText = uaParsed.browser;
+  if (intelTz) intelTz.innerText = tz;
+  if (intelRef) intelRef.innerText = ref;
+
+  // Hardware metrics
+  if (intelCores) intelCores.innerText = `${navigator.hardwareConcurrency || 'Unknown'} Cores`;
+  if (intelRam) intelRam.innerText = navigator.deviceMemory ? `~${navigator.deviceMemory} GB` : 'Not Supported';
+  if (intelGpu) {
+    intelGpu.innerText = gpu;
+    intelGpu.title = gpu; // tooltip for full GPU path
   }
-  if (tzField) {
-    tzField.value = `${Intl.DateTimeFormat().resolvedOptions().timeZone} | UTC${-(new Date().getTimezoneOffset() / 60)}`;
+  if (intelScreen) intelScreen.innerText = screenText;
+  if (intelCanvas) intelCanvas.innerText = canvasHash;
+
+  // Webdriver automation integrity audit
+  if (intelBot) {
+    if (navigator.webdriver) {
+      intelBot.innerText = '⚠ HEADLESS (Automated)';
+      intelBot.style.color = '#ff5f56';
+    } else {
+      intelBot.innerText = '✓ Genuine (Clean)';
+      intelBot.style.color = 'var(--accent-green)';
+    }
   }
-  if (langField) {
-    langField.value = `${navigator.language} | ${navigator.languages.join(', ')}`;
-  }
-  if (refField) {
-    refField.value = document.referrer || 'Direct / No referrer';
+
+  // Real-time page timer loop
+  const intelTime = document.getElementById('intel-time');
+  if (intelTime) {
+    setInterval(() => {
+      const elapsed = Math.round((Date.now() - pageLoadTime) / 1000);
+      intelTime.innerText = `${elapsed}s on page`;
+    }, 1000);
   }
 }
 
@@ -417,6 +579,491 @@ function initCustomCursor() {
   });
 }
 
+// ── INTERACTIVE TERMINAL CLI LOGIC ──
+function focusTerminalInput() {
+  const input = document.getElementById('terminal-input');
+  if (input) input.focus();
+}
+
+function initTerminalCLI() {
+  const input = document.getElementById('terminal-input');
+  const history = document.getElementById('terminal-history');
+  if (!input || !history) return;
+
+  // Print startup hints in developer console
+  console.log("%c>> SECURITY TRACE: Encrypted token found inside client resources.", "color: #00f0ff; font-family: monospace; font-size: 13px; font-weight: bold;");
+  console.log("%cClue (Base64): RkxBR3sxZGF5X2NyZXdfc2VjcmV0X2RlY29kZWR9", "color: #ff007a; font-family: monospace; font-size: 13px;");
+  console.log("Decode this in the about terminal via 'decode [clue]' and run 'submit [decoded_flag]' to solve the challenge!");
+
+  input.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      const fullCmd = input.value.trim();
+      input.value = '';
+      if (!fullCmd) return;
+
+      const args = fullCmd.split(' ');
+      const command = args[0].toLowerCase();
+      const param = args.slice(1).join(' ');
+
+      // Render command line in CLI
+      const cmdLine = document.createElement('div');
+      cmdLine.className = 'terminal-line';
+      cmdLine.innerHTML = `<span class="terminal-cmd">[root@matrix:~]#</span> <span>${escapeHTML(fullCmd)}</span>`;
+      history.appendChild(cmdLine);
+
+      // Render output line
+      const outputLine = document.createElement('div');
+      outputLine.className = 'terminal-output';
+
+      switch (command) {
+        case 'help':
+          outputLine.innerHTML = `
+            Available commands:<br>
+            - <span style="color: var(--accent-cyan)">help</span>: Displays list of options.<br>
+            - <span style="color: var(--accent-cyan)">cat profile</span>: Outputs bio summary.<br>
+            - <span style="color: var(--accent-cyan)">decode [hash]</span>: Decodes Base64 cipher text.<br>
+            - <span style="color: var(--accent-cyan)">submit [flag]</span>: Submit verified flag to unlock reward.<br>
+            - <span style="color: var(--accent-cyan)">tools</span>: Navigate directly to the client-side pentest toolbox.<br>
+            - <span style="color: var(--accent-cyan)">clear</span>: Wipe terminal logs.
+          `;
+          break;
+
+        case 'cat':
+          if (param === 'profile' || param === '/etc/profile') {
+            outputLine.innerText = `I'm Kuldeep, a college student with a passion for cyber defense, penetration testing, and CTF competitions. I love reverse engineering, Linux, open source, and coffee.`;
+          } else {
+            outputLine.innerHTML = `<span class="terminal-line-input-error">cat: ${escapeHTML(param || 'profile')}: file not found. Run 'cat profile'.</span>`;
+          }
+          break;
+
+        case 'decode':
+          if (!param) {
+            outputLine.innerHTML = `<span class="terminal-line-input-error">Usage: decode [base64_string]</span>`;
+          } else {
+            try {
+              const decoded = atob(param.trim());
+              outputLine.innerHTML = `Decoded result: <span style="color: var(--accent-green); font-weight: bold;">${escapeHTML(decoded)}</span>`;
+            } catch (err) {
+              outputLine.innerHTML = `<span class="terminal-line-input-error">Invalid Base64 sequence. Usage: decode RkxBR...</span>`;
+            }
+          }
+          break;
+
+        case 'submit':
+          if (!param) {
+            outputLine.innerHTML = `<span class="terminal-line-input-error">Usage: submit [flag]</span>`;
+          } else if (param.trim() === 'FLAG{1day_crew_secret_decoded}') {
+            outputLine.innerHTML = `<span class="terminal-line-input-success">FLAG ACCEPTED: Access authorized. Launching serverless reward panel...</span>`;
+            setTimeout(triggerCTFSuccess, 1000);
+          } else {
+            outputLine.innerHTML = `<span class="terminal-line-input-error">>> ACCESS DENIED: Invalid flag token parameter mismatch.</span>`;
+          }
+          break;
+
+        case 'tools':
+          outputLine.innerHTML = `Scrolling target layout scope to pentest toolbox...`;
+          const toolSec = document.getElementById('toolbox');
+          if (toolSec) {
+            setTimeout(() => {
+              toolSec.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+          }
+          break;
+
+        case 'clear':
+          history.innerHTML = '';
+          return;
+
+        default:
+          outputLine.innerHTML = `<span class="terminal-line-input-error">bash: ${escapeHTML(command)}: command not found. Type 'help' for options.</span>`;
+      }
+
+      history.appendChild(outputLine);
+      
+      const body = document.querySelector('.terminal-body');
+      if (body) {
+        body.scrollTop = body.scrollHeight;
+      }
+    }
+  });
+}
+
+function escapeHTML(str) {
+  return str.replace(/[&<>'"]/g, 
+    tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag)
+  );
+}
+
+// ── CYBER TOOLBOX LOGIC ──
+let currentCipherMode = 'encode';
+
+function switchToolboxTab(event, tabId) {
+  const container = event.target.closest('.toolbox-card');
+  if (!container) return;
+
+  const tabs = container.querySelectorAll('.tab-btn');
+  const panels = container.querySelectorAll('.tab-panel');
+
+  tabs.forEach(tab => tab.classList.remove('active'));
+  panels.forEach(panel => panel.classList.remove('active'));
+
+  event.target.classList.add('active');
+  const activePanel = document.getElementById(tabId);
+  if (activePanel) activePanel.classList.add('active');
+}
+
+// Subtle Crypto Hash generator
+async function calculateHashes() {
+  const input = document.getElementById('hash-input').value;
+  const sha1Field = document.getElementById('hash-sha1');
+  const sha256Field = document.getElementById('hash-sha256');
+  if (!sha1Field || !sha256Field) return;
+
+  if (!input) {
+    sha1Field.innerText = 'Type something to generate hash...';
+    sha256Field.innerText = 'Type something to generate hash...';
+    return;
+  }
+
+  try {
+    // SHA-1
+    const buffer1 = new TextEncoder().encode(input);
+    const hashBuffer1 = await crypto.subtle.digest('SHA-1', buffer1);
+    const hex1 = Array.from(new Uint8Array(hashBuffer1)).map(b => b.toString(16).padStart(2, '0')).join('');
+    sha1Field.innerText = hex1;
+
+    // SHA-256
+    const buffer2 = new TextEncoder().encode(input);
+    const hashBuffer2 = await crypto.subtle.digest('SHA-256', buffer2);
+    const hex2 = Array.from(new Uint8Array(hashBuffer2)).map(b => b.toString(16).padStart(2, '0')).join('');
+    sha256Field.innerText = hex2;
+  } catch (err) {
+    console.error('Crypto digests failed:', err);
+  }
+}
+
+function setCipherMode(mode) {
+  currentCipherMode = mode;
+  
+  // Update button highlights
+  const controls = document.querySelector('.cipher-controls');
+  if (controls) {
+    const btns = controls.querySelectorAll('button');
+    btns.forEach(btn => {
+      if (btn.innerText.toLowerCase().includes(mode)) {
+        btn.style.borderColor = 'var(--accent-cyan)';
+        btn.style.boxShadow = '0 0 10px rgba(0, 240, 255, 0.15)';
+      } else {
+        btn.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+        btn.style.boxShadow = 'none';
+      }
+    });
+  }
+  processCipher();
+}
+
+function processCipher() {
+  const textarea = document.getElementById('cipher-input');
+  const output = document.getElementById('cipher-output');
+  if (!textarea || !output) return;
+
+  const value = textarea.value;
+  if (!value) {
+    output.innerText = 'Output will appear here...';
+    return;
+  }
+
+  if (currentCipherMode === 'encode') {
+    try {
+      output.innerText = btoa(unescape(encodeURIComponent(value)));
+    } catch (e) {
+      output.innerText = 'Error: Encoding failed.';
+    }
+  } else if (currentCipherMode === 'decode') {
+    try {
+      output.innerText = decodeURIComponent(escape(atob(value.trim())));
+    } catch (e) {
+      output.innerText = 'Error: Invalid Base64 sequence.';
+    }
+  } else if (currentCipherMode === 'rot13') {
+    output.innerText = value.replace(/[a-zA-Z]/g, function(c) {
+      return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
+    });
+  }
+}
+
+// Password entropy and strength calculations
+function analyzePassword() {
+  const password = document.getElementById('password-input').value;
+  const bar = document.getElementById('strength-bar');
+  const label = document.getElementById('strength-label');
+  const entropyLabel = document.getElementById('entropy-label');
+  const crackTime = document.getElementById('crack-time');
+  const audit = document.getElementById('complexity-audit');
+
+  if (!bar || !label || !entropyLabel || !crackTime || !audit) return;
+
+  // Reset HIBP query result
+  const hibpResult = document.getElementById('hibp-result');
+  if (hibpResult) {
+    hibpResult.innerText = 'Not queried.';
+    hibpResult.style.color = 'var(--text-muted)';
+  }
+
+  if (!password) {
+    bar.style.width = '0%';
+    label.innerText = 'Too Short';
+    label.style.color = 'var(--text-muted)';
+    entropyLabel.innerText = '0';
+    crackTime.innerText = 'Instantly';
+    audit.innerText = 'Too short';
+    audit.style.color = 'var(--text-muted)';
+    return;
+  }
+
+  // Calculate pool size R
+  let R = 0;
+  if (/[a-z]/.test(password)) R += 26;
+  if (/[A-Z]/.test(password)) R += 26;
+  if (/[0-9]/.test(password)) R += 10;
+  if (/[^a-zA-Z0-9]/.test(password)) R += 33;
+
+  const L = password.length;
+  const entropy = Math.round(L * (R > 0 ? Math.log2(R) : 0));
+  entropyLabel.innerText = entropy;
+
+  const percent = Math.min(100, Math.round((entropy / 80) * 100));
+  bar.style.width = `${percent}%`;
+
+  let rating = 'Weak';
+  let color = '#ff5f56';
+  let glow = 'rgba(255, 95, 86, 0.4)';
+
+  if (entropy < 28) {
+    rating = 'Very Weak';
+    color = '#ff5f56';
+    glow = 'rgba(255, 95, 86, 0.4)';
+  } else if (entropy >= 28 && entropy < 40) {
+    rating = 'Weak';
+    color = '#ff5f56';
+    glow = 'rgba(255, 95, 86, 0.4)';
+  } else if (entropy >= 40 && entropy < 60) {
+    rating = 'Medium';
+    color = '#febc2e';
+    glow = 'rgba(254, 188, 46, 0.4)';
+  } else if (entropy >= 60 && entropy < 80) {
+    rating = 'Strong';
+    color = '#27c93f';
+    glow = 'rgba(39, 201, 63, 0.4)';
+  } else if (entropy >= 80) {
+    rating = 'Very Strong';
+    color = 'var(--accent-cyan)';
+    glow = 'rgba(0, 240, 255, 0.5)';
+  }
+
+  label.innerText = rating;
+  label.style.color = color;
+  bar.style.backgroundColor = color;
+  bar.style.boxShadow = `0 0 10px ${glow}`;
+
+  // Time estimates
+  const guessesPerSecond = 1e10; // 10 billion guesses/sec
+  const totalCombinations = Math.pow(R, L);
+  const timeInSeconds = totalCombinations / guessesPerSecond;
+
+  let timeString = 'Instantly';
+  if (timeInSeconds < 1) {
+    timeString = 'Instantly';
+  } else if (timeInSeconds < 60) {
+    timeString = `${Math.round(timeInSeconds)} seconds`;
+  } else if (timeInSeconds < 3600) {
+    timeString = `${Math.round(timeInSeconds / 60)} minutes`;
+  } else if (timeInSeconds < 86400) {
+    timeString = `${Math.round(timeInSeconds / 3600)} hours`;
+  } else if (timeInSeconds < 31536000) {
+    timeString = `${Math.round(timeInSeconds / 86400)} days`;
+  } else if (timeInSeconds < 31536000 * 1000) {
+    timeString = `${Math.round(timeInSeconds / 31536000)} years`;
+  } else {
+    const power = Math.floor(Math.log10(timeInSeconds / 31536000));
+    const base = Math.round((timeInSeconds / 31536000) / Math.pow(10, power));
+    timeString = `${base} x 10^${power} years`;
+  }
+  crackTime.innerText = timeString;
+
+  // Complexity audit checks
+  const checks = [];
+  if (L < 8) checks.push('Too short (min 8 chars)');
+  if (!/[A-Z]/.test(password)) checks.push('Missing uppercase letter');
+  if (!/[a-z]/.test(password)) checks.push('Missing lowercase letter');
+  if (!/[0-9]/.test(password)) checks.push('Missing number');
+  if (!/[^a-zA-Z0-9]/.test(password)) checks.push('Missing special character');
+
+  if (checks.length === 0) {
+    audit.innerText = '✓ Safe Complex Structure';
+    audit.style.color = 'var(--accent-green)';
+  } else {
+    audit.innerText = `⚠ ${checks[0]}`;
+    audit.style.color = '#ff5f56';
+  }
+}
+
+// ── HAVE I BEEN PWNED CHECKER (HIBP API via K-Anonymity) ──
+async function checkHIBP() {
+  const password = document.getElementById('password-input').value;
+  const resultField = document.getElementById('hibp-result');
+  const btn = document.getElementById('hibp-btn');
+  if (!resultField || !btn) return;
+
+  if (!password) {
+    resultField.innerText = '⚠ Enter a password first.';
+    resultField.style.color = '#ff5f56';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerText = 'Querying HIBP...';
+  resultField.innerText = 'Querying breach database...';
+  resultField.style.color = 'var(--text-muted)';
+
+  try {
+    // 1. Generate SHA-1 hash of password
+    const msgBuffer = new TextEncoder().encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+
+    // 2. Extract first 5 characters and remaining suffix
+    const first5 = hashHex.slice(0, 5);
+    const suffix = hashHex.slice(5);
+
+    // 3. Query HIBP range API
+    const response = await fetch(`https://api.pwnedpasswords.com/range/${first5}`);
+    if (!response.ok) throw new Error('HIBP API error');
+
+    const responseText = await response.text();
+    
+    // 4. Search for the suffix in response
+    const lines = responseText.split('\n');
+    let leakCount = 0;
+    
+    for (let line of lines) {
+      const parts = line.split(':');
+      if (parts[0].trim() === suffix) {
+        leakCount = parseInt(parts[1], 10);
+        break;
+      }
+    }
+
+    // 5. Render result
+    if (leakCount > 0) {
+      resultField.innerHTML = `⚠ PWNED! Found in <strong style="color: #ff5f56">${leakCount.toLocaleString()}</strong> data breaches.`;
+      resultField.style.color = '#ff5f56';
+    } else {
+      resultField.innerHTML = `✓ SECURE! No known database leaks detected.`;
+      resultField.style.color = 'var(--accent-green)';
+    }
+  } catch (err) {
+    console.error('HIBP query failed:', err);
+    resultField.innerText = '⚠ API Query failed. Try again.';
+    resultField.style.color = '#ff5f56';
+  } finally {
+    btn.disabled = false;
+    btn.innerText = 'Check Breach Database (HIBP)';
+  }
+}
+
+// ── EMAIL BREACH CHECKER (XposedOrNot API Lookup) ──
+async function checkEmailBreach() {
+  const emailInput = document.getElementById('breach-email-input');
+  const resultsDiv = document.getElementById('email-breach-results');
+  const statusDiv = document.getElementById('email-breach-status');
+  if (!emailInput || !resultsDiv || !statusDiv) return;
+
+  const email = emailInput.value.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  if (!email || !emailRegex.test(email)) {
+    statusDiv.innerHTML = '<span style="color: #ff5f56">>> ERROR: Enter a valid email address.</span>';
+    resultsDiv.style.display = 'none';
+    return;
+  }
+
+  statusDiv.innerHTML = '<span class="blink">▌</span> Scanning global breach indexes...';
+  statusDiv.style.color = 'var(--accent-cyan)';
+  resultsDiv.style.display = 'none';
+
+  try {
+    const response = await fetch(`https://api.xposedornot.com/v1/breach-analytics?email=${encodeURIComponent(email)}`);
+    if (!response.ok) throw new Error('Breach directory response failed');
+
+    const data = await response.json();
+    
+    // API returns ExposedBreaches as null if no breaches are found
+    if (!data.ExposedBreaches || !data.ExposedBreaches.breaches_details) {
+      statusDiv.innerHTML = '<span style="color: var(--accent-green); font-weight: bold;">✓ SECURE! This email address was not found in any known public data leaks.</span>';
+      return;
+    }
+
+    const breaches = data.ExposedBreaches.breaches_details;
+
+    statusDiv.innerHTML = `⚠ ALERT! Found in <strong style="color: #ff5f56">${breaches.length}</strong> public data breaches.`;
+    statusDiv.style.color = '#ff5f56';
+    resultsDiv.innerHTML = '';
+
+    breaches.forEach(item => {
+      const name = item.breach || 'Unknown Leak';
+      const date = item.xposed_date || 'Unknown Date';
+      const desc = item.details || 'No details provided.';
+      const rawCategories = item.xposed_data || '';
+      const categories = rawCategories.split(';').map(c => c.trim()).filter(c => c.length > 0);
+
+      const card = document.createElement('div');
+      card.className = 'hash-results';
+      card.style.marginTop = '16px';
+      card.style.textAlign = 'left';
+      card.style.border = '1px solid rgba(255, 95, 86, 0.15)';
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+          <strong style="color: var(--accent-cyan); font-size: 1.05rem;">${escapeHTML(name)}</strong>
+          <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted);">${escapeHTML(date)}</span>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
+          ${desc}
+        </p>
+        <div style="font-size: 0.82rem; color: var(--text-muted);">
+          <strong style="color: var(--accent-pink);">Compromised Data:</strong> 
+          <span style="font-family: var(--font-mono); color: var(--text-secondary);">${escapeHTML(categories.join(', '))}</span>
+        </div>
+      `;
+      resultsDiv.appendChild(card);
+    });
+
+    resultsDiv.style.display = 'block';
+  } catch (err) {
+    console.error('Email breach scan failed:', err);
+    statusDiv.innerHTML = '<span style="color: #ff5f56">>> ERROR: Connection to breach database failed. Try again.</span>';
+    resultsDiv.style.display = 'none';
+  }
+}
+
+// ── MODAL TRIGGER ALERTS ──
+function triggerCTFSuccess() {
+  const modal = document.getElementById('achievement-modal');
+  if (modal) modal.classList.add('active');
+}
+
+function closeModal() {
+  const modal = document.getElementById('achievement-modal');
+  if (modal) modal.classList.remove('active');
+}
+
 // ── INIT INITIALIZATION ──
 document.addEventListener('DOMContentLoaded', () => {
   runFingerprinting();
@@ -425,4 +1072,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbarScroll();
   fetchGitHubProjects();
   initCustomCursor();
+  initTerminalCLI();
 });
