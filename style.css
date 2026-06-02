@@ -1009,7 +1009,7 @@ h1:hover {
     top: 0; left: 0;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    z-index: 9999;
+    z-index: 20000;
     opacity: 0;
     transition: width 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), 
                 height 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), 
