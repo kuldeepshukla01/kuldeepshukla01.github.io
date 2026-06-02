@@ -1489,19 +1489,21 @@ h1:hover {
 /* ── MOBILE RESPONSIVE OVERRIDES FOR TOOLBOX & MODALS ── */
 @media (max-width: 768px) {
   .toolbox-tabs {
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  .toolbox-tabs::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+    display: flex !important;
+    flex-wrap: wrap !important;
+    background: rgba(9, 13, 26, 0.7) !important;
   }
   .tab-btn {
-    flex: 0 0 auto;
-    padding: 14px 20px;
-    font-size: 0.85rem;
+    flex: 1 1 calc(33.333% - 4px) !important;
+    padding: 12px 4px !important;
+    font-size: 0.8rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    text-align: center !important;
+  }
+  /* For the second row, let the last two tabs stretch to 50% each */
+  .tab-btn:nth-child(4),
+  .tab-btn:nth-child(5) {
+    flex: 1 1 calc(50% - 4px) !important;
   }
   .toolbox-content {
     padding: 24px 16px;
