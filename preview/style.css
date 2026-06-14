@@ -9,9 +9,9 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Colors */
-  --bg-dark: #050508;
-  --bg-panel: rgba(10, 15, 30, 0.42);
-  --bg-panel-hover: rgba(20, 25, 45, 0.52);
+  --bg-dark: #030409;
+  --bg-panel: rgba(255, 255, 255, 0.035);
+  --bg-panel-hover: rgba(255, 255, 255, 0.075);
 
   /* Aurora Accents */
   --accent-cyan: #06b6d4;
@@ -25,7 +25,7 @@
   --text-muted: #94a3b8;
 
   /* Glass tokens */
-  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.1);
   --glass-border-hover: rgba(255, 255, 255, 0.22);
   --glass-blur: blur(32px) saturate(210%);
   --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
@@ -47,7 +47,7 @@ html {
 body {
   background-color: #030306;
   background-image: 
-    linear-gradient(rgba(3, 3, 6, 0.12), rgba(3, 3, 6, 0.28)),
+    linear-gradient(rgba(3, 3, 6, 0.25), rgba(3, 3, 6, 0.45)),
     url('clouds_bg.png'),
     linear-gradient(rgba(255, 255, 255, 0.006) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.006) 1px, transparent 1px);
