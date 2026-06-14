@@ -820,6 +820,103 @@ async function checkEmailBreach() {
   }
 }
 
+// ── INTERACTIVE GLASS DUST PARTICLES CANVAS ──
+function initAmbientCanvas() {
+  const canvas = document.getElementById('ambient-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+  
+  const particles = [];
+  const particleCount = Math.min(60, Math.floor((width * height) / 20000));
+  
+  let mouse = { x: null, y: null, radius: 150 };
+  
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  
+  window.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+  
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+  
+  class Particle {
+    constructor() {
+      this.reset();
+      this.y = Math.random() * height; // distribute initially
+    }
+    
+    reset() {
+      this.x = Math.random() * width;
+      this.y = -10;
+      this.size = Math.random() * 3 + 1; // 1px to 4px
+      this.speedX = Math.random() * 0.4 - 0.2; // sway side to side
+      this.speedY = Math.random() * 0.3 + 0.1;  // drift down slowly
+      this.opacity = Math.random() * 0.25 + 0.05; // soft glow
+      this.color = Math.random() > 0.5 ? '139, 92, 246' : '6, 182, 212'; // purple or cyan
+      this.angle = Math.random() * 360;
+      this.spinSpeed = Math.random() * 0.02 - 0.01;
+    }
+    
+    update() {
+      this.y += this.speedY;
+      this.x += this.speedX + Math.sin(this.angle) * 0.15;
+      this.angle += this.spinSpeed;
+      
+      // Mouse interaction (gravity attraction)
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < mouse.radius) {
+          const force = (mouse.radius - distance) / mouse.radius;
+          this.x += (dx / distance) * force * 0.8;
+          this.y += (dy / distance) * force * 0.8;
+        }
+      }
+      
+      // Reset when going off screen
+      if (this.y > height + 10 || this.x < -10 || this.x > width + 10) {
+        this.reset();
+      }
+    }
+    
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = `rgba(${this.color}, ${this.opacity})`;
+      ctx.fill();
+      ctx.shadowBlur = 0; // reset shadow
+    }
+  }
+  
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
 // ── INTERACTIVE 3D PERSPECTIVE GLASS TILT & CURSOR SPOTLIGHT SHINE ──
 function initGlassTilt() {
   const cards = document.querySelectorAll('.glass, .glass-light');
@@ -858,6 +955,7 @@ function initGlassTilt() {
 
 // ── INIT INITIALIZATION ──
 document.addEventListener('DOMContentLoaded', () => {
+  initAmbientCanvas(); // Fire particle canvas loop
   runFingerprinting();
   initContactForm();
   initNavbarScroll();
