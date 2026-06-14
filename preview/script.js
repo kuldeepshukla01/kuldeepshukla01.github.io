@@ -1,7 +1,7 @@
 /* 
-  ── PREMIUM CYBER GLASSMORPHISM INTERACTIVE SCRIPTS ──
+  ── PREMIUM AETHER AURORA GLASSMORPHISM SCRIPTS ──
   Designed for: 1Day_crew.DEV (Kuldeep Shukla)
-  Features: Matrix Rain, 3D Perspective Tilt, Custom Cursor, Telemetry Diagnostics
+  Features: 3D Perspective Card Tilt, Spotlight Reflection, Telemetry Auditor
 */
 
 // Initialize EmailJS contact form (loaded globally in HTML)
@@ -11,7 +11,7 @@ if (typeof emailjs !== 'undefined') {
 
 const pageLoadTime = Date.now();
 
-// ── IP & LOCATION & VPN DETECT API ──
+// ── TELEMETRY & DIGITAL FOOTPRINT GENERATION ──
 function runFingerprinting() {
   // WebGL query
   const gpu = (() => {
@@ -37,12 +37,12 @@ function runFingerprinting() {
       const ctx = canvas.getContext('2d');
       if (!ctx) return 'Not supported';
       ctx.textBaseline = "top";
-      ctx.font = "12px 'Fira Code', monospace";
-      ctx.fillStyle = "#00f0ff";
+      ctx.font = "12px 'Outfit', sans-serif";
+      ctx.fillStyle = "#8b5cf6";
       ctx.fillRect(5, 5, 140, 2);
-      ctx.fillStyle = "#ff007a";
-      ctx.fillText("1day_crew.dev", 10, 10);
-      ctx.fillText("🕵️🔐", 100, 8);
+      ctx.fillStyle = "#06b6d4";
+      ctx.fillText("kuldeep.shukla", 10, 10);
+      ctx.fillText("🔒✨", 100, 8);
       const dataUrl = canvas.toDataURL();
       let hash = 0;
       for (let i = 0; i < dataUrl.length; i++) {
@@ -99,7 +99,7 @@ function runFingerprinting() {
       if (intelIp) intelIp.innerText = ipText;
       if (intelVpn) {
         intelVpn.innerText = vpn;
-        intelVpn.style.color = vpn.includes('CLEAN') ? 'var(--accent-green)' : '#ff5f56';
+        intelVpn.style.color = vpn.includes('CLEAN') ? 'var(--accent-green)' : '#ef4444';
       }
     })
     .catch(() => {
@@ -193,7 +193,7 @@ function runFingerprinting() {
   if (intelRam) intelRam.innerText = navigator.deviceMemory ? `~${navigator.deviceMemory} GB` : 'Not Supported';
   if (intelGpu) {
     intelGpu.innerText = gpu;
-    intelGpu.title = gpu; // tooltip for full GPU path
+    intelGpu.title = gpu;
   }
   if (intelScreen) intelScreen.innerText = screenText;
   if (intelCanvas) intelCanvas.innerText = canvasHash;
@@ -201,10 +201,10 @@ function runFingerprinting() {
   // Webdriver automation integrity audit
   if (intelBot) {
     if (navigator.webdriver) {
-      intelBot.innerText = '⚠ HEADLESS (Automated)';
-      intelBot.style.color = '#ff5f56';
+      intelBot.innerText = '⚠ Automated (Webdriver)';
+      intelBot.style.color = '#ef4444';
     } else {
-      intelBot.innerText = '✓ Genuine (Clean)';
+      intelBot.innerText = '✓ Genuine Browser';
       intelBot.style.color = 'var(--accent-green)';
     }
   }
@@ -228,151 +228,78 @@ function initContactForm() {
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Honeypot check (hidden field to trap bots)
     const honeypot = form.querySelector('input[name="honeypot"]');
     if (honeypot && honeypot.value) {
       form.reset();
       return;
     }
 
-    // Email validation
     const emailInput = form.querySelector('input[name="email"]');
     const emailVal = emailInput ? emailInput.value.trim() : '';
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailRegex.test(emailVal)) {
       if (status) {
-        status.style.color = '#FF3232';
-        status.innerText = '>> ERROR: Enter a valid email address.';
+        status.style.color = '#ef4444';
+        status.innerText = 'Error: Enter a valid email address.';
       }
       return;
     }
 
-    // Time-on-page checking
     const fpTimeField = document.getElementById('fp_time');
     const secs = Math.round((Date.now() - pageLoadTime) / 1000);
     if (fpTimeField) {
-      fpTimeField.value = `${secs}s on page — ${secs < 4 ? '⚠ SUSPICIOUS (possible bot)' : '✓ OK'}`;
+      fpTimeField.value = `${secs}s on page — ${secs < 4 ? '⚠ Bot Signature' : '✓ Human OK'}`;
     }
 
     const btn = form.querySelector('button[type="submit"]');
     if (btn) {
       btn.disabled = true;
       const btnSpan = btn.querySelector('span');
-      if (btnSpan) btnSpan.innerText = 'TRANSMITTING...';
+      if (btnSpan) btnSpan.innerText = 'Transmitting...';
     }
     
     if (status) {
-      status.style.color = '#00DCC8';
-      status.innerText = 'Transmitting...';
+      status.style.color = 'var(--accent-cyan)';
+      status.innerText = 'Sending...';
     }
 
     if (typeof emailjs !== 'undefined') {
       emailjs.sendForm('service_ccpimhj', 'template_pxr2b9p', this)
         .then(() => {
           if (status) {
-            status.style.color = '#00FF46';
-            status.innerText = ">> Message sent successfully to Kuldeep Shukla '@1day_crew'";
+            status.style.color = 'var(--accent-green)';
+            status.innerText = "Message sent successfully!";
           }
           form.reset();
           if (btn) {
             btn.disabled = false;
             const btnSpan = btn.querySelector('span');
-            if (btnSpan) btnSpan.innerText = 'SEND TRANSMISSION >';
+            if (btnSpan) btnSpan.innerText = 'Send Message';
           }
         }, (err) => {
           if (status) {
-            status.style.color = '#FF3232';
-            status.innerText = '>> Failed to send message. Please try again.';
+            status.style.color = '#ef4444';
+            status.innerText = 'Failed to transmit message. Try again.';
           }
           console.error(err);
           if (btn) {
             btn.disabled = false;
             const btnSpan = btn.querySelector('span');
-            if (btnSpan) btnSpan.innerText = 'SEND TRANSMISSION >';
+            if (btnSpan) btnSpan.innerText = 'Send Message';
           }
         });
     } else {
       if (status) {
-        status.style.color = '#FF3232';
-        status.innerText = '>> Failed: EmailJS library missing.';
+        status.style.color = '#ef4444';
+        status.innerText = 'Failed: EmailJS SDK not available.';
       }
       if (btn) {
         btn.disabled = false;
         const btnSpan = btn.querySelector('span');
-        if (btnSpan) btnSpan.innerText = 'SEND TRANSMISSION >';
+        if (btnSpan) btnSpan.innerText = 'Send Message';
       }
     }
   });
-}
-
-// ── MATRIX RAIN EFFECTS (CYBER CYAN) ──
-function initMatrixRain() {
-  const canvas = document.getElementById('matrix-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  const fontSize = 13;
-  const colSpacing = fontSize * 1.1;
-  let cols, drops, speeds;
-
-  function initDrops() {
-    cols = Math.floor(canvas.width / colSpacing);
-    drops = Array(cols).fill(0).map(() => Math.random() * -(canvas.height / fontSize) * 2);
-    speeds = Array(cols).fill(0).map(() => 0.4 + Math.random() * 0.9);
-  }
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initDrops();
-  }
-  
-  resize();
-  window.addEventListener('resize', resize);
-
-  const chars = 'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789';
-  const MAX_TRAIL = 32;
-
-  function drawMatrix() {
-    ctx.fillStyle = 'rgba(7, 9, 19, 0.025)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = 0; i < cols; i++) {
-      const x = i * colSpacing;
-      const y = drops[i] * fontSize;
-
-      ctx.shadowBlur = 6;
-      ctx.shadowColor = 'rgba(0, 240, 255, 0.9)';
-      ctx.fillStyle = '#ffffff';
-      ctx.font = `${fontSize}px "Fira Code", monospace`;
-      ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, y);
-      ctx.shadowBlur = 0;
-
-      const trailLength = 18 + Math.floor(Math.random() * 14);
-      for (let t = 1; t < trailLength; t++) {
-        const progress = t / trailLength;
-        const alpha = Math.pow(1 - progress, 1.4) * 0.92;
-        const g = Math.floor(180 * (1 - progress));
-        const b = Math.floor(255 * (1 - progress));
-        
-        ctx.fillStyle = `rgba(0, ${g}, ${b}, ${alpha})`;
-        ctx.font = `${fontSize}px "Fira Code", monospace`;
-        const ty = y - t * fontSize;
-        if (ty > -fontSize) {
-          ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, ty);
-        }
-      }
-
-      if (drops[i] * fontSize > canvas.height + MAX_TRAIL * fontSize) {
-        if (Math.random() > 0.96) {
-          drops[i] = -Math.floor(Math.random() * 20);
-        }
-      }
-      drops[i] += speeds[i];
-    }
-  }
-
-  setInterval(drawMatrix, 40);
 }
 
 // ── NAVIGATION CONTROLS ──
@@ -441,15 +368,12 @@ function getRepoIcon(name, lang) {
   lang = (lang || '').toLowerCase();
   
   if (name.includes('scan') || name.includes('recon') || name.includes('sniff') || name.includes('visual')) return '📡';
-  if (name.includes('crypto') || name.includes('cipher') || name.includes('key') || name.includes('ca1') || name.includes('ca2')) return '🔒';
-  if (name.includes('shell') || name.includes('terminal') || name.includes('ssh')) return '🐚';
-  if (name.includes('exploit') || name.includes('hack') || name.includes('bypass') || name.includes('payload') || name.includes('ml')) return '💀';
+  if (name.includes('crypto') || name.includes('cipher') || name.includes('key')) return '🔒';
+  if (name.includes('shell') || name.includes('terminal')) return '💻';
   
   if (lang === 'python') return '🐍';
   if (lang === 'javascript' || lang === 'typescript') return '⚡';
   if (lang === 'html' || lang === 'css') return '🌐';
-  if (lang === 'java' || lang === 'kotlin') return '☕';
-  if (lang === 'c' || lang === 'c++' || lang === 'rust' || lang === 'go') return '⚙️';
   
   return '📁';
 }
@@ -467,7 +391,6 @@ function renderProjects(repos) {
     const card = document.createElement('div');
     card.className = 'project-card glass tilt-card';
     card.innerHTML = `
-      <div class="corner-brackets"></div>
       <div class="project-icon-wrap">${icon}</div>
       <h3>${formatRepoName(repo.name)}</h3>
       <div class="project-meta">
@@ -476,7 +399,7 @@ function renderProjects(repos) {
       </div>
       <p>${desc}</p>
       <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="project-link">
-        GitHub Repo <span>→</span>
+        Source Repository <span>→</span>
       </a>
     `;
     grid.appendChild(card);
@@ -541,7 +464,7 @@ function initCustomCursor() {
     ring.style.opacity = '0';
   });
 
-  const hoverSelectors = 'a, button, input, textarea, .btn, .btn-submit, .project-card, .nav-logo, .terminal-dot';
+  const hoverSelectors = 'a, button, input, textarea, .btn, .btn-submit, .project-card, .nav-logo, .tab-btn';
   
   document.addEventListener('mouseover', (e) => {
     if (e.target.closest(hoverSelectors)) {
@@ -566,124 +489,6 @@ function initCustomCursor() {
     dot.classList.remove('active-dot');
     ring.classList.remove('active-ring');
   });
-}
-
-// ── INTERACTIVE TERMINAL CLI LOGIC ──
-function focusTerminalInput() {
-  const input = document.getElementById('terminal-input');
-  if (input) input.focus();
-}
-
-function initTerminalCLI() {
-  const input = document.getElementById('terminal-input');
-  const history = document.getElementById('terminal-history');
-  if (!input || !history) return;
-
-  console.log("%c>> SECURITY TRACE: Encrypted token found inside client resources.", "color: #00f0ff; font-family: monospace; font-size: 13px; font-weight: bold;");
-  console.log("%cClue (Base64): RkxBR3sxZGF5X2NyZXdfc2VjcmV0X2RlY29kZWR9", "color: #ff007a; font-family: monospace; font-size: 13px;");
-  console.log("Decode this in the about terminal via 'decode [clue]' and run 'submit [decoded_flag]' to solve the challenge!");
-
-  input.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-      const fullCmd = input.value.trim();
-      input.value = '';
-      if (!fullCmd) return;
-
-      const args = fullCmd.split(' ');
-      const command = args[0].toLowerCase();
-      const param = args.slice(1).join(' ');
-
-      const cmdLine = document.createElement('div');
-      cmdLine.className = 'terminal-line';
-      cmdLine.innerHTML = `<span class="terminal-cmd">[root@matrix:~]#</span> <span>${escapeHTML(fullCmd)}</span>`;
-      history.appendChild(cmdLine);
-
-      const outputLine = document.createElement('div');
-      outputLine.className = 'terminal-output';
-
-      switch (command) {
-        case 'help':
-          outputLine.innerHTML = `
-            Available commands:<br>
-            - <span style="color: var(--accent-cyan)">help</span>: Displays list of options.<br>
-            - <span style="color: var(--accent-cyan)">cat profile</span>: Outputs bio summary.<br>
-            - <span style="color: var(--accent-cyan)">decode [hash]</span>: Decodes Base64 cipher text.<br>
-            - <span style="color: var(--accent-cyan)">submit [flag]</span>: Submit verified flag to unlock reward.<br>
-            - <span style="color: var(--accent-cyan)">tools</span>: Navigate directly to the client-side pentest toolbox.<br>
-            - <span style="color: var(--accent-cyan)">clear</span>: Wipe terminal logs.
-          `;
-          break;
-
-        case 'cat':
-          if (param === 'profile' || param === '/etc/profile') {
-            outputLine.innerText = `I'm Kuldeep, a college student with a passion for cyber defense, penetration testing, and CTF competitions. I love reverse engineering, Linux, open source, and coffee.`;
-          } else {
-            outputLine.innerHTML = `<span class="terminal-line-input-error">cat: ${escapeHTML(param || 'profile')}: file not found. Run 'cat profile'.</span>`;
-          }
-          break;
-
-        case 'decode':
-          if (!param) {
-            outputLine.innerHTML = `<span class="terminal-line-input-error">Usage: decode [base64_string]</span>`;
-          } else {
-            try {
-              const decoded = atob(param.trim());
-              outputLine.innerHTML = `Decoded result: <span style="color: var(--accent-green); font-weight: bold;">${escapeHTML(decoded)}</span>`;
-            } catch (err) {
-              outputLine.innerHTML = `<span class="terminal-line-input-error">Invalid Base64 sequence. Usage: decode RkxBR...</span>`;
-            }
-          }
-          break;
-
-        case 'submit':
-          if (!param) {
-            outputLine.innerHTML = `<span class="terminal-line-input-error">Usage: submit [flag]</span>`;
-          } else if (param.trim() === 'FLAG{1day_crew_secret_decoded}') {
-            outputLine.innerHTML = `<span class="terminal-line-input-success">FLAG ACCEPTED: Access authorized. Launching serverless reward panel...</span>`;
-            setTimeout(triggerCTFSuccess, 1000);
-          } else {
-            outputLine.innerHTML = `<span class="terminal-line-input-error">>> ACCESS DENIED: Invalid flag token parameter mismatch.</span>`;
-          }
-          break;
-
-        case 'tools':
-          outputLine.innerHTML = `Scrolling target layout scope to pentest toolbox...`;
-          const toolSec = document.getElementById('toolbox');
-          if (toolSec) {
-            setTimeout(() => {
-              toolSec.scrollIntoView({ behavior: 'smooth' });
-            }, 500);
-          }
-          break;
-
-        case 'clear':
-          history.innerHTML = '';
-          return;
-
-        default:
-          outputLine.innerHTML = `<span class="terminal-line-input-error">bash: ${escapeHTML(command)}: command not found. Type 'help' for options.</span>`;
-      }
-
-      history.appendChild(outputLine);
-      
-      const body = document.querySelector('.terminal-body');
-      if (body) {
-        body.scrollTop = body.scrollHeight;
-      }
-    }
-  });
-}
-
-function escapeHTML(str) {
-  return str.replace(/[&<>'"]/g, 
-    tag => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      "'": '&#39;',
-      '"': '&quot;'
-    }[tag] || tag)
-  );
 }
 
 // ── CYBER TOOLBOX LOGIC ──
@@ -739,11 +544,11 @@ function setCipherMode(mode) {
     const btns = controls.querySelectorAll('button');
     btns.forEach(btn => {
       if (btn.innerText.toLowerCase().includes(mode)) {
-        btn.style.borderColor = 'var(--accent-cyan)';
-        btn.style.boxShadow = '0 0 10px rgba(0, 240, 255, 0.15)';
+        btn.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+        btn.style.background = 'rgba(255, 255, 255, 0.08)';
       } else {
-        btn.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-        btn.style.boxShadow = 'none';
+        btn.style.borderColor = 'rgba(255, 255, 255, 0.07)';
+        btn.style.background = 'transparent';
       }
     });
   }
@@ -822,35 +627,27 @@ function analyzePassword() {
   bar.style.width = `${percent}%`;
 
   let rating = 'Weak';
-  let color = '#ff5f56';
-  let glow = 'rgba(255, 95, 86, 0.4)';
+  let color = '#ef4444';
 
   if (entropy < 28) {
     rating = 'Very Weak';
-    color = '#ff5f56';
-    glow = 'rgba(255, 95, 86, 0.4)';
+    color = '#ef4444';
   } else if (entropy >= 28 && entropy < 40) {
     rating = 'Weak';
-    color = '#ff5f56';
-    glow = 'rgba(255, 95, 86, 0.4)';
+    color = '#ef4444';
   } else if (entropy >= 40 && entropy < 60) {
-    rating = 'Medium';
-    color = '#febc2e';
-    glow = 'rgba(254, 188, 46, 0.4)';
+    rating = '#f59e0b';
   } else if (entropy >= 60 && entropy < 80) {
     rating = 'Strong';
-    color = '#27c93f';
-    glow = 'rgba(39, 201, 63, 0.4)';
+    color = '#10b981';
   } else if (entropy >= 80) {
     rating = 'Very Strong';
     color = 'var(--accent-cyan)';
-    glow = 'rgba(0, 240, 255, 0.5)';
   }
 
   label.innerText = rating;
   label.style.color = color;
   bar.style.backgroundColor = color;
-  bar.style.boxShadow = `0 0 10px ${glow}`;
 
   const guessesPerSecond = 1e10;
   const totalCombinations = Math.pow(R, L);
@@ -888,7 +685,7 @@ function analyzePassword() {
     audit.style.color = 'var(--accent-green)';
   } else {
     audit.innerText = `⚠ ${checks[0]}`;
-    audit.style.color = '#ff5f56';
+    audit.style.color = '#ef4444';
   }
 }
 
@@ -901,7 +698,7 @@ async function checkHIBP() {
 
   if (!password) {
     resultField.innerText = '⚠ Enter a password first.';
-    resultField.style.color = '#ff5f56';
+    resultField.style.color = '#ef4444';
     return;
   }
 
@@ -935,8 +732,8 @@ async function checkHIBP() {
     }
 
     if (leakCount > 0) {
-      resultField.innerHTML = `⚠ PWNED! Found in <strong style="color: #ff5f56">${leakCount.toLocaleString()}</strong> data breaches.`;
-      resultField.style.color = '#ff5f56';
+      resultField.innerHTML = `⚠ PWNED! Found in <strong style="color: #ef4444">${leakCount.toLocaleString()}</strong> data breaches.`;
+      resultField.style.color = '#ef4444';
     } else {
       resultField.innerHTML = `✓ SECURE! No known database leaks detected.`;
       resultField.style.color = 'var(--accent-green)';
@@ -944,7 +741,7 @@ async function checkHIBP() {
   } catch (err) {
     console.error('HIBP query failed:', err);
     resultField.innerText = '⚠ API Query failed. Try again.';
-    resultField.style.color = '#ff5f56';
+    resultField.style.color = '#ef4444';
   } finally {
     btn.disabled = false;
     btn.innerText = 'Check Breach Database (HIBP)';
@@ -962,12 +759,12 @@ async function checkEmailBreach() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   if (!email || !emailRegex.test(email)) {
-    statusDiv.innerHTML = '<span style="color: #ff5f56">>> ERROR: Enter a valid email address.</span>';
+    statusDiv.innerHTML = '<span style="color: #ef4444">>> ERROR: Enter a valid email address.</span>';
     resultsDiv.style.display = 'none';
     return;
   }
 
-  statusDiv.innerHTML = '<span class="blink">▌</span> Scanning global breach indexes...';
+  statusDiv.innerHTML = 'Scanning database directory...';
   statusDiv.style.color = 'var(--accent-cyan)';
   resultsDiv.style.display = 'none';
 
@@ -983,8 +780,8 @@ async function checkEmailBreach() {
     }
 
     const breaches = data.ExposedBreaches.breaches_details;
-    statusDiv.innerHTML = `⚠ ALERT! Found in <strong style="color: #ff5f56">${breaches.length}</strong> public data breaches.`;
-    statusDiv.style.color = '#ff5f56';
+    statusDiv.innerHTML = `⚠ ALERT! Found in <strong style="color: #ef4444">${breaches.length}</strong> public data breaches.`;
+    statusDiv.style.color = '#ef4444';
     resultsDiv.innerHTML = '';
 
     breaches.forEach(item => {
@@ -998,18 +795,18 @@ async function checkEmailBreach() {
       card.className = 'hash-results';
       card.style.marginTop = '16px';
       card.style.textAlign = 'left';
-      card.style.border = '1px solid rgba(255, 95, 86, 0.15)';
+      card.style.border = '1px solid rgba(239, 68, 68, 0.15)';
       card.innerHTML = `
         <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
           <strong style="color: var(--accent-cyan); font-size: 1.05rem;">${escapeHTML(name)}</strong>
-          <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted);">${escapeHTML(date)}</span>
+          <span style="font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-muted);">${escapeHTML(date)}</span>
         </div>
         <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
           ${desc}
         </p>
         <div style="font-size: 0.82rem; color: var(--text-muted);">
           <strong style="color: var(--accent-pink);">Compromised Data:</strong> 
-          <span style="font-family: var(--font-mono); color: var(--text-secondary);">${escapeHTML(categories.join(', '))}</span>
+          <span style="color: var(--text-secondary);">${escapeHTML(categories.join(', '))}</span>
         </div>
       `;
       resultsDiv.appendChild(card);
@@ -1018,20 +815,9 @@ async function checkEmailBreach() {
     resultsDiv.style.display = 'block';
   } catch (err) {
     console.error('Email breach scan failed:', err);
-    statusDiv.innerHTML = '<span style="color: #ff5f56">>> ERROR: Connection to breach database failed. Try again.</span>';
+    statusDiv.innerHTML = '<span style="color: #ef4444">>> ERROR: Connection to breach database failed. Try again.</span>';
     resultsDiv.style.display = 'none';
   }
-}
-
-// ── MODAL TRIGGER ALERTS ──
-function triggerCTFSuccess() {
-  const modal = document.getElementById('achievement-modal');
-  if (modal) modal.classList.add('active');
-}
-
-function closeModal() {
-  const modal = document.getElementById('achievement-modal');
-  if (modal) modal.classList.remove('active');
 }
 
 // ── INTERACTIVE 3D PERSPECTIVE GLASS TILT & CURSOR SPOTLIGHT SHINE ──
@@ -1041,27 +827,23 @@ function initGlassTilt() {
   cards.forEach(card => {
     card.addEventListener('mousemove', e => {
       const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left; // x coordinate within element
-      const y = e.clientY - rect.top;  // y coordinate within element
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
       
-      // Update custom properties for spotlight shine overlay
       card.style.setProperty('--mouse-x', `${x}px`);
       card.style.setProperty('--mouse-y', `${y}px`);
       
-      // Only tilt on desktop screens (greater than 768px)
       if (window.innerWidth > 768 && card.classList.contains('tilt-card')) {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        // Calculate tilt angles (max tilt +/- 10 degrees)
-        const rotateY = ((x - centerX) / centerX) * 10;
-        const rotateX = -((y - centerY) / centerY) * 10;
+        const rotateY = ((x - centerX) / centerX) * 8; // Max tilt +/- 8 degrees
+        const rotateX = -((y - centerY) / centerY) * 8;
         
         card.style.setProperty('--rotate-x', `${rotateX}deg`);
         card.style.setProperty('--rotate-y', `${rotateY}deg`);
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        card.style.borderColor = 'rgba(0, 240, 255, 0.35)';
-        card.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 240, 255, 0.18)';
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
+        card.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 30px rgba(139, 92, 246, 0.08)';
       }
     });
     
@@ -1069,7 +851,6 @@ function initGlassTilt() {
       card.style.setProperty('--rotate-x', `0deg`);
       card.style.setProperty('--rotate-y', `0deg`);
       card.style.transform = '';
-      card.style.borderColor = '';
       card.style.boxShadow = '';
     });
   });
@@ -1079,10 +860,8 @@ function initGlassTilt() {
 document.addEventListener('DOMContentLoaded', () => {
   runFingerprinting();
   initContactForm();
-  initMatrixRain();
   initNavbarScroll();
   fetchGitHubProjects();
   initCustomCursor();
-  initTerminalCLI();
-  initGlassTilt(); // Fire next-generation 3D tilt controls
+  initGlassTilt();
 });

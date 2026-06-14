@@ -3,31 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kuldeep | Personal Portfolio [Preview Mode]</title>
+  <title>Kuldeep Shukla | Cybersecurity & Software Engineer</title>
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Modern Sans-Serif Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Preview Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=preview">
+  <!-- Premium Glass Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=preview-aurora">
   
   <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   
-  <!-- Preview Scripts -->
-  <script src="script.js?v=preview" defer></script>
+  <!-- Interaction Scripts -->
+  <script src="script.js?v=preview-aurora" defer></script>
 </head>
 <body>
-  <!-- Custom Cyber Pointer Cursor -->
+  <!-- Custom Glass Pointer Cursor -->
   <div class="custom-cursor cursor-dot"></div>
   <div class="custom-cursor cursor-ring"></div>
 
-  <!-- Canvas layer for background Matrix rain -->
-  <canvas id="matrix-canvas"></canvas>
-  <div class="scanlines"></div>
-  <div class="vignette"></div>
-
-  <!-- Ambient Glowing Blur Orbs -->
+  <!-- Ambient Drifting Aurora Clouds -->
   <div class="ambient-orbs-container">
     <div class="ambient-orb orb-1"></div>
     <div class="ambient-orb orb-2"></div>
@@ -35,77 +30,87 @@
   </div>
 
   <div class="site-wrap">
-    <!-- Navbar -->
+    <!-- Floating Capsule Navbar -->
     <nav>
       <div class="nav-inner">
         <a href="#" class="nav-logo">
-          <span class="blink">■</span>
-          1Day_crew<span class="accent">.DEV</span>
+          Kuldeep<span class="accent">.Shukla</span>
         </a>
         <div class="nav-links">
-          <a href="#about">/about</a>
-          <a href="#toolbox">/toolbox</a>
-          <a href="#projects">/projects</a>
-          <a href="#contact">/contact</a>
+          <a href="#about">About</a>
+          <a href="#toolbox">Tools</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
         </div>
         <button id="mobile-menu-btn" onclick="toggleMobileMenu()">
           ☰
         </button>
       </div>
       <div id="mobile-menu">
-        <a href="#about" onclick="toggleMobileMenu()">/about</a>
-        <a href="#toolbox" onclick="toggleMobileMenu()">/toolbox</a>
-        <a href="#projects" onclick="toggleMobileMenu()">/projects</a>
-        <a href="#contact" onclick="toggleMobileMenu()">/contact</a>
+        <a href="#about" onclick="toggleMobileMenu()">About</a>
+        <a href="#toolbox" onclick="toggleMobileMenu()">Tools</a>
+        <a href="#projects" onclick="toggleMobileMenu()">Projects</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
       </div>
     </nav>
 
     <!-- Hero Section -->
     <div class="hero">
       <div class="hero-text">
-        <div class="hero-tag">[ AUTHORIZED ACCESS ONLY ]</div>
-        <h1>_Hello, I'm <span class="name">Kuldeep</span></h1>
-        <p class="hero-sub">Ethical Hacker &amp; Cybersecurity Enthusiast</p>
-        <div class="hero-desc glass-light tilt-card">
-          I craft secure systems, discover vulnerabilities, and hack the matrix—legally.
-          Let's secure the future, one bit at a time. <span class="blink">▌</span>
+        <div class="hero-tag">Welcome to my space</div>
+        <h1>Securing systems. <br>Building <span class="name">solutions</span>.</h1>
+        <p class="hero-sub">Cybersecurity Analyst &amp; Software Developer</p>
+        <div class="hero-desc glass tilt-card">
+          Welcome to my digital profile. I specialize in designing robust security architectures, identifying potential system vulnerabilities, and developing scalable software solutions. Explore my custom utilities, projects, and diagnostics below.
         </div>
-        <a href="#projects" class="btn">VIEW PROJECTS</a>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">Explore Work</a>
+          <a href="../kdcv.docx" download class="btn btn-secondary">Get Resume</a>
+        </div>
       </div>
       <div class="avatar-wrap tilt-card">
-        <img src="../img.PNG" alt="ZeroCool" />
+        <img src="../img.PNG" alt="Portrait" />
       </div>
     </div>
 
-    <!-- About Section -->
+    <!-- About Biography & Professional Timeline -->
     <section id="about">
-      <h2 class="section-title">/about</h2>
-      <div class="terminal-card glass tilt-card">
-        <div class="corner-brackets"></div>
-        <div class="terminal-header">
-          <div class="terminal-dots">
-            <div class="terminal-dot dot-red"></div>
-            <div class="terminal-dot dot-yellow"></div>
-            <div class="terminal-dot dot-green"></div>
+      <h2 class="section-title">About Me</h2>
+      <div class="bio-panel glass tilt-card">
+        <div class="bio-grid">
+          <!-- Profile columns -->
+          <div class="bio-details">
+            <h3>Who I Am</h3>
+            <p>
+              I am a dedicated cybersecurity student and software developer. I focus on bridging the gap between secure systems engineering and intuitive user experiences. My work revolves around application security, penetration testing concepts, and open-source software optimization.
+            </p>
+            <p style="margin-top: 16px;">
+              I believe in building a transparent and secure web. That is why all my tools run completely client-side in the browser, showing you exactly what information is being accessed without storing it.
+            </p>
           </div>
-          <div class="terminal-title">root@1day_crew: ~/about — [CTF active: solve to unlock resume]</div>
-          <div class="terminal-status"></div>
-        </div>
-        <div class="terminal-body" onclick="focusTerminalInput()">
-          <div class="terminal-history" id="terminal-history">
-            <div class="terminal-line">
-              <span class="terminal-cmd">[root@matrix:~]#</span> <span>cat /etc/profile</span>
+          <div class="bio-timeline">
+            <h3>Specializations</h3>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h4>Application Security</h4>
+                <p>Auditing software systems for security gaps and vulnerabilities.</p>
+              </div>
             </div>
-            <div class="terminal-output">
-              I'm Kuldeep, a college student with a passion for cyber defense,
-              penetration testing, and CTF competitions. I love reverse engineering,
-              Linux, open source, and coffee.
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h4>Secure Coding</h4>
+                <p>Developing robust programs with cryptographic layers and input sanity checks.</p>
+              </div>
             </div>
-          </div>
-          <!-- Terminal CLI Input Line -->
-          <div class="terminal-input-line">
-            <span class="terminal-cmd">[root@matrix:~]#</span>
-            <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" placeholder="type 'help'...">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h4>Privacy Audits</h4>
+                <p>Analyzing browser behaviors, data leakage paths, and metadata tracking.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -113,34 +118,32 @@
 
     <!-- Toolbox Section -->
     <section id="toolbox">
-      <h2 class="section-title">/toolbox</h2>
+      <h2 class="section-title">Developer Utilities</h2>
       <div class="toolbox-card glass tilt-card">
-        <div class="corner-brackets"></div>
-        
         <!-- Tab buttons -->
         <div class="toolbox-tabs">
-          <button class="tab-btn active" onclick="switchToolboxTab(event, 'hash-generator-tab')">Hash Gen</button>
+          <button class="tab-btn active" onclick="switchToolboxTab(event, 'hash-generator-tab')">Hash Generator</button>
           <button class="tab-btn" onclick="switchToolboxTab(event, 'cipher-tab')">Encoder/Decoder</button>
           <button class="tab-btn" onclick="switchToolboxTab(event, 'password-tab')">Strength Gauge</button>
           <button class="tab-btn" onclick="switchToolboxTab(event, 'email-breach-tab')">Breach Check</button>
-          <button class="tab-btn" onclick="switchToolboxTab(event, 'threat-intel-tab')">Threat Intel</button>
+          <button class="tab-btn" onclick="switchToolboxTab(event, 'threat-intel-tab')">Visitor Insights</button>
         </div>
         
         <!-- Tab Content panels -->
         <div class="toolbox-content">
           <!-- Tab 1: Hash Generator -->
           <div id="hash-generator-tab" class="tab-panel active">
-            <p class="tool-desc">Calculate cryptographic hashes (SHA-1, SHA-256) client-side in real-time using native Web Crypto API.</p>
+            <p class="tool-desc">Generate standard SHA-1 and SHA-256 cryptographic hashes locally using the Web Crypto API.</p>
             <div class="form-group">
               <input type="text" id="hash-input" placeholder="Enter text to hash..." oninput="calculateHashes()">
             </div>
             <div class="hash-results">
               <div class="hash-row">
-                <span class="hash-algo">SHA-1:</span>
+                <span class="hash-algo">SHA-1</span>
                 <span class="hash-val" id="hash-sha1">Type something to generate hash...</span>
               </div>
               <div class="hash-row">
-                <span class="hash-algo">SHA-256:</span>
+                <span class="hash-algo">SHA-256</span>
                 <span class="hash-val" id="hash-sha256">Type something to generate hash...</span>
               </div>
             </div>
@@ -148,24 +151,24 @@
           
           <!-- Tab 2: Cipher encoder/decoder -->
           <div id="cipher-tab" class="tab-panel">
-            <p class="tool-desc">Encode or decode Base64 strings and ROT13 ciphers for quick security challenge solving.</p>
+            <p class="tool-desc">Encode or decode Base64 data and translate text strings using the ROT13 cipher.</p>
             <div class="form-group">
               <textarea id="cipher-input" placeholder="Enter text to process..." oninput="processCipher()"></textarea>
             </div>
             <div class="cipher-controls">
-              <button class="btn btn-small" onclick="setCipherMode('encode')">Base64 Encode</button>
-              <button class="btn btn-small" onclick="setCipherMode('decode')">Base64 Decode</button>
-              <button class="btn btn-small" onclick="setCipherMode('rot13')">ROT13 Rotator</button>
+              <button class="btn-sub-small" onclick="setCipherMode('encode')">Base64 Encode</button>
+              <button class="btn-sub-small" onclick="setCipherMode('decode')">Base64 Decode</button>
+              <button class="btn-sub-small" onclick="setCipherMode('rot13')">ROT13 Rotator</button>
             </div>
             <div class="cipher-result-box">
-              <span class="result-label">Result:</span>
+              <span class="result-label">Output Result</span>
               <div class="result-text" id="cipher-output">Output will appear here...</div>
             </div>
           </div>
           
           <!-- Tab 3: Password Analyzer -->
           <div id="password-tab" class="tab-panel">
-            <p class="tool-desc">Check password entropy strength, verify requirements, and audit potential security vulnerabilities.</p>
+            <p class="tool-desc">Measure password complexity, entropy levels, and estimate brute-force decryption timelines.</p>
             <div class="form-group">
               <input type="password" id="password-input" placeholder="Enter password to analyze..." oninput="analyzePassword()">
             </div>
@@ -175,20 +178,20 @@
                 <div class="strength-bar-fill" id="strength-bar"></div>
               </div>
               <div class="strength-text-row">
-                <span>Strength Rating: <strong id="strength-label">Too Short</strong></span>
+                <span>Strength Assessment: <strong id="strength-label">Too Short</strong></span>
                 <span>Entropy: <strong id="entropy-label">0</strong> bits</span>
               </div>
             </div>
 
             <!-- Have I Been Pwned Check Panel -->
             <div class="hibp-check-panel" style="margin: 24px 0; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-              <button type="button" class="btn btn-small" id="hibp-btn" onclick="checkHIBP()">Check Breach Database (HIBP)</button>
-              <span id="hibp-result" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-muted)">Not queried.</span>
+              <button type="button" class="btn btn-sub-small" id="hibp-btn" onclick="checkHIBP()">Query Breach Databases (HIBP)</button>
+              <span id="hibp-result" style="font-size: 0.9rem; color: var(--text-muted)">Not queried.</span>
             </div>
             
             <div class="password-details">
               <div class="detail-row">
-                <span>Estimated Brute-force Time:</span>
+                <span>Estimated Time to Crack:</span>
                 <strong id="crack-time">Instantly</strong>
               </div>
               <div class="detail-row">
@@ -200,14 +203,14 @@
 
           <!-- Tab 4: Email Breach Checker -->
           <div id="email-breach-tab" class="tab-panel">
-            <p class="tool-desc">Check if an email address has been compromised in public data breaches. Performs anonymous API lookups.</p>
+            <p class="tool-desc">Check if an email address is associated with historical database breaches via anonymous directory scans.</p>
             <div class="form-group" style="display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;">
-              <input type="email" id="breach-email-input" placeholder="Enter email address to scan..." style="flex: 1; min-width: 250px;">
-              <button type="button" class="btn" style="border-radius: 10px; padding: 14px 28px;" onclick="checkEmailBreach()">Scan Address</button>
+              <input type="email" id="breach-email-input" placeholder="Enter email address..." style="flex: 1; min-width: 250px;">
+              <button type="button" class="btn" style="border-radius: 50px; padding: 14px 28px;" onclick="checkEmailBreach()">Scan Database</button>
             </div>
             
-            <div id="email-breach-status" style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-muted); text-align: center; padding: 12px 0;">
-              Enter an email and click Scan to check databases.
+            <div id="email-breach-status" style="font-size: 0.95rem; color: var(--text-muted); text-align: center; padding: 12px 0;">
+              Enter an email address and trigger the scan to fetch leak analytics.
             </div>
 
             <div id="email-breach-results" style="display: none; max-height: 400px; overflow-y: auto; padding-right: 8px;">
@@ -219,92 +222,92 @@
             </div>
           </div>
 
-          <!-- Tab 5: Threat Intel Device Fingerprint -->
+          <!-- Tab 5: Visitor Insights -->
           <div id="threat-intel-tab" class="tab-panel">
-            <p class="tool-desc">View your device metadata and dynamic digital footprint extracted client-side. This transparency tool illustrates what data is accessible to scripts automatically.</p>
+            <p class="tool-desc">Inspect your dynamic system parameters and network details fetched on load. Demonstrates what information browsers leak automatically to scripts.</p>
             
             <div class="hash-results" style="margin-top: 0; text-align: left;">
-              <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px; margin-bottom: 15px; font-weight: 700; color: var(--accent-cyan); font-family: var(--font-mono);">
-                [ ACTIVE CLIENT DIGITAL FOOTPRINT ]
+              <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px; margin-bottom: 15px; font-weight: 700; color: var(--accent-cyan); letter-spacing: 0.05em;">
+                Visitor Diagnostic Report
               </div>
               
               <div class="footprint-grid">
-                <!-- Column 1: Network & Connection -->
+                <!-- Column 1: Connection -->
                 <div class="footprint-col">
                   <div class="hash-row">
-                    <span class="hash-algo">IP & ISP:</span>
-                    <span class="hash-val" id="intel-ip">Resolving endpoint...</span>
+                    <span class="hash-algo">IP & ISP</span>
+                    <span class="hash-val" id="intel-ip">Resolving...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">VPN Flag:</span>
-                    <span class="hash-val" id="intel-vpn">Evaluating proxy...</span>
+                    <span class="hash-algo">VPN/Proxy</span>
+                    <span class="hash-val" id="intel-vpn">Evaluating...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">Connection:</span>
-                    <span class="hash-val" id="intel-conn">Querying network...</span>
+                    <span class="hash-algo">Connection</span>
+                    <span class="hash-val" id="intel-conn">Querying...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">Referrer:</span>
-                    <span class="hash-val" id="intel-ref">Evaluating origin...</span>
+                    <span class="hash-algo">Referrer</span>
+                    <span class="hash-val" id="intel-ref">Evaluating...</span>
                   </div>
                 </div>
 
-                <!-- Column 2: OS & Browser -->
+                <!-- Column 2: System -->
                 <div class="footprint-col">
                   <div class="hash-row">
-                    <span class="hash-algo">Device Class:</span>
-                    <span class="hash-val" id="intel-device">Determining type...</span>
+                    <span class="hash-algo">Device Class</span>
+                    <span class="hash-val" id="intel-device">Determining...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">System OS:</span>
-                    <span class="hash-val" id="intel-os">Parsing kernel...</span>
+                    <span class="hash-algo">Platform OS</span>
+                    <span class="hash-val" id="intel-os">Parsing...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">Browser:</span>
-                    <span class="hash-val" id="intel-browser">Parsing engine...</span>
+                    <span class="hash-algo">Browser</span>
+                    <span class="hash-val" id="intel-browser">Parsing...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">Timezone:</span>
-                    <span class="hash-val" id="intel-tz">Reading clock...</span>
+                    <span class="hash-algo">Timezone</span>
+                    <span class="hash-val" id="intel-tz">Reading...</span>
                   </div>
                 </div>
 
-                <!-- Column 3: Hardware Specifications -->
+                <!-- Column 3: Hardware -->
                 <div class="footprint-col">
                   <div class="hash-row">
-                    <span class="hash-algo">CPU Cores:</span>
-                    <span class="hash-val" id="intel-cores">Checking logical cores...</span>
+                    <span class="hash-algo">CPU Cores</span>
+                    <span class="hash-val" id="intel-cores">Checking...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">System RAM:</span>
-                    <span class="hash-val" id="intel-ram">Estimating memory...</span>
+                    <span class="hash-algo">System RAM</span>
+                    <span class="hash-val" id="intel-ram">Estimating...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">GPU Card:</span>
-                    <span class="hash-val" id="intel-gpu" style="font-size: 0.8rem;">Querying WebGL...</span>
+                    <span class="hash-algo">WebGL GPU</span>
+                    <span class="hash-val" id="intel-gpu" style="font-size: 0.8rem;">Querying...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">Resolution:</span>
-                    <span class="hash-val" id="intel-screen">Measuring display...</span>
+                    <span class="hash-algo">Resolution</span>
+                    <span class="hash-val" id="intel-screen">Measuring...</span>
                   </div>
                 </div>
 
-                <!-- Column 4: Sensors & Integrity -->
+                <!-- Column 4: Diagnostics -->
                 <div class="footprint-col">
                   <div class="hash-row">
-                    <span class="hash-algo">Battery:</span>
-                    <span class="hash-val" id="intel-battery">Reading battery API...</span>
+                    <span class="hash-algo">Battery</span>
+                    <span class="hash-val" id="intel-battery">Reading...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">Canvas Hash:</span>
-                    <span class="hash-val" id="intel-canvas" style="font-size: 0.82rem;">Drawing signature...</span>
+                    <span class="hash-algo">Canvas Hash</span>
+                    <span class="hash-val" id="intel-canvas" style="font-size: 0.82rem;">Calculating...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">Bot Detect:</span>
-                    <span class="hash-val" id="intel-bot">Checking webdriver...</span>
+                    <span class="hash-algo">Automation</span>
+                    <span class="hash-val" id="intel-bot">Checking...</span>
                   </div>
                   <div class="hash-row">
-                    <span class="hash-algo">Active Time:</span>
+                    <span class="hash-algo">Session Time</span>
                     <span class="hash-val" id="intel-time">0s on page</span>
                   </div>
                 </div>
@@ -327,23 +330,22 @@
 
     <!-- Projects Section (GitHub API Loaded Dynamically) -->
     <section id="projects">
-      <h2 class="section-title">/projects</h2>
+      <h2 class="section-title">Featured Projects</h2>
       <div class="projects-grid" id="github-projects-grid">
-        <div class="loading-projects" style="grid-column: 1 / -1; text-align: center; font-family: var(--font-mono); color: var(--accent-cyan); padding: 40px;">
-          <span class="blink">▌</span> Loading transmissions from GitHub...
+        <div class="loading-projects" style="grid-column: 1 / -1; text-align: center; color: var(--accent-cyan); padding: 40px;">
+          Loading transmissions from GitHub...
         </div>
       </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact">
-      <h2 class="section-title">/contact</h2>
+      <h2 class="section-title">Get In Touch</h2>
       <div class="contact-panel glass tilt-card">
-        <div class="corner-brackets"></div>
-        <p class="contact-subtitle">Got a challenge? Let's hack together. Send a message:</p>
+        <p class="contact-subtitle">Have a query or want to work together? Drop a message below:</p>
         <form id="contact-form">
           <div class="form-group">
-            <input type="text" name="handle" placeholder="Your Handle" required autocomplete="off">
+            <input type="text" name="handle" placeholder="Your Name / Handle" required autocomplete="off">
           </div>
           <div class="form-group">
             <input type="email" name="email" placeholder="Your Email" required autocomplete="off">
@@ -368,40 +370,17 @@
           <input type="hidden" name="time_on_page" id="fp_time">
 
           <button type="submit" class="btn-submit">
-            <span>SEND TRANSMISSION &gt;</span>
+            <span>Send Message</span>
           </button>
         </form>
-        <p id="status" style="margin-top:1.5rem;font-weight:bold;text-align:center;font-family:var(--font-mono);"></p>
+        <p id="status" style="margin-top:1.5rem;font-weight:bold;text-align:center;"></p>
       </div>
     </section>
 
     <!-- Footer -->
     <footer>
-      <div class="prompt-line">root@matrix:~# <span class="blink">cat /etc/motd</span></div>
-      <div>© 2026 1Day_crew. Keep securing the cyber world.</div>
+      <div>© 2026 Kuldeep Shukla. All rights reserved. Built with 100% Glassmorphism.</div>
     </footer>
-  </div>
-
-  <!-- CTF Achievement Modal -->
-  <div class="modal-overlay" id="achievement-modal">
-    <div class="modal-card glass">
-      <div class="corner-brackets"></div>
-      <div class="modal-header-cyber">
-        <span class="blink">⚡</span> SYSTEM UNLOCKED <span class="blink">⚡</span>
-      </div>
-      <div class="modal-body-cyber">
-        <h3>CONGRATULATIONS, AGENT!</h3>
-        <p>You have successfully decoded the cryptographic console trace and pwned the matrix.</p>
-        <div class="flag-reveal">
-          FLAG{1day_crew_secret_decoded}
-        </div>
-        <p class="modal-sub">As a reward, you are authorized to access Kuldeep Shukla's secure resources:</p>
-        <div class="modal-actions">
-          <a href="../kdcv.docx" download class="btn">[ DOWNLOAD RESUME ]</a>
-          <button class="btn btn-close" onclick="closeModal()">DISMISS</button>
-        </div>
-      </div>
-    </div>
   </div>
 </body>
 </html>
