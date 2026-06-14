@@ -425,69 +425,25 @@ async function fetchGitHubProjects() {
   }
 }
 
-// ── CUSTOM MOUSE POINTER LOGIC ──
-function initCustomCursor() {
-  const dot = document.querySelector('.cursor-dot');
-  const ring = document.querySelector('.cursor-ring');
-  if (!dot || !ring) return;
+// ── FOOTER HOVER INTERACTION LOGIC ──
+let isFooterHovered = false;
 
-  if (window.innerWidth <= 768) return;
+function initFooterInteraction() {
+  const footer = document.querySelector('footer');
+  if (!footer) return;
 
-  let mouseX = 0;
-  let mouseY = 0;
-  let ringX = 0;
-  let ringY = 0;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    dot.style.left = `${mouseX}px`;
-    dot.style.top = `${mouseY}px`;
-    dot.style.opacity = '1';
-    ring.style.opacity = '1';
+  footer.addEventListener('mouseenter', () => {
+    isFooterHovered = true;
+    document.querySelectorAll('.ambient-orb').forEach(orb => {
+      orb.style.animationPlayState = 'paused';
+    });
   });
 
-  function animateRing() {
-    ringX += (mouseX - ringX) * 0.15;
-    ringY += (mouseY - ringY) * 0.15;
-
-    ring.style.left = `${ringX}px`;
-    ring.style.top = `${ringY}px`;
-
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-
-  document.addEventListener('mouseleave', () => {
-    dot.style.opacity = '0';
-    ring.style.opacity = '0';
-  });
-
-  const hoverSelectors = 'a, button, input, textarea, .btn, .btn-submit, .project-card, .nav-logo, .tab-btn';
-  
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(hoverSelectors)) {
-      dot.classList.add('hovered-dot');
-      ring.classList.add('hovered-ring');
-    }
-  });
-
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(hoverSelectors)) {
-      dot.classList.remove('hovered-dot');
-      ring.classList.remove('hovered-ring');
-    }
-  });
-
-  window.addEventListener('mousedown', () => {
-    dot.classList.add('active-dot');
-    ring.classList.add('active-ring');
-  });
-
-  window.addEventListener('mouseup', () => {
-    dot.classList.remove('active-dot');
-    ring.classList.remove('active-ring');
+  footer.addEventListener('mouseleave', () => {
+    isFooterHovered = false;
+    document.querySelectorAll('.ambient-orb').forEach(orb => {
+      orb.style.animationPlayState = 'running';
+    });
   });
 }
 
@@ -868,6 +824,7 @@ function initAmbientCanvas() {
     }
     
     update() {
+      if (isFooterHovered) return;
       this.y += this.speedY;
       this.x += this.speedX + Math.sin(this.angle) * 0.15;
       this.angle += this.spinSpeed;
@@ -960,6 +917,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initNavbarScroll();
   fetchGitHubProjects();
-  initCustomCursor();
+  initFooterInteraction();
   initGlassTilt();
 });

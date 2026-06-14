@@ -502,27 +502,6 @@ h1 .name {
   z-index: 5;
 }
 
-.avatar-wrap::before {
-  content: '';
-  position: absolute;
-  inset: -12px;
-  border: 1px solid rgba(6, 182, 212, 0.2);
-  border-radius: 50%;
-  animation: spin-clockwise 24s linear infinite;
-}
-
-.avatar-wrap::after {
-  content: '';
-  position: absolute;
-  inset: -24px;
-  border: 1px solid rgba(139, 92, 246, 0.15);
-  border-radius: 50%;
-  animation: spin-counter 35s linear infinite;
-}
-
-@keyframes spin-clockwise { to { transform: rotate(360deg); } }
-@keyframes spin-counter { to { transform: rotate(-360deg); } }
-
 .avatar-wrap img {
   width: 250px; height: 250px;
   border-radius: 50%;
@@ -1171,78 +1150,6 @@ footer {
   color: var(--text-secondary);
   line-height: 1.6;
   margin: 0;
-}
-
-/* ── CUSTOM MOUSE POINTER ── */
-@media (min-width: 769px) {
-  body, a, button, input, textarea, .btn, .btn-submit, .project-card, .nav-logo {
-    cursor: none !important;
-  }
-
-  .custom-cursor {
-    display: block;
-    width: 6px;
-    height: 6px;
-    background: var(--text-primary);
-    border-radius: 50%;
-    position: fixed;
-    top: 0; left: 0;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 20000;
-    opacity: 0;
-    transition: width 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                height 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                background-color 0.2s ease, 
-                opacity 0.3s ease;
-  }
-
-  .cursor-ring {
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: transform 0.08s ease-out, 
-                width 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                height 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                border-color 0.3s ease, 
-                background-color 0.3s ease;
-  }
-
-  /* Hover Interactive Elements States */
-  .cursor-dot.hovered-dot {
-    width: 4px;
-    height: 4px;
-    background: var(--accent-purple);
-  }
-
-  .cursor-ring.hovered-ring {
-    width: 44px;
-    height: 44px;
-    border-color: var(--accent-purple);
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
-    background: rgba(139, 92, 246, 0.02);
-  }
-
-  /* Active Click States */
-  .cursor-dot.active-dot {
-    transform: translate(-50%, -50%) scale(1.6);
-    background: var(--accent-cyan);
-  }
-
-  .cursor-ring.active-ring {
-    transform: translate(-50%, -50%) scale(0.7);
-    border-color: var(--accent-cyan);
-    box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
-  }
-}
-
-/* Hide cursor elements on touchscreen/mobile devices */
-@media (max-width: 768px) {
-  .custom-cursor {
-    display: none !important;
-  }
 }
 
 /* ── MOBILE RESPONSIVE OVERRIDES FOR TOOLBOX & MODALS ── */
