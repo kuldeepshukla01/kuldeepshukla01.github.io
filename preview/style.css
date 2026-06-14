@@ -20,13 +20,13 @@
   --accent-green: #10b981;
 
   /* Text colors */
-  --text-primary: #f8fafc;
-  --text-secondary: #e2e8f0;
-  --text-muted: #94a3b8;
+  --text-primary: #ffffff;
+  --text-secondary: #f1f5f9;
+  --text-muted: #cbd5e1;
 
   /* Glass tokens */
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-border-hover: rgba(255, 255, 255, 0.22);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-hover: rgba(255, 255, 255, 0.24);
   --glass-blur: blur(32px) saturate(210%);
   --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
   --glass-inner-shadow: inset 0 1.5px 1px rgba(255, 255, 255, 0.22), inset 0 -1.5px 1px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
@@ -502,6 +502,27 @@ h1 .name {
   z-index: 5;
 }
 
+.avatar-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: 50%;
+  animation: spin-clockwise 24s linear infinite;
+}
+
+.avatar-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -24px;
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  border-radius: 50%;
+  animation: spin-counter 35s linear infinite;
+}
+
+@keyframes spin-clockwise { to { transform: rotate(360deg); } }
+@keyframes spin-counter { to { transform: rotate(-360deg); } }
+
 .avatar-wrap img {
   width: 250px; height: 250px;
   border-radius: 50%;
@@ -846,15 +867,22 @@ section {
 /* ── FOOTER ── */
 footer {
   text-align: center;
-  padding: 60px 24px;
-  background: rgba(5, 7, 15, 0.5);
+  padding: 44px 24px;
+  background: var(--bg-panel);
   border-top: 1px solid var(--glass-border);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  color: var(--text-muted);
-  font-size: 0.88rem;
+  box-shadow: var(--glass-inner-shadow);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
   position: relative;
   z-index: 5;
+  transition: background-color 0.3s ease;
+}
+
+footer:hover {
+  background-color: var(--bg-panel-hover);
 }
 
 /* ── CYBER TOOLBOX STYLES ── */
