@@ -369,6 +369,12 @@ nav.scrolled {
 }
 
 @media (max-width: 768px) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  body, a, button, input, textarea, .btn, .btn-submit, .project-card, .nav-logo {
+    touch-action: manipulation !important;
+  }
   nav {
     width: calc(100% - 32px);
     max-width: 420px;

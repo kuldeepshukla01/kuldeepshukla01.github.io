@@ -319,7 +319,7 @@ function toggleMobileMenu() {
 
 function initNavbarScroll() {
   const nav = document.querySelector('nav');
-  if (!nav) return;
+  if (!nav || window.innerWidth <= 768) return;
   
   window.addEventListener('scroll', () => {
     if (window.scrollY > 20) {
