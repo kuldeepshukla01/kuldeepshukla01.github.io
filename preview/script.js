@@ -874,7 +874,7 @@ function initAmbientCanvas() {
   animate();
 }
 
-// ── INTERACTIVE 3D PERSPECTIVE GLASS TILT & CURSOR SPOTLIGHT SHINE ──
+// ── INTERACTIVE GLASS SPOTLIGHT COORDINATES TRACKER ──
 function initGlassTilt() {
   const cards = document.querySelectorAll('.glass, .glass-light');
   
@@ -886,26 +886,6 @@ function initGlassTilt() {
       
       card.style.setProperty('--mouse-x', `${x}px`);
       card.style.setProperty('--mouse-y', `${y}px`);
-      
-      if (window.innerWidth > 768 && card.classList.contains('tilt-card')) {
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateY = ((x - centerX) / centerX) * 8; // Max tilt +/- 8 degrees
-        const rotateX = -((y - centerY) / centerY) * 8;
-        
-        card.style.setProperty('--rotate-x', `${rotateX}deg`);
-        card.style.setProperty('--rotate-y', `${rotateY}deg`);
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
-        card.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 30px rgba(139, 92, 246, 0.08)';
-      }
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.style.setProperty('--rotate-x', `0deg`);
-      card.style.setProperty('--rotate-y', `0deg`);
-      card.style.transform = '';
-      card.style.boxShadow = '';
     });
   });
 }
