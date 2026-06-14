@@ -867,7 +867,7 @@ section {
 /* ── FOOTER ── */
 footer {
   text-align: center;
-  padding: 44px 24px;
+  padding: 16px 24px;
   background: var(--bg-panel);
   border-top: 1px solid var(--glass-border);
   backdrop-filter: var(--glass-blur);
