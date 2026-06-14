@@ -780,6 +780,10 @@ async function checkEmailBreach() {
 function initAmbientCanvas() {
   const canvas = document.getElementById('ambient-canvas');
   if (!canvas) return;
+  if (window.innerWidth <= 768) {
+    canvas.style.display = 'none';
+    return;
+  }
   const ctx = canvas.getContext('2d');
   
   let width = canvas.width = window.innerWidth;

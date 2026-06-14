@@ -373,12 +373,36 @@ nav.scrolled {
     width: calc(100% - 32px);
     max-width: 420px;
     border-radius: 24px;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(10, 12, 22, 0.96) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
   }
   .nav-inner {
     width: 100%;
     justify-content: space-between;
     gap: 0;
     padding: 0 18px;
+  }
+  #mobile-menu {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(10, 12, 22, 0.98) !important;
+  }
+  .ambient-orb {
+    display: none !important;
+    animation: none !important;
+  }
+  #ambient-canvas {
+    display: none !important;
+  }
+  .ambient-orbs-container {
+    display: none !important;
+  }
+  .glass, .glass-light {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(15, 20, 35, 0.95) !important;
   }
 }
 
