@@ -862,14 +862,7 @@ function initAmbientCanvas() {
       this.speedX = Math.random() * 0.5 - 0.25; // sway side to side
       this.speedY = Math.random() * 0.35 + 0.15;  // drift down slowly
       this.opacity = Math.random() * 0.3 + 0.08; // soft glow
-      const randColor = Math.random();
-      if (randColor < 0.33) {
-        this.color = '139, 92, 246'; // purple
-      } else if (randColor < 0.66) {
-        this.color = '6, 182, 212'; // cyan
-      } else {
-        this.color = '255, 255, 255'; // silver glass dust
-      }
+      this.color = '255, 255, 255'; // silver glass dust
       this.angle = Math.random() * 360;
       this.spinSpeed = Math.random() * 0.02 - 0.01;
     }
