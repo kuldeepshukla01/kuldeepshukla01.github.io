@@ -27,7 +27,7 @@
   /* Glass tokens */
   --glass-border: rgba(255, 255, 255, 0.12);
   --glass-border-hover: rgba(255, 255, 255, 0.24);
-  --glass-blur: blur(32px) saturate(210%);
+  --glass-blur: blur(20px) saturate(180%);
   --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
   --glass-inner-shadow: inset 0 1.5px 1px rgba(255, 255, 255, 0.22), inset 0 -1.5px 1px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
   --glow-light: 0 0 35px rgba(139, 92, 246, 0.15);
@@ -46,6 +46,19 @@ html {
 
 body {
   background-color: #030306;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* Hardware-accelerated fixed background to prevent layout repaints during scrolling */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
   background-image: 
     linear-gradient(rgba(3, 3, 6, 0.25), rgba(3, 3, 6, 0.45)),
     url('clouds_bg.png'),
@@ -54,13 +67,9 @@ body {
   background-size: 100% 100%, cover, 40px 40px, 40px 40px;
   background-position: center, center, center, center;
   background-repeat: no-repeat, no-repeat, repeat, repeat;
-  background-attachment: scroll, fixed, fixed, fixed;
-  min-height: 100vh;
-  font-family: var(--font-body);
-  color: var(--text-primary);
-  overflow-x: hidden;
-  position: relative;
-  line-height: 1.6;
+  z-index: -10;
+  pointer-events: none;
+  will-change: transform;
 }
 
 /* Custom Soft Scrollbar */
@@ -90,7 +99,6 @@ body {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  filter: blur(100px);
 }
 
 #ambient-canvas {
@@ -104,9 +112,10 @@ body {
 .ambient-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(130px);
+  filter: blur(100px);
   opacity: 0.12;
   mix-blend-mode: overlay;
+  will-change: transform;
 }
 
 .orb-1 {

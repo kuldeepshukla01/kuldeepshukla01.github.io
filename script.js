@@ -321,13 +321,18 @@ function initNavbarScroll() {
   const nav = document.querySelector('nav');
   if (!nav || window.innerWidth <= 768) return;
   
+  let lastScrolled = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
+    const isScrolled = window.scrollY > 20;
+    if (isScrolled !== lastScrolled) {
+      lastScrolled = isScrolled;
+      if (isScrolled) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
     }
-  });
+  }, { passive: true });
 }
 
 // ── DYNAMIC GITHUB REPOSITORIES FETCH ──
@@ -404,6 +409,9 @@ function renderProjects(repos) {
     `;
     grid.appendChild(card);
   });
+  
+  // Re-run glass tilt to bind to new dynamic elements
+  initGlassTilt();
 }
 
 async function fetchGitHubProjects() {
@@ -883,13 +891,57 @@ function initGlassTilt() {
   const cards = document.querySelectorAll('.glass, .glass-light');
   
   cards.forEach(card => {
+    let rect = null;
+    
+    card.addEventListener('mouseenter', () => {
+      rect = card.getBoundingClientRect();
+    });
+    
     card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
+      if (!rect) rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       
       card.style.setProperty('--mouse-x', `${x}px`);
       card.style.setProperty('--mouse-y', `${y}px`);
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      rect = null;
+    });
+  });
+}
+
+// ── OPTIMIZED SMOOTH SCROLLING WITH NAVBAR OFFSET ──
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        e.preventDefault();
+        
+        // Close mobile menu if open
+        const menu = document.getElementById('mobile-menu');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (menu && menu.style.display === 'flex') {
+          menu.style.display = 'none';
+          if (btn) btn.innerText = '☰';
+        }
+        
+        // Scroll to target element smoothly with nav offset
+        const nav = document.querySelector('nav');
+        const navHeight = nav ? nav.offsetHeight + 10 : 80;
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     });
   });
 }
@@ -903,4 +955,5 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchGitHubProjects();
   initFooterInteraction();
   initGlassTilt();
+  initSmoothScroll();
 });
