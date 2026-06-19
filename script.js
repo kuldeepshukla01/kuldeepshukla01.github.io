@@ -1,7 +1,7 @@
 /* 
-  ── DECUPLED INTERACTIVE SCRIPTS ──
+  ── PREMIUM AETHER AURORA GLASSMORPHISM SCRIPTS ──
   Designed for: 1Day_crew.DEV (Kuldeep Shukla)
-  Features: Matrix Rain, Mobile Navigation, Scroll Effects, Fingerprinting, GitHub API Fetch
+  Features: 3D Perspective Card Tilt, Spotlight Reflection, Telemetry Auditor
 */
 
 // Initialize EmailJS contact form (loaded globally in HTML)
@@ -11,7 +11,7 @@ if (typeof emailjs !== 'undefined') {
 
 const pageLoadTime = Date.now();
 
-// ── IP & LOCATION & VPN DETECT API ──
+// ── TELEMETRY & DIGITAL FOOTPRINT GENERATION ──
 function runFingerprinting() {
   // WebGL query
   const gpu = (() => {
@@ -37,12 +37,12 @@ function runFingerprinting() {
       const ctx = canvas.getContext('2d');
       if (!ctx) return 'Not supported';
       ctx.textBaseline = "top";
-      ctx.font = "12px 'Fira Code', monospace";
-      ctx.fillStyle = "#00f0ff";
+      ctx.font = "12px 'Outfit', sans-serif";
+      ctx.fillStyle = "#8b5cf6";
       ctx.fillRect(5, 5, 140, 2);
-      ctx.fillStyle = "#ff007a";
-      ctx.fillText("1day_crew.dev", 10, 10);
-      ctx.fillText("🕵️🔐", 100, 8);
+      ctx.fillStyle = "#06b6d4";
+      ctx.fillText("kuldeep.shukla", 10, 10);
+      ctx.fillText("🔒✨", 100, 8);
       const dataUrl = canvas.toDataURL();
       let hash = 0;
       for (let i = 0; i < dataUrl.length; i++) {
@@ -99,7 +99,7 @@ function runFingerprinting() {
       if (intelIp) intelIp.innerText = ipText;
       if (intelVpn) {
         intelVpn.innerText = vpn;
-        intelVpn.style.color = vpn.includes('CLEAN') ? 'var(--accent-green)' : '#ff5f56';
+        intelVpn.style.color = vpn.includes('CLEAN') ? 'var(--accent-green)' : '#ef4444';
       }
     })
     .catch(() => {
@@ -193,7 +193,7 @@ function runFingerprinting() {
   if (intelRam) intelRam.innerText = navigator.deviceMemory ? `~${navigator.deviceMemory} GB` : 'Not Supported';
   if (intelGpu) {
     intelGpu.innerText = gpu;
-    intelGpu.title = gpu; // tooltip for full GPU path
+    intelGpu.title = gpu;
   }
   if (intelScreen) intelScreen.innerText = screenText;
   if (intelCanvas) intelCanvas.innerText = canvasHash;
@@ -201,10 +201,10 @@ function runFingerprinting() {
   // Webdriver automation integrity audit
   if (intelBot) {
     if (navigator.webdriver) {
-      intelBot.innerText = '⚠ HEADLESS (Automated)';
-      intelBot.style.color = '#ff5f56';
+      intelBot.innerText = '⚠ Automated (Webdriver)';
+      intelBot.style.color = '#ef4444';
     } else {
-      intelBot.innerText = '✓ Genuine (Clean)';
+      intelBot.innerText = '✓ Genuine Browser';
       intelBot.style.color = 'var(--accent-green)';
     }
   }
@@ -228,155 +228,78 @@ function initContactForm() {
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Honeypot check (hidden field to trap bots)
     const honeypot = form.querySelector('input[name="honeypot"]');
     if (honeypot && honeypot.value) {
       form.reset();
       return;
     }
 
-    // Email validation
     const emailInput = form.querySelector('input[name="email"]');
     const emailVal = emailInput ? emailInput.value.trim() : '';
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailRegex.test(emailVal)) {
       if (status) {
-        status.style.color = '#FF3232';
-        status.innerText = '>> ERROR: Enter a valid email address.';
+        status.style.color = '#ef4444';
+        status.innerText = 'Error: Enter a valid email address.';
       }
       return;
     }
 
-    // Time-on-page checking
     const fpTimeField = document.getElementById('fp_time');
     const secs = Math.round((Date.now() - pageLoadTime) / 1000);
     if (fpTimeField) {
-      fpTimeField.value = `${secs}s on page — ${secs < 4 ? '⚠ SUSPICIOUS (possible bot)' : '✓ OK'}`;
+      fpTimeField.value = `${secs}s on page — ${secs < 4 ? '⚠ Bot Signature' : '✓ Human OK'}`;
     }
 
     const btn = form.querySelector('button[type="submit"]');
     if (btn) {
       btn.disabled = true;
       const btnSpan = btn.querySelector('span');
-      if (btnSpan) btnSpan.innerText = 'TRANSMITTING...';
+      if (btnSpan) btnSpan.innerText = 'Transmitting...';
     }
     
     if (status) {
-      status.style.color = '#00DCC8';
-      status.innerText = 'Transmitting...';
+      status.style.color = 'var(--accent-cyan)';
+      status.innerText = 'Sending...';
     }
 
     if (typeof emailjs !== 'undefined') {
       emailjs.sendForm('service_ccpimhj', 'template_pxr2b9p', this)
         .then(() => {
           if (status) {
-            status.style.color = '#00FF46';
-            status.innerText = ">> Message sent successfully to Kuldeep Shukla '@1day_crew'";
+            status.style.color = 'var(--accent-green)';
+            status.innerText = "Message sent successfully!";
           }
           form.reset();
           if (btn) {
             btn.disabled = false;
             const btnSpan = btn.querySelector('span');
-            if (btnSpan) btnSpan.innerText = 'SEND TRANSMISSION >';
+            if (btnSpan) btnSpan.innerText = 'Send Message';
           }
         }, (err) => {
           if (status) {
-            status.style.color = '#FF3232';
-            status.innerText = '>> Failed to send message. Please try again.';
+            status.style.color = '#ef4444';
+            status.innerText = 'Failed to transmit message. Try again.';
           }
           console.error(err);
           if (btn) {
             btn.disabled = false;
             const btnSpan = btn.querySelector('span');
-            if (btnSpan) btnSpan.innerText = 'SEND TRANSMISSION >';
+            if (btnSpan) btnSpan.innerText = 'Send Message';
           }
         });
     } else {
       if (status) {
-        status.style.color = '#FF3232';
-        status.innerText = '>> Failed: EmailJS library missing.';
+        status.style.color = '#ef4444';
+        status.innerText = 'Failed: EmailJS SDK not available.';
       }
       if (btn) {
         btn.disabled = false;
         const btnSpan = btn.querySelector('span');
-        if (btnSpan) btnSpan.innerText = 'SEND TRANSMISSION >';
+        if (btnSpan) btnSpan.innerText = 'Send Message';
       }
     }
   });
-}
-
-// ── MATRIX RAIN EFFECTS (CYBER CYAN) ──
-function initMatrixRain() {
-  const canvas = document.getElementById('matrix-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  const fontSize = 13;
-  const colSpacing = fontSize * 1.1;
-  let cols, drops, speeds;
-
-  function initDrops() {
-    cols = Math.floor(canvas.width / colSpacing);
-    drops = Array(cols).fill(0).map(() => Math.random() * -(canvas.height / fontSize) * 2);
-    speeds = Array(cols).fill(0).map(() => 0.4 + Math.random() * 0.9);
-  }
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initDrops();
-  }
-  
-  resize();
-  window.addEventListener('resize', resize);
-
-  const chars = 'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789';
-  const MAX_TRAIL = 32;
-
-  function drawMatrix() {
-    // Draws over canvas keeping a transparent dark background layer
-    ctx.fillStyle = 'rgba(7, 9, 19, 0.025)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = 0; i < cols; i++) {
-      const x = i * colSpacing;
-      const y = drops[i] * fontSize;
-
-      // Glowing white lead head
-      ctx.shadowBlur = 6;
-      ctx.shadowColor = 'rgba(0, 240, 255, 0.9)';
-      ctx.fillStyle = '#ffffff';
-      ctx.font = `${fontSize}px "Fira Code", monospace`;
-      ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, y);
-      ctx.shadowBlur = 0;
-
-      // Fading trailing drops
-      const trailLength = 18 + Math.floor(Math.random() * 14);
-      for (let t = 1; t < trailLength; t++) {
-        const progress = t / trailLength;
-        const alpha = Math.pow(1 - progress, 1.4) * 0.92;
-        const g = Math.floor(180 * (1 - progress));
-        const b = Math.floor(255 * (1 - progress));
-        
-        ctx.fillStyle = `rgba(0, ${g}, ${b}, ${alpha})`;
-        ctx.font = `${fontSize}px "Fira Code", monospace`;
-        const ty = y - t * fontSize;
-        if (ty > -fontSize) {
-          ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, ty);
-        }
-      }
-
-      // Restart column drop once off-screen
-      if (drops[i] * fontSize > canvas.height + MAX_TRAIL * fontSize) {
-        if (Math.random() > 0.96) {
-          drops[i] = -Math.floor(Math.random() * 20);
-        }
-      }
-      drops[i] += speeds[i];
-    }
-  }
-
-  setInterval(drawMatrix, 40);
 }
 
 // ── NAVIGATION CONTROLS ──
@@ -396,7 +319,7 @@ function toggleMobileMenu() {
 
 function initNavbarScroll() {
   const nav = document.querySelector('nav');
-  if (!nav) return;
+  if (!nav || window.innerWidth <= 768) return;
   
   window.addEventListener('scroll', () => {
     if (window.scrollY > 20) {
@@ -445,15 +368,12 @@ function getRepoIcon(name, lang) {
   lang = (lang || '').toLowerCase();
   
   if (name.includes('scan') || name.includes('recon') || name.includes('sniff') || name.includes('visual')) return '📡';
-  if (name.includes('crypto') || name.includes('cipher') || name.includes('key') || name.includes('ca1') || name.includes('ca2')) return '🔒';
-  if (name.includes('shell') || name.includes('terminal') || name.includes('ssh')) return '🐚';
-  if (name.includes('exploit') || name.includes('hack') || name.includes('bypass') || name.includes('payload') || name.includes('ml')) return '💀';
+  if (name.includes('crypto') || name.includes('cipher') || name.includes('key')) return '🔒';
+  if (name.includes('shell') || name.includes('terminal')) return '💻';
   
   if (lang === 'python') return '🐍';
   if (lang === 'javascript' || lang === 'typescript') return '⚡';
   if (lang === 'html' || lang === 'css') return '🌐';
-  if (lang === 'java' || lang === 'kotlin') return '☕';
-  if (lang === 'c' || lang === 'c++' || lang === 'rust' || lang === 'go') return '⚙️';
   
   return '📁';
 }
@@ -469,10 +389,8 @@ function renderProjects(repos) {
     const desc = repo.description || 'No description provided. Click below to view the source code and details on GitHub.';
     
     const card = document.createElement('div');
-    card.className = 'project-card glass';
-    // Adding brackets child for hover bracket trace effect
+    card.className = 'project-card glass tilt-card';
     card.innerHTML = `
-      <div class="corner-brackets"></div>
       <div class="project-icon-wrap">${icon}</div>
       <h3>${formatRepoName(repo.name)}</h3>
       <div class="project-meta">
@@ -481,7 +399,7 @@ function renderProjects(repos) {
       </div>
       <p>${desc}</p>
       <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="project-link">
-        GitHub Repo <span>→</span>
+        Source Repository <span>→</span>
       </a>
     `;
     grid.appendChild(card);
@@ -507,197 +425,26 @@ async function fetchGitHubProjects() {
   }
 }
 
-// ── CUSTOM MOUSE POINTER LOGIC ──
-function initCustomCursor() {
-  const dot = document.querySelector('.cursor-dot');
-  const ring = document.querySelector('.cursor-ring');
-  if (!dot || !ring) return;
+// ── FOOTER HOVER INTERACTION LOGIC ──
+let isFooterHovered = false;
 
-  // Only run on desktop devices
-  if (window.innerWidth <= 768) return;
+function initFooterInteraction() {
+  const footer = document.querySelector('footer');
+  if (!footer) return;
 
-  let mouseX = 0;
-  let mouseY = 0;
-  let ringX = 0;
-  let ringY = 0;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    // Instantly place internal dot
-    dot.style.left = `${mouseX}px`;
-    dot.style.top = `${mouseY}px`;
-    dot.style.opacity = '1';
-    ring.style.opacity = '1';
+  footer.addEventListener('mouseenter', () => {
+    isFooterHovered = true;
+    document.querySelectorAll('.ambient-orb').forEach(orb => {
+      orb.style.animationPlayState = 'paused';
+    });
   });
 
-  // Ease position of outer ring (LERP)
-  function animateRing() {
-    ringX += (mouseX - ringX) * 0.15;
-    ringY += (mouseY - ringY) * 0.15;
-
-    ring.style.left = `${ringX}px`;
-    ring.style.top = `${ringY}px`;
-
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-
-  document.addEventListener('mouseleave', () => {
-    dot.style.opacity = '0';
-    ring.style.opacity = '0';
+  footer.addEventListener('mouseleave', () => {
+    isFooterHovered = false;
+    document.querySelectorAll('.ambient-orb').forEach(orb => {
+      orb.style.animationPlayState = 'running';
+    });
   });
-
-  // Attach hover styles to all interactive elements
-  const hoverSelectors = 'a, button, input, textarea, .btn, .btn-submit, .project-card, .nav-logo, .terminal-dot';
-  
-  // Use event delegation to dynamically support GitHub cards
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(hoverSelectors)) {
-      dot.classList.add('hovered-dot');
-      ring.classList.add('hovered-ring');
-    }
-  });
-
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(hoverSelectors)) {
-      dot.classList.remove('hovered-dot');
-      ring.classList.remove('hovered-ring');
-    }
-  });
-
-  // Click active states
-  window.addEventListener('mousedown', () => {
-    dot.classList.add('active-dot');
-    ring.classList.add('active-ring');
-  });
-
-  window.addEventListener('mouseup', () => {
-    dot.classList.remove('active-dot');
-    ring.classList.remove('active-ring');
-  });
-}
-
-// ── INTERACTIVE TERMINAL CLI LOGIC ──
-function focusTerminalInput() {
-  const input = document.getElementById('terminal-input');
-  if (input) input.focus();
-}
-
-function initTerminalCLI() {
-  const input = document.getElementById('terminal-input');
-  const history = document.getElementById('terminal-history');
-  if (!input || !history) return;
-
-  // Print startup hints in developer console
-  console.log("%c>> SECURITY TRACE: Encrypted token found inside client resources.", "color: #00f0ff; font-family: monospace; font-size: 13px; font-weight: bold;");
-  console.log("%cClue (Base64): RkxBR3sxZGF5X2NyZXdfc2VjcmV0X2RlY29kZWR9", "color: #ff007a; font-family: monospace; font-size: 13px;");
-  console.log("Decode this in the about terminal via 'decode [clue]' and run 'submit [decoded_flag]' to solve the challenge!");
-
-  input.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-      const fullCmd = input.value.trim();
-      input.value = '';
-      if (!fullCmd) return;
-
-      const args = fullCmd.split(' ');
-      const command = args[0].toLowerCase();
-      const param = args.slice(1).join(' ');
-
-      // Render command line in CLI
-      const cmdLine = document.createElement('div');
-      cmdLine.className = 'terminal-line';
-      cmdLine.innerHTML = `<span class="terminal-cmd">[root@matrix:~]#</span> <span>${escapeHTML(fullCmd)}</span>`;
-      history.appendChild(cmdLine);
-
-      // Render output line
-      const outputLine = document.createElement('div');
-      outputLine.className = 'terminal-output';
-
-      switch (command) {
-        case 'help':
-          outputLine.innerHTML = `
-            Available commands:<br>
-            - <span style="color: var(--accent-cyan)">help</span>: Displays list of options.<br>
-            - <span style="color: var(--accent-cyan)">cat profile</span>: Outputs bio summary.<br>
-            - <span style="color: var(--accent-cyan)">decode [hash]</span>: Decodes Base64 cipher text.<br>
-            - <span style="color: var(--accent-cyan)">submit [flag]</span>: Submit verified flag to unlock reward.<br>
-            - <span style="color: var(--accent-cyan)">tools</span>: Navigate directly to the client-side pentest toolbox.<br>
-            - <span style="color: var(--accent-cyan)">clear</span>: Wipe terminal logs.
-          `;
-          break;
-
-        case 'cat':
-          if (param === 'profile' || param === '/etc/profile') {
-            outputLine.innerText = `I'm Kuldeep, a college student with a passion for cyber defense, penetration testing, and CTF competitions. I love reverse engineering, Linux, open source, and coffee.`;
-          } else {
-            outputLine.innerHTML = `<span class="terminal-line-input-error">cat: ${escapeHTML(param || 'profile')}: file not found. Run 'cat profile'.</span>`;
-          }
-          break;
-
-        case 'decode':
-          if (!param) {
-            outputLine.innerHTML = `<span class="terminal-line-input-error">Usage: decode [base64_string]</span>`;
-          } else {
-            try {
-              const decoded = atob(param.trim());
-              outputLine.innerHTML = `Decoded result: <span style="color: var(--accent-green); font-weight: bold;">${escapeHTML(decoded)}</span>`;
-            } catch (err) {
-              outputLine.innerHTML = `<span class="terminal-line-input-error">Invalid Base64 sequence. Usage: decode RkxBR...</span>`;
-            }
-          }
-          break;
-
-        case 'submit':
-          if (!param) {
-            outputLine.innerHTML = `<span class="terminal-line-input-error">Usage: submit [flag]</span>`;
-          } else if (param.trim() === 'FLAG{1day_crew_secret_decoded}') {
-            outputLine.innerHTML = `<span class="terminal-line-input-success">FLAG ACCEPTED: Access authorized. Launching serverless reward panel...</span>`;
-            setTimeout(triggerCTFSuccess, 1000);
-          } else {
-            outputLine.innerHTML = `<span class="terminal-line-input-error">>> ACCESS DENIED: Invalid flag token parameter mismatch.</span>`;
-          }
-          break;
-
-        case 'tools':
-          outputLine.innerHTML = `Scrolling target layout scope to pentest toolbox...`;
-          const toolSec = document.getElementById('toolbox');
-          if (toolSec) {
-            setTimeout(() => {
-              toolSec.scrollIntoView({ behavior: 'smooth' });
-            }, 500);
-          }
-          break;
-
-        case 'clear':
-          history.innerHTML = '';
-          return;
-
-        default:
-          outputLine.innerHTML = `<span class="terminal-line-input-error">bash: ${escapeHTML(command)}: command not found. Type 'help' for options.</span>`;
-      }
-
-      history.appendChild(outputLine);
-      
-      const body = document.querySelector('.terminal-body');
-      if (body) {
-        body.scrollTop = body.scrollHeight;
-      }
-    }
-  });
-}
-
-function escapeHTML(str) {
-  return str.replace(/[&<>'"]/g, 
-    tag => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      "'": '&#39;',
-      '"': '&quot;'
-    }[tag] || tag)
-  );
 }
 
 // ── CYBER TOOLBOX LOGIC ──
@@ -732,13 +479,11 @@ async function calculateHashes() {
   }
 
   try {
-    // SHA-1
     const buffer1 = new TextEncoder().encode(input);
     const hashBuffer1 = await crypto.subtle.digest('SHA-1', buffer1);
     const hex1 = Array.from(new Uint8Array(hashBuffer1)).map(b => b.toString(16).padStart(2, '0')).join('');
     sha1Field.innerText = hex1;
 
-    // SHA-256
     const buffer2 = new TextEncoder().encode(input);
     const hashBuffer2 = await crypto.subtle.digest('SHA-256', buffer2);
     const hex2 = Array.from(new Uint8Array(hashBuffer2)).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -750,18 +495,16 @@ async function calculateHashes() {
 
 function setCipherMode(mode) {
   currentCipherMode = mode;
-  
-  // Update button highlights
   const controls = document.querySelector('.cipher-controls');
   if (controls) {
     const btns = controls.querySelectorAll('button');
     btns.forEach(btn => {
       if (btn.innerText.toLowerCase().includes(mode)) {
-        btn.style.borderColor = 'var(--accent-cyan)';
-        btn.style.boxShadow = '0 0 10px rgba(0, 240, 255, 0.15)';
+        btn.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+        btn.style.background = 'rgba(255, 255, 255, 0.08)';
       } else {
-        btn.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-        btn.style.boxShadow = 'none';
+        btn.style.borderColor = 'rgba(255, 255, 255, 0.07)';
+        btn.style.background = 'transparent';
       }
     });
   }
@@ -809,7 +552,6 @@ function analyzePassword() {
 
   if (!bar || !label || !entropyLabel || !crackTime || !audit) return;
 
-  // Reset HIBP query result
   const hibpResult = document.getElementById('hibp-result');
   if (hibpResult) {
     hibpResult.innerText = 'Not queried.';
@@ -827,7 +569,6 @@ function analyzePassword() {
     return;
   }
 
-  // Calculate pool size R
   let R = 0;
   if (/[a-z]/.test(password)) R += 26;
   if (/[A-Z]/.test(password)) R += 26;
@@ -842,38 +583,29 @@ function analyzePassword() {
   bar.style.width = `${percent}%`;
 
   let rating = 'Weak';
-  let color = '#ff5f56';
-  let glow = 'rgba(255, 95, 86, 0.4)';
+  let color = '#ef4444';
 
   if (entropy < 28) {
     rating = 'Very Weak';
-    color = '#ff5f56';
-    glow = 'rgba(255, 95, 86, 0.4)';
+    color = '#ef4444';
   } else if (entropy >= 28 && entropy < 40) {
     rating = 'Weak';
-    color = '#ff5f56';
-    glow = 'rgba(255, 95, 86, 0.4)';
+    color = '#ef4444';
   } else if (entropy >= 40 && entropy < 60) {
-    rating = 'Medium';
-    color = '#febc2e';
-    glow = 'rgba(254, 188, 46, 0.4)';
+    rating = '#f59e0b';
   } else if (entropy >= 60 && entropy < 80) {
     rating = 'Strong';
-    color = '#27c93f';
-    glow = 'rgba(39, 201, 63, 0.4)';
+    color = '#10b981';
   } else if (entropy >= 80) {
     rating = 'Very Strong';
     color = 'var(--accent-cyan)';
-    glow = 'rgba(0, 240, 255, 0.5)';
   }
 
   label.innerText = rating;
   label.style.color = color;
   bar.style.backgroundColor = color;
-  bar.style.boxShadow = `0 0 10px ${glow}`;
 
-  // Time estimates
-  const guessesPerSecond = 1e10; // 10 billion guesses/sec
+  const guessesPerSecond = 1e10;
   const totalCombinations = Math.pow(R, L);
   const timeInSeconds = totalCombinations / guessesPerSecond;
 
@@ -897,7 +629,6 @@ function analyzePassword() {
   }
   crackTime.innerText = timeString;
 
-  // Complexity audit checks
   const checks = [];
   if (L < 8) checks.push('Too short (min 8 chars)');
   if (!/[A-Z]/.test(password)) checks.push('Missing uppercase letter');
@@ -910,7 +641,7 @@ function analyzePassword() {
     audit.style.color = 'var(--accent-green)';
   } else {
     audit.innerText = `⚠ ${checks[0]}`;
-    audit.style.color = '#ff5f56';
+    audit.style.color = '#ef4444';
   }
 }
 
@@ -923,7 +654,7 @@ async function checkHIBP() {
 
   if (!password) {
     resultField.innerText = '⚠ Enter a password first.';
-    resultField.style.color = '#ff5f56';
+    resultField.style.color = '#ef4444';
     return;
   }
 
@@ -933,23 +664,18 @@ async function checkHIBP() {
   resultField.style.color = 'var(--text-muted)';
 
   try {
-    // 1. Generate SHA-1 hash of password
     const msgBuffer = new TextEncoder().encode(password);
     const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
 
-    // 2. Extract first 5 characters and remaining suffix
     const first5 = hashHex.slice(0, 5);
     const suffix = hashHex.slice(5);
 
-    // 3. Query HIBP range API
     const response = await fetch(`https://api.pwnedpasswords.com/range/${first5}`);
     if (!response.ok) throw new Error('HIBP API error');
 
     const responseText = await response.text();
-    
-    // 4. Search for the suffix in response
     const lines = responseText.split('\n');
     let leakCount = 0;
     
@@ -961,10 +687,9 @@ async function checkHIBP() {
       }
     }
 
-    // 5. Render result
     if (leakCount > 0) {
-      resultField.innerHTML = `⚠ PWNED! Found in <strong style="color: #ff5f56">${leakCount.toLocaleString()}</strong> data breaches.`;
-      resultField.style.color = '#ff5f56';
+      resultField.innerHTML = `⚠ PWNED! Found in <strong style="color: #ef4444">${leakCount.toLocaleString()}</strong> data breaches.`;
+      resultField.style.color = '#ef4444';
     } else {
       resultField.innerHTML = `✓ SECURE! No known database leaks detected.`;
       resultField.style.color = 'var(--accent-green)';
@@ -972,7 +697,7 @@ async function checkHIBP() {
   } catch (err) {
     console.error('HIBP query failed:', err);
     resultField.innerText = '⚠ API Query failed. Try again.';
-    resultField.style.color = '#ff5f56';
+    resultField.style.color = '#ef4444';
   } finally {
     btn.disabled = false;
     btn.innerText = 'Check Breach Database (HIBP)';
@@ -990,12 +715,12 @@ async function checkEmailBreach() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   if (!email || !emailRegex.test(email)) {
-    statusDiv.innerHTML = '<span style="color: #ff5f56">>> ERROR: Enter a valid email address.</span>';
+    statusDiv.innerHTML = '<span style="color: #ef4444">>> ERROR: Enter a valid email address.</span>';
     resultsDiv.style.display = 'none';
     return;
   }
 
-  statusDiv.innerHTML = '<span class="blink">▌</span> Scanning global breach indexes...';
+  statusDiv.innerHTML = 'Scanning database directory...';
   statusDiv.style.color = 'var(--accent-cyan)';
   resultsDiv.style.display = 'none';
 
@@ -1005,16 +730,14 @@ async function checkEmailBreach() {
 
     const data = await response.json();
     
-    // API returns ExposedBreaches as null if no breaches are found
     if (!data.ExposedBreaches || !data.ExposedBreaches.breaches_details) {
       statusDiv.innerHTML = '<span style="color: var(--accent-green); font-weight: bold;">✓ SECURE! This email address was not found in any known public data leaks.</span>';
       return;
     }
 
     const breaches = data.ExposedBreaches.breaches_details;
-
-    statusDiv.innerHTML = `⚠ ALERT! Found in <strong style="color: #ff5f56">${breaches.length}</strong> public data breaches.`;
-    statusDiv.style.color = '#ff5f56';
+    statusDiv.innerHTML = `⚠ ALERT! Found in <strong style="color: #ef4444">${breaches.length}</strong> public data breaches.`;
+    statusDiv.style.color = '#ef4444';
     resultsDiv.innerHTML = '';
 
     breaches.forEach(item => {
@@ -1028,18 +751,18 @@ async function checkEmailBreach() {
       card.className = 'hash-results';
       card.style.marginTop = '16px';
       card.style.textAlign = 'left';
-      card.style.border = '1px solid rgba(255, 95, 86, 0.15)';
+      card.style.border = '1px solid rgba(239, 68, 68, 0.15)';
       card.innerHTML = `
         <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
           <strong style="color: var(--accent-cyan); font-size: 1.05rem;">${escapeHTML(name)}</strong>
-          <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted);">${escapeHTML(date)}</span>
+          <span style="font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-muted);">${escapeHTML(date)}</span>
         </div>
         <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
           ${desc}
         </p>
         <div style="font-size: 0.82rem; color: var(--text-muted);">
           <strong style="color: var(--accent-pink);">Compromised Data:</strong> 
-          <span style="font-family: var(--font-mono); color: var(--text-secondary);">${escapeHTML(categories.join(', '))}</span>
+          <span style="color: var(--text-secondary);">${escapeHTML(categories.join(', '))}</span>
         </div>
       `;
       resultsDiv.appendChild(card);
@@ -1048,29 +771,136 @@ async function checkEmailBreach() {
     resultsDiv.style.display = 'block';
   } catch (err) {
     console.error('Email breach scan failed:', err);
-    statusDiv.innerHTML = '<span style="color: #ff5f56">>> ERROR: Connection to breach database failed. Try again.</span>';
+    statusDiv.innerHTML = '<span style="color: #ef4444">>> ERROR: Connection to breach database failed. Try again.</span>';
     resultsDiv.style.display = 'none';
   }
 }
 
-// ── MODAL TRIGGER ALERTS ──
-function triggerCTFSuccess() {
-  const modal = document.getElementById('achievement-modal');
-  if (modal) modal.classList.add('active');
+// ── INTERACTIVE GLASS DUST PARTICLES CANVAS ──
+function initAmbientCanvas() {
+  const canvas = document.getElementById('ambient-canvas');
+  if (!canvas) return;
+  if (window.innerWidth <= 768) {
+    canvas.style.display = 'none';
+    return;
+  }
+  const ctx = canvas.getContext('2d');
+  
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+  
+  const particles = [];
+  const particleCount = Math.min(60, Math.floor((width * height) / 20000));
+  
+  let mouse = { x: null, y: null, radius: 150 };
+  
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  
+  window.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+  
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+  
+  class Particle {
+    constructor() {
+      this.reset();
+      this.y = Math.random() * height; // distribute initially
+    }
+    
+    reset() {
+      this.x = Math.random() * width;
+      this.y = -10;
+      this.size = Math.random() * 3.5 + 1.2; // 1.2px to 4.7px
+      this.speedX = Math.random() * 0.5 - 0.25; // sway side to side
+      this.speedY = Math.random() * 0.35 + 0.15;  // drift down slowly
+      this.opacity = Math.random() * 0.3 + 0.08; // soft glow
+      this.color = '255, 255, 255'; // silver glass dust
+      this.angle = Math.random() * 360;
+      this.spinSpeed = Math.random() * 0.02 - 0.01;
+    }
+    
+    update() {
+      if (isFooterHovered) return;
+      this.y += this.speedY;
+      this.x += this.speedX + Math.sin(this.angle) * 0.15;
+      this.angle += this.spinSpeed;
+      
+      // Mouse interaction (gravity attraction)
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < mouse.radius) {
+          const force = (mouse.radius - distance) / mouse.radius;
+          this.x += (dx / distance) * force * 0.8;
+          this.y += (dy / distance) * force * 0.8;
+        }
+      }
+      
+      // Reset when going off screen
+      if (this.y > height + 10 || this.x < -10 || this.x > width + 10) {
+        this.reset();
+      }
+    }
+    
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = `rgba(${this.color}, ${this.opacity})`;
+      ctx.fill();
+      ctx.shadowBlur = 0; // reset shadow
+    }
+  }
+  
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
 }
 
-function closeModal() {
-  const modal = document.getElementById('achievement-modal');
-  if (modal) modal.classList.remove('active');
+// ── INTERACTIVE GLASS SPOTLIGHT COORDINATES TRACKER ──
+function initGlassTilt() {
+  const cards = document.querySelectorAll('.glass, .glass-light');
+  
+  cards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
 }
 
 // ── INIT INITIALIZATION ──
 document.addEventListener('DOMContentLoaded', () => {
+  initAmbientCanvas(); // Fire particle canvas loop
   runFingerprinting();
   initContactForm();
-  initMatrixRain();
   initNavbarScroll();
   fetchGitHubProjects();
-  initCustomCursor();
-  initTerminalCLI();
+  initFooterInteraction();
+  initGlassTilt();
 });
