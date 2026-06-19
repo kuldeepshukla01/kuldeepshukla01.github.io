@@ -338,25 +338,25 @@ function initNavbarScroll() {
 // ── DYNAMIC GITHUB REPOSITORIES FETCH ──
 const fallbackProjects = [
   {
-    name: 'Matrix Scanner',
-    description: 'Port & vulnerability scanner with real-time terminal UI and adaptive fingerprinting.',
-    html_url: 'https://github.com/kuldeepshukla01/1day_crew.github.io',
+    name: '1DayCrew AI',
+    description: 'Machine learning Network Intrusion Detection System classifying 14 attack types with >97% accuracy on CIC-IDS2017 packet flow data.',
+    html_url: 'https://github.com/kuldeepshukla01',
     language: 'Python',
+    stargazers_count: 8
+  },
+  {
+    name: '1DayCrew OS',
+    description: 'Custom Debian-based hacker distribution with KDE Plasma desktop, native Broadcom wireless drivers, and CUDA-accelerated local Ollama LLM integration.',
+    html_url: 'https://github.com/kuldeepshukla01',
+    language: 'Shell',
     stargazers_count: 5
   },
   {
-    name: 'CryptoShell',
-    description: 'A secure encrypted shell for remote hacking challenges with end-to-end cipher tunneling.',
+    name: 'Mobile Sec Audit',
+    description: 'Methodologies, recon pipelines, and proof-of-concept exploits developed during EC-Council Certified Android Bug Bounty audits.',
     html_url: 'https://github.com/kuldeepshukla01',
-    language: 'C++',
-    stargazers_count: 3
-  },
-  {
-    name: 'ReconGenius',
-    description: 'Automated reconnaissance toolkit for bug bounty hunters with OSINT pipeline integration.',
-    html_url: 'https://github.com/kuldeepshukla01',
-    language: 'Shell',
-    stargazers_count: 8
+    language: 'Markdown',
+    stargazers_count: 6
   }
 ];
 
