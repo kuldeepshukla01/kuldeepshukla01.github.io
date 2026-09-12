@@ -1,959 +1,176 @@
-/* 
-  ── PREMIUM AETHER AURORA GLASSMORPHISM SCRIPTS ──
-  Designed for: 1Day_crew.DEV (Kuldeep Shukla)
-  Features: 3D Perspective Card Tilt, Spotlight Reflection, Telemetry Auditor
-*/
+const pageLoad=Date.now();
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>24),{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// Initialize EmailJS contact form (loaded globally in HTML)
-if (typeof emailjs !== 'undefined') {
-  emailjs.init("S_prJ5TjZ3DcUdmQW");
-}
-
-const pageLoadTime = Date.now();
-
-// ── TELEMETRY & DIGITAL FOOTPRINT GENERATION ──
-function runFingerprinting() {
-  // WebGL query
-  const gpu = (() => {
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (!gl) return 'WebGL Blocked';
-      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-      if (!debugInfo) return 'Supported (No info)';
-      const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-      return renderer ? renderer.replace(/ANGLE \([^\)]+\)/g, '').trim() : 'Unknown GPU';
-    } catch (e) {
-      return 'Restricted';
-    }
-  })();
-
-  // Canvas signature
-  const canvasHash = (() => {
-    try {
-      const canvas = document.createElement('canvas');
-      canvas.width = 150;
-      canvas.height = 30;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return 'Not supported';
-      ctx.textBaseline = "top";
-      ctx.font = "12px 'Outfit', sans-serif";
-      ctx.fillStyle = "#8b5cf6";
-      ctx.fillRect(5, 5, 140, 2);
-      ctx.fillStyle = "#06b6d4";
-      ctx.fillText("kuldeep.shukla", 10, 10);
-      ctx.fillText("🔒✨", 100, 8);
-      const dataUrl = canvas.toDataURL();
-      let hash = 0;
-      for (let i = 0; i < dataUrl.length; i++) {
-        hash = ((hash << 5) - hash) + dataUrl.charCodeAt(i);
-        hash |= 0;
-      }
-      return Math.abs(hash).toString(16).toUpperCase();
-    } catch (e) {
-      return 'Blocked';
-    }
-  })();
-
-  // User agent parsing
-  const uaParsed = (() => {
-    const ua = navigator.userAgent;
-    let os = 'Unknown OS';
-    let browser = 'Unknown Browser';
-
-    if (ua.indexOf('Win') !== -1) os = 'Windows';
-    else if (ua.indexOf('Mac') !== -1 && !('ontouchend' in document)) os = 'macOS';
-    else if (ua.indexOf('Linux') !== -1) os = 'Linux';
-    else if (ua.indexOf('Android') !== -1) os = 'Android';
-    else if (/iPad|iPhone|iPod/.test(ua) || (ua.indexOf('Mac') !== -1 && 'ontouchend' in document)) os = 'iOS';
-
-    if (ua.indexOf('Firefox') !== -1) browser = 'Firefox';
-    else if (ua.indexOf('SamsungBrowser') !== -1) browser = 'Samsung Browser';
-    else if (ua.indexOf('Opera') !== -1 || ua.indexOf('OPR') !== -1) browser = 'Opera';
-    else if (ua.indexOf('Edge') !== -1 || ua.indexOf('Edg') !== -1) browser = 'Edge';
-    else if (ua.indexOf('Chrome') !== -1) browser = 'Chrome';
-    else if (ua.indexOf('Safari') !== -1) browser = 'Safari';
-
-    const deviceType = /Mobi|Android|iPhone|iPad/i.test(ua) ? 'Mobile / Tablet' : 'Desktop';
-    return { os, browser, deviceType };
-  })();
-
-  // Fetch IP details
-  fetch('https://ipapi.co/json/')
-    .then(r => r.json())
-    .then(data => {
-      const ipText = `${data.ip} | ${data.city}, ${data.region}, ${data.country_name} | ISP: ${data.org}`;
-      const vpn = (data.org || '').match(
-        /vpn|proxy|hosting|cloud|digitalocean|aws|azure|linode|vultr|ovh|tor/i
-      ) ? '⚠ POSSIBLE VPN/PROXY' : '✓ CLEAN';
-
-      // Populate hidden inputs for contact form
-      const ipField = document.getElementById('fp_ip');
-      const vpnField = document.getElementById('fp_vpn');
-      if (ipField) ipField.value = ipText;
-      if (vpnField) vpnField.value = vpn;
-
-      // Populate Threat Intel tab UI Elements
-      const intelIp = document.getElementById('intel-ip');
-      const intelVpn = document.getElementById('intel-vpn');
-      if (intelIp) intelIp.innerText = ipText;
-      if (intelVpn) {
-        intelVpn.innerText = vpn;
-        intelVpn.style.color = vpn.includes('CLEAN') ? 'var(--accent-green)' : '#ef4444';
-      }
-    })
-    .catch(() => {
-      const ipField = document.getElementById('fp_ip');
-      const vpnField = document.getElementById('fp_vpn');
-      if (ipField) ipField.value = 'Could not fetch IP';
-      if (vpnField) vpnField.value = 'Unknown';
-
-      const intelIp = document.getElementById('intel-ip');
-      const intelVpn = document.getElementById('intel-vpn');
-      if (intelIp) intelIp.innerText = 'Could not fetch IP';
-      if (intelVpn) intelVpn.innerText = 'Unknown';
-    });
-
-  // Battery Status initialization
-  const batteryField = document.getElementById('intel-battery');
-  if (batteryField) {
-    if (typeof navigator.getBattery === 'function') {
-      navigator.getBattery().then(battery => {
-        const updateBattery = () => {
-          const pct = Math.round(battery.level * 100);
-          const chg = battery.charging ? '⚡ Charging' : '🔌 Discharging';
-          batteryField.innerText = `${pct}% (${chg})`;
-        };
-        updateBattery();
-        battery.addEventListener('levelchange', updateBattery);
-        battery.addEventListener('chargingchange', updateBattery);
-      }).catch(() => {
-        batteryField.innerText = 'API Blocked';
-      });
-    } else {
-      batteryField.innerText = 'Not Supported';
-    }
-  }
-
-  // Network connection data
-  const connField = document.getElementById('intel-conn');
-  if (connField) {
-    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    if (conn) {
-      const speed = conn.downlink ? `${conn.downlink} Mbps` : 'Unknown Speed';
-      const rtt = conn.rtt ? `${conn.rtt}ms RTT` : 'Unknown Latency';
-      const type = conn.effectiveType ? conn.effectiveType.toUpperCase() : 'Cellular/WiFi';
-      connField.innerText = `${type} (${speed} | ${rtt})`;
-    } else {
-      connField.innerText = 'Not Supported';
-    }
-  }
-
-  // Static browser details
-  const ua = navigator.userAgent;
-  const screenText = `${screen.width}x${screen.height} | ${screen.colorDepth}bit | ratio: ${window.devicePixelRatio}x`;
-  const tz = `${Intl.DateTimeFormat().resolvedOptions().timeZone} | UTC${-(new Date().getTimezoneOffset() / 60)}`;
-  const lang = `${navigator.language} | ${navigator.languages.join(', ')}`;
-  const ref = document.referrer || 'Direct / No referrer';
-
-  // Fill contact form hidden inputs
-  const uaField = document.getElementById('fp_ua');
-  const screenField = document.getElementById('fp_screen');
-  const tzField = document.getElementById('fp_tz');
-  const langField = document.getElementById('fp_lang');
-  const refField = document.getElementById('fp_ref');
-
-  if (uaField) uaField.value = ua;
-  if (screenField) screenField.value = screenText;
-  if (tzField) tzField.value = tz;
-  if (langField) langField.value = lang;
-  if (refField) refField.value = ref;
-
-  // Fill Threat Intel tab UI
-  const intelDevice = document.getElementById('intel-device');
-  const intelOs = document.getElementById('intel-os');
-  const intelBrowser = document.getElementById('intel-browser');
-  const intelTz = document.getElementById('intel-tz');
-  const intelCores = document.getElementById('intel-cores');
-  const intelRam = document.getElementById('intel-ram');
-  const intelGpu = document.getElementById('intel-gpu');
-  const intelScreen = document.getElementById('intel-screen');
-  const intelCanvas = document.getElementById('intel-canvas');
-  const intelBot = document.getElementById('intel-bot');
-  const intelRef = document.getElementById('intel-ref');
-
-  if (intelDevice) intelDevice.innerText = uaParsed.deviceType;
-  if (intelOs) intelOs.innerText = uaParsed.os;
-  if (intelBrowser) intelBrowser.innerText = uaParsed.browser;
-  if (intelTz) intelTz.innerText = tz;
-  if (intelRef) intelRef.innerText = ref;
-
-  // Hardware metrics
-  if (intelCores) intelCores.innerText = `${navigator.hardwareConcurrency || 'Unknown'} Cores`;
-  if (intelRam) intelRam.innerText = navigator.deviceMemory ? `~${navigator.deviceMemory} GB` : 'Not Supported';
-  if (intelGpu) {
-    intelGpu.innerText = gpu;
-    intelGpu.title = gpu;
-  }
-  if (intelScreen) intelScreen.innerText = screenText;
-  if (intelCanvas) intelCanvas.innerText = canvasHash;
-
-  // Webdriver automation integrity audit
-  if (intelBot) {
-    if (navigator.webdriver) {
-      intelBot.innerText = '⚠ Automated (Webdriver)';
-      intelBot.style.color = '#ef4444';
-    } else {
-      intelBot.innerText = '✓ Genuine Browser';
-      intelBot.style.color = 'var(--accent-green)';
-    }
-  }
-
-  // Real-time page timer loop
-  const intelTime = document.getElementById('intel-time');
-  if (intelTime) {
-    setInterval(() => {
-      const elapsed = Math.round((Date.now() - pageLoadTime) / 1000);
-      intelTime.innerText = `${elapsed}s on page`;
-    }, 1000);
-  }
-}
-
-// ── CONTACT FORM HANDLER ──
-function initContactForm() {
-  const form = document.getElementById('contact-form');
-  const status = document.getElementById('status');
-  if (!form) return;
-
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const honeypot = form.querySelector('input[name="honeypot"]');
-    if (honeypot && honeypot.value) {
-      form.reset();
-      return;
-    }
-
-    const emailInput = form.querySelector('input[name="email"]');
-    const emailVal = emailInput ? emailInput.value.trim() : '';
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    if (!emailRegex.test(emailVal)) {
-      if (status) {
-        status.style.color = '#ef4444';
-        status.innerText = 'Error: Enter a valid email address.';
-      }
-      return;
-    }
-
-    const fpTimeField = document.getElementById('fp_time');
-    const secs = Math.round((Date.now() - pageLoadTime) / 1000);
-    if (fpTimeField) {
-      fpTimeField.value = `${secs}s on page — ${secs < 4 ? '⚠ Bot Signature' : '✓ Human OK'}`;
-    }
-
-    const btn = form.querySelector('button[type="submit"]');
-    if (btn) {
-      btn.disabled = true;
-      const btnSpan = btn.querySelector('span');
-      if (btnSpan) btnSpan.innerText = 'Transmitting...';
-    }
-    
-    if (status) {
-      status.style.color = 'var(--accent-cyan)';
-      status.innerText = 'Sending...';
-    }
-
-    if (typeof emailjs !== 'undefined') {
-      emailjs.sendForm('service_ccpimhj', 'template_pxr2b9p', this)
-        .then(() => {
-          if (status) {
-            status.style.color = 'var(--accent-green)';
-            status.innerText = "Message sent successfully!";
-          }
-          form.reset();
-          if (btn) {
-            btn.disabled = false;
-            const btnSpan = btn.querySelector('span');
-            if (btnSpan) btnSpan.innerText = 'Send Message';
-          }
-        }, (err) => {
-          if (status) {
-            status.style.color = '#ef4444';
-            status.innerText = 'Failed to transmit message. Try again.';
-          }
-          console.error(err);
-          if (btn) {
-            btn.disabled = false;
-            const btnSpan = btn.querySelector('span');
-            if (btnSpan) btnSpan.innerText = 'Send Message';
-          }
-        });
-    } else {
-      if (status) {
-        status.style.color = '#ef4444';
-        status.innerText = 'Failed: EmailJS SDK not available.';
-      }
-      if (btn) {
-        btn.disabled = false;
-        const btnSpan = btn.querySelector('span');
-        if (btnSpan) btnSpan.innerText = 'Send Message';
-      }
-    }
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab)?.classList.add('active');
   });
+});
+
+async function digest(algo,str){
+  const buf=await crypto.subtle.digest(algo,new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
 }
+document.getElementById('hash-input').addEventListener('input',async e=>{
+  const v=e.target.value;
+  if(!v){document.getElementById('hash-sha1').textContent='—';document.getElementById('hash-sha256').textContent='—';return}
+  document.getElementById('hash-sha1').textContent=await digest('SHA-1',v);
+  document.getElementById('hash-sha256').textContent=await digest('SHA-256',v);
+});
 
-// ── NAVIGATION CONTROLS ──
-function toggleMobileMenu() {
-  const menu = document.getElementById('mobile-menu');
-  const btn = document.getElementById('mobile-menu-btn');
-  if (!menu || !btn) return;
-  
-  if (menu.style.display === 'flex') {
-    menu.style.display = 'none';
-    btn.innerText = '☰';
-  } else {
-    menu.style.display = 'flex';
-    btn.innerText = '✕';
-  }
-}
-
-function initNavbarScroll() {
-  const nav = document.querySelector('nav');
-  if (!nav || window.innerWidth <= 768) return;
-  
-  let lastScrolled = false;
-  window.addEventListener('scroll', () => {
-    const isScrolled = window.scrollY > 20;
-    if (isScrolled !== lastScrolled) {
-      lastScrolled = isScrolled;
-      if (isScrolled) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-    }
-  }, { passive: true });
-}
-
-// ── DYNAMIC GITHUB REPOSITORIES FETCH ──
-const fallbackProjects = [
-  {
-    name: '1DayCrew AI',
-    description: 'Machine learning Network Intrusion Detection System classifying 14 attack types with >97% accuracy on CIC-IDS2017 packet flow data.',
-    html_url: 'https://github.com/kuldeepshukla01',
-    language: 'Python',
-    stargazers_count: 8
-  },
-  {
-    name: '1DayCrew OS',
-    description: 'Custom Debian-based hacker distribution with KDE Plasma desktop, native Broadcom wireless drivers, and CUDA-accelerated local Ollama LLM integration.',
-    html_url: 'https://github.com/kuldeepshukla01',
-    language: 'Shell',
-    stargazers_count: 5
-  },
-  {
-    name: 'Mobile Sec Audit',
-    description: 'Methodologies, recon pipelines, and proof-of-concept exploits developed during EC-Council Certified Android Bug Bounty audits.',
-    html_url: 'https://github.com/kuldeepshukla01',
-    language: 'Markdown',
-    stargazers_count: 6
-  }
-];
-
-function formatRepoName(name) {
-  return name
-    .replace(/[-_]/g, ' ')
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
-function getRepoIcon(name, lang) {
-  name = name.toLowerCase();
-  lang = (lang || '').toLowerCase();
-  
-  if (name.includes('scan') || name.includes('recon') || name.includes('sniff') || name.includes('visual')) return '📡';
-  if (name.includes('crypto') || name.includes('cipher') || name.includes('key')) return '🔒';
-  if (name.includes('shell') || name.includes('terminal')) return '💻';
-  
-  if (lang === 'python') return '🐍';
-  if (lang === 'javascript' || lang === 'typescript') return '⚡';
-  if (lang === 'html' || lang === 'css') return '🌐';
-  
-  return '📁';
-}
-
-function renderProjects(repos) {
-  const grid = document.getElementById('github-projects-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  
-  repos.forEach(repo => {
-    const icon = getRepoIcon(repo.name, repo.language);
-    const langTag = repo.language ? `<span class="project-lang-tag">${repo.language}</span>` : '';
-    const desc = repo.description || 'No description provided. Click below to view the source code and details on GitHub.';
-    
-    const card = document.createElement('div');
-    card.className = 'project-card glass tilt-card';
-    card.innerHTML = `
-      <div class="project-icon-wrap">${icon}</div>
-      <h3>${formatRepoName(repo.name)}</h3>
-      <div class="project-meta">
-        ${langTag}
-        <span class="project-stars-tag">⭐ ${repo.stargazers_count || 0}</span>
-      </div>
-      <p>${desc}</p>
-      <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="project-link">
-        Source Repository <span>→</span>
-      </a>
-    `;
-    grid.appendChild(card);
+let cipherMode='encode';
+document.querySelectorAll('[data-mode]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('[data-mode]').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');cipherMode=b.dataset.mode;processCipher();
   });
-  
-  // Re-run glass tilt to bind to new dynamic elements
-  initGlassTilt();
+});
+document.getElementById('cipher-input').addEventListener('input',processCipher);
+function processCipher(){
+  const v=document.getElementById('cipher-input').value;
+  const out=document.getElementById('cipher-output');
+  if(!v){out.textContent='—';return}
+  try{
+    if(cipherMode==='encode') out.textContent=btoa(unescape(encodeURIComponent(v)));
+    else if(cipherMode==='decode') out.textContent=decodeURIComponent(escape(atob(v.trim())));
+    else out.textContent=v.replace(/[a-zA-Z]/g,c=>String.fromCharCode((c<='Z'?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26));
+  }catch{out.textContent='Error.'}
 }
 
-async function fetchGitHubProjects() {
-  const username = 'kuldeepshukla01';
-  try {
-    const response = await fetch(`https://api.github.com/users/${username}/repos?sort=pushed&per_page=12`);
-    if (!response.ok) throw new Error('GitHub API request failed');
-    const repos = await response.json();
-    const filteredRepos = repos.filter(repo => !repo.fork);
-    
-    if (filteredRepos.length === 0) {
-      renderProjects(fallbackProjects);
-      return;
-    }
-    renderProjects(filteredRepos.slice(0, 6));
-  } catch (err) {
-    console.error('Failed to fetch repos, loading fallbacks:', err);
-    renderProjects(fallbackProjects);
-  }
+function entropy(pw){
+  if(!pw) return 0;
+  let R=0;
+  if(/[a-z]/.test(pw)) R+=26; if(/[A-Z]/.test(pw)) R+=26; if(/[0-9]/.test(pw)) R+=10; if(/[^a-zA-Z0-9]/.test(pw)) R+=33;
+  return Math.round(pw.length*(R?Math.log2(R):0));
 }
+document.getElementById('password-input').addEventListener('input',()=>{
+  const pw=document.getElementById('password-input').value;
+  const e=entropy(pw);
+  const bar=document.getElementById('strength-bar');
+  bar.style.width=Math.min(100,(e/80)*100)+'%';
+  let label='—',col='var(--muted)';
+  if(pw){if(e<28){label='Very weak';col='var(--danger)'}else if(e<40){label='Weak';col='var(--danger)'}else if(e<60){label='Fair';col='var(--warn)'}else if(e<80){label='Strong';col='var(--ok)'}else{label='Very strong';col='var(--accent)'}}
+  bar.style.background=col;
+  document.getElementById('strength-label').textContent=label;
+  document.getElementById('strength-label').style.color=col;
+  document.getElementById('entropy-label').textContent=e;
+  const R=(/[a-z]/.test(pw)?26:0)+(/[A-Z]/.test(pw)?26:0)+(/[0-9]/.test(pw)?10:0)+(/[^a-zA-Z0-9]/.test(pw)?33:0);
+  const secs=R&&pw.length?Math.pow(R,pw.length)/1e10:0;
+  let time='Instantly';
+  if(secs>=1&&secs<60) time=Math.round(secs)+'s';
+  else if(secs>=60&&secs<3600) time=Math.round(secs/60)+' min';
+  else if(secs>=3600&&secs<86400) time=Math.round(secs/3600)+' hrs';
+  else if(secs>=86400&&secs<31536000) time=Math.round(secs/86400)+' days';
+  else if(secs>=31536000) time=Math.round(secs/31536000)+' yrs';
+  document.getElementById('crack-time').textContent=pw?time:'—';
+  const checks=[];
+  if(pw.length&&pw.length<8) checks.push('Too short');
+  if(pw&&!/[A-Z]/.test(pw)) checks.push('No uppercase');
+  if(pw&&!/[a-z]/.test(pw)) checks.push('No lowercase');
+  if(pw&&!/[0-9]/.test(pw)) checks.push('No number');
+  if(pw&&!/[^a-zA-Z0-9]/.test(pw)) checks.push('No special');
+  const audit=document.getElementById('complexity-audit');
+  if(!pw){audit.textContent='—';audit.style.color='var(--muted)'}
+  else if(!checks.length){audit.textContent='✓ Complex';audit.style.color='var(--ok)'}
+  else{audit.textContent='⚠ '+checks[0];audit.style.color='var(--danger)'}
+  document.getElementById('hibp-result').textContent='Not queried.';
+  document.getElementById('hibp-result').style.color='var(--muted)';
+});
+document.getElementById('hibp-btn').addEventListener('click',async()=>{
+  const pw=document.getElementById('password-input').value;
+  const res=document.getElementById('hibp-result');
+  if(!pw){res.textContent='Enter password first.';res.style.color='var(--danger)';return}
+  res.textContent='Querying…';
+  try{
+    const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-1',new TextEncoder().encode(pw)))].map(b=>b.toString(16).padStart(2,'0')).join('').toUpperCase();
+    const r=await fetch('https://api.pwnedpasswords.com/range/'+hash.slice(0,5));
+    const text=await r.text();
+    let count=0;
+    for(const line of text.split('\n')){const [s,c]=line.split(':');if(s.trim()===hash.slice(5)){count=parseInt(c,10);break}}
+    if(count){res.innerHTML=`⚠ ${count.toLocaleString()} breaches`;res.style.color='var(--danger)'}
+    else{res.textContent='✓ No known leaks';res.style.color='var(--ok)'}
+  }catch{res.textContent='Failed.';res.style.color='var(--danger)'}
+});
 
-// ── FOOTER HOVER INTERACTION LOGIC ──
-let isFooterHovered = false;
+document.getElementById('breach-btn').addEventListener('click',async()=>{
+  const email=document.getElementById('breach-email').value.trim();
+  const status=document.getElementById('breach-status');
+  const results=document.getElementById('breach-results');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){status.innerHTML='<span style="color:var(--danger)">Valid email required.</span>';return}
+  status.textContent='Scanning…';status.style.color='var(--accent)';results.innerHTML='';
+  try{
+    const r=await fetch('https://api.xposedornot.com/v1/breach-analytics?email='+encodeURIComponent(email));
+    const data=await r.json();
+    if(!data.ExposedBreaches?.breaches_details){status.innerHTML='<span style="color:var(--ok)">✓ Not found in known leaks.</span>';return}
+    const list=data.ExposedBreaches.breaches_details;
+    status.innerHTML=`⚠ <strong style="color:var(--danger)">${list.length}</strong> breaches`;status.style.color='var(--danger)';
+    results.innerHTML=list.map(b=>`<div class="hash-results" style="margin-top:10px;text-align:left"><strong style="color:var(--accent)">${b.breach||'Unknown'}</strong> <span style="color:var(--faint);font-size:.78rem">${b.xposed_date||''}</span><p style="font-size:.82rem;color:var(--muted);margin-top:6px">${(b.details||'').slice(0,160)}</p></div>`).join('');
+  }catch{status.innerHTML='<span style="color:var(--danger)">Scan failed.</span>'}
+});
 
-function initFooterInteraction() {
-  const footer = document.querySelector('footer');
-  if (!footer) return;
+(function(){
+  const ua=navigator.userAgent;
+  let os='Unknown',browser='Unknown';
+  if(/Win/.test(ua)) os='Windows'; else if(/Mac/.test(ua)&&!('ontouchend' in document)) os='macOS'; else if(/Linux/.test(ua)) os='Linux'; else if(/Android/.test(ua)) os='Android'; else if(/iPhone|iPad/.test(ua)) os='iOS';
+  if(/Firefox/.test(ua)) browser='Firefox'; else if(/Edg/.test(ua)) browser='Edge'; else if(/Chrome/.test(ua)) browser='Chrome'; else if(/Safari/.test(ua)) browser='Safari';
+  document.getElementById('intel-os').textContent=os;
+  document.getElementById('intel-browser').textContent=browser;
+  document.getElementById('intel-cores').textContent=(navigator.hardwareConcurrency||'?')+' cores';
+  document.getElementById('intel-ram').textContent=navigator.deviceMemory?`~${navigator.deviceMemory} GB`:'n/a';
+  document.getElementById('intel-screen').textContent=`${screen.width}×${screen.height}`;
+  document.getElementById('intel-tz').textContent=Intl.DateTimeFormat().resolvedOptions().timeZone;
+  document.getElementById('intel-bot').textContent=navigator.webdriver?'⚠ Auto':'✓ Genuine';
+  document.getElementById('intel-bot').style.color=navigator.webdriver?'var(--danger)':'var(--ok)';
+  const conn=navigator.connection||navigator.mozConnection;
+  document.getElementById('intel-conn').textContent=conn?`${conn.effectiveType||''} ${conn.downlink?conn.downlink+' Mbps':''}`:'n/a';
+  try{const c=document.createElement('canvas');const ctx=c.getContext('2d');ctx.font='12px monospace';ctx.fillText('ks',2,12);let h=0;const d=c.toDataURL();for(let i=0;i<d.length;i++){h=((h<<5)-h)+d.charCodeAt(i);h|=0}document.getElementById('intel-canvas').textContent=Math.abs(h).toString(16).toUpperCase()}catch{document.getElementById('intel-canvas').textContent='blocked'}
+  fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
+    document.getElementById('intel-ip').textContent=`${d.ip} · ${d.city||''}`;
+    const vpn=/(vpn|proxy|hosting|cloud|aws|azure)/i.test(d.org||'')?'⚠ VPN?':'✓ Clean';
+    document.getElementById('intel-vpn').textContent=vpn;
+    document.getElementById('intel-vpn').style.color=vpn.includes('Clean')?'var(--ok)':'var(--danger)';
+    const _ip=document.getElementById('fp_ip');if(_ip)_ip.value=`${d.ip}|${d.org||''}`;
+    const _vpn=document.getElementById('fp_vpn');if(_vpn)_vpn.value=vpn;
+  }).catch(()=>{document.getElementById('intel-ip').textContent='n/a'});
+  setInterval(()=>{document.getElementById('intel-time').textContent=Math.round((Date.now()-pageLoad)/1000)+'s'},1000);
+  (document.getElementById('fp_ua')||{}).value=ua;
+  (document.getElementById('fp_screen')||{}).value=screen.width+'x'+screen.height;
+  (document.getElementById('fp_tz')||{}).value=Intl.DateTimeFormat().resolvedOptions().timeZone;
+  (document.getElementById('fp_lang')||{}).value=navigator.language;
+  (document.getElementById('fp_ref')||{}).value=document.referrer||'Direct';
+})();
 
-  footer.addEventListener('mouseenter', () => {
-    isFooterHovered = true;
-    document.querySelectorAll('.ambient-orb').forEach(orb => {
-      orb.style.animationPlayState = 'paused';
-    });
+fetch('https://api.github.com/users/kuldeepshukla01/repos?sort=pushed&per_page=12')
+  .then(r=>r.json())
+  .then(repos=>{
+    const list=(Array.isArray(repos)?repos.filter(x=>!x.fork):[]).slice(0,6);
+    if(!list.length) return;
+    document.getElementById('github-grid').innerHTML=list.map(repo=>`
+      <div class="gh-card glass">
+        <h3>${repo.name.replace(/[-_]/g,' ')}</h3>
+        <div class="gh-meta">${repo.language||'Code'} · ★ ${repo.stargazers_count||0}</div>
+        <p>${repo.description||'View on GitHub.'}</p>
+        <a href="${repo.html_url}" target="_blank" rel="noopener">Repo ↗</a>
+      </div>`).join('');
+  }).catch(()=>{});
+
+
+  }else{status.textContent='Unavailable.';status.style.color='var(--danger)';btn.disabled=false}
+});
+
+/* glass spotlight — cursor light on real glass */
+document.querySelectorAll('.glass').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width*100).toFixed(1);
+    const y=((e.clientY-r.top)/r.height*100).toFixed(1);
+    card.style.setProperty('--mx',x+'%');
+    card.style.setProperty('--my',y+'%');
   });
-
-  footer.addEventListener('mouseleave', () => {
-    isFooterHovered = false;
-    document.querySelectorAll('.ambient-orb').forEach(orb => {
-      orb.style.animationPlayState = 'running';
-    });
-  });
-}
-
-// ── CYBER TOOLBOX LOGIC ──
-let currentCipherMode = 'encode';
-
-function switchToolboxTab(event, tabId) {
-  const container = event.target.closest('.toolbox-card');
-  if (!container) return;
-
-  const tabs = container.querySelectorAll('.tab-btn');
-  const panels = container.querySelectorAll('.tab-panel');
-
-  tabs.forEach(tab => tab.classList.remove('active'));
-  panels.forEach(panel => panel.classList.remove('active'));
-
-  event.target.classList.add('active');
-  const activePanel = document.getElementById(tabId);
-  if (activePanel) activePanel.classList.add('active');
-}
-
-// Subtle Crypto Hash generator
-async function calculateHashes() {
-  const input = document.getElementById('hash-input').value;
-  const sha1Field = document.getElementById('hash-sha1');
-  const sha256Field = document.getElementById('hash-sha256');
-  if (!sha1Field || !sha256Field) return;
-
-  if (!input) {
-    sha1Field.innerText = 'Type something to generate hash...';
-    sha256Field.innerText = 'Type something to generate hash...';
-    return;
-  }
-
-  try {
-    const buffer1 = new TextEncoder().encode(input);
-    const hashBuffer1 = await crypto.subtle.digest('SHA-1', buffer1);
-    const hex1 = Array.from(new Uint8Array(hashBuffer1)).map(b => b.toString(16).padStart(2, '0')).join('');
-    sha1Field.innerText = hex1;
-
-    const buffer2 = new TextEncoder().encode(input);
-    const hashBuffer2 = await crypto.subtle.digest('SHA-256', buffer2);
-    const hex2 = Array.from(new Uint8Array(hashBuffer2)).map(b => b.toString(16).padStart(2, '0')).join('');
-    sha256Field.innerText = hex2;
-  } catch (err) {
-    console.error('Crypto digests failed:', err);
-  }
-}
-
-function setCipherMode(mode) {
-  currentCipherMode = mode;
-  const controls = document.querySelector('.cipher-controls');
-  if (controls) {
-    const btns = controls.querySelectorAll('button');
-    btns.forEach(btn => {
-      if (btn.innerText.toLowerCase().includes(mode)) {
-        btn.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-        btn.style.background = 'rgba(255, 255, 255, 0.08)';
-      } else {
-        btn.style.borderColor = 'rgba(255, 255, 255, 0.07)';
-        btn.style.background = 'transparent';
-      }
-    });
-  }
-  processCipher();
-}
-
-function processCipher() {
-  const textarea = document.getElementById('cipher-input');
-  const output = document.getElementById('cipher-output');
-  if (!textarea || !output) return;
-
-  const value = textarea.value;
-  if (!value) {
-    output.innerText = 'Output will appear here...';
-    return;
-  }
-
-  if (currentCipherMode === 'encode') {
-    try {
-      output.innerText = btoa(unescape(encodeURIComponent(value)));
-    } catch (e) {
-      output.innerText = 'Error: Encoding failed.';
-    }
-  } else if (currentCipherMode === 'decode') {
-    try {
-      output.innerText = decodeURIComponent(escape(atob(value.trim())));
-    } catch (e) {
-      output.innerText = 'Error: Invalid Base64 sequence.';
-    }
-  } else if (currentCipherMode === 'rot13') {
-    output.innerText = value.replace(/[a-zA-Z]/g, function(c) {
-      return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
-    });
-  }
-}
-
-// Password entropy and strength calculations
-function analyzePassword() {
-  const password = document.getElementById('password-input').value;
-  const bar = document.getElementById('strength-bar');
-  const label = document.getElementById('strength-label');
-  const entropyLabel = document.getElementById('entropy-label');
-  const crackTime = document.getElementById('crack-time');
-  const audit = document.getElementById('complexity-audit');
-
-  if (!bar || !label || !entropyLabel || !crackTime || !audit) return;
-
-  const hibpResult = document.getElementById('hibp-result');
-  if (hibpResult) {
-    hibpResult.innerText = 'Not queried.';
-    hibpResult.style.color = 'var(--text-muted)';
-  }
-
-  if (!password) {
-    bar.style.width = '0%';
-    label.innerText = 'Too Short';
-    label.style.color = 'var(--text-muted)';
-    entropyLabel.innerText = '0';
-    crackTime.innerText = 'Instantly';
-    audit.innerText = 'Too short';
-    audit.style.color = 'var(--text-muted)';
-    return;
-  }
-
-  let R = 0;
-  if (/[a-z]/.test(password)) R += 26;
-  if (/[A-Z]/.test(password)) R += 26;
-  if (/[0-9]/.test(password)) R += 10;
-  if (/[^a-zA-Z0-9]/.test(password)) R += 33;
-
-  const L = password.length;
-  const entropy = Math.round(L * (R > 0 ? Math.log2(R) : 0));
-  entropyLabel.innerText = entropy;
-
-  const percent = Math.min(100, Math.round((entropy / 80) * 100));
-  bar.style.width = `${percent}%`;
-
-  let rating = 'Weak';
-  let color = '#ef4444';
-
-  if (entropy < 28) {
-    rating = 'Very Weak';
-    color = '#ef4444';
-  } else if (entropy >= 28 && entropy < 40) {
-    rating = 'Weak';
-    color = '#ef4444';
-  } else if (entropy >= 40 && entropy < 60) {
-    rating = '#f59e0b';
-  } else if (entropy >= 60 && entropy < 80) {
-    rating = 'Strong';
-    color = '#10b981';
-  } else if (entropy >= 80) {
-    rating = 'Very Strong';
-    color = 'var(--accent-cyan)';
-  }
-
-  label.innerText = rating;
-  label.style.color = color;
-  bar.style.backgroundColor = color;
-
-  const guessesPerSecond = 1e10;
-  const totalCombinations = Math.pow(R, L);
-  const timeInSeconds = totalCombinations / guessesPerSecond;
-
-  let timeString = 'Instantly';
-  if (timeInSeconds < 1) {
-    timeString = 'Instantly';
-  } else if (timeInSeconds < 60) {
-    timeString = `${Math.round(timeInSeconds)} seconds`;
-  } else if (timeInSeconds < 3600) {
-    timeString = `${Math.round(timeInSeconds / 60)} minutes`;
-  } else if (timeInSeconds < 86400) {
-    timeString = `${Math.round(timeInSeconds / 3600)} hours`;
-  } else if (timeInSeconds < 31536000) {
-    timeString = `${Math.round(timeInSeconds / 86400)} days`;
-  } else if (timeInSeconds < 31536000 * 1000) {
-    timeString = `${Math.round(timeInSeconds / 31536000)} years`;
-  } else {
-    const power = Math.floor(Math.log10(timeInSeconds / 31536000));
-    const base = Math.round((timeInSeconds / 31536000) / Math.pow(10, power));
-    timeString = `${base} x 10^${power} years`;
-  }
-  crackTime.innerText = timeString;
-
-  const checks = [];
-  if (L < 8) checks.push('Too short (min 8 chars)');
-  if (!/[A-Z]/.test(password)) checks.push('Missing uppercase letter');
-  if (!/[a-z]/.test(password)) checks.push('Missing lowercase letter');
-  if (!/[0-9]/.test(password)) checks.push('Missing number');
-  if (!/[^a-zA-Z0-9]/.test(password)) checks.push('Missing special character');
-
-  if (checks.length === 0) {
-    audit.innerText = '✓ Safe Complex Structure';
-    audit.style.color = 'var(--accent-green)';
-  } else {
-    audit.innerText = `⚠ ${checks[0]}`;
-    audit.style.color = '#ef4444';
-  }
-}
-
-// ── HAVE I BEEN PWNED CHECKER (HIBP API via K-Anonymity) ──
-async function checkHIBP() {
-  const password = document.getElementById('password-input').value;
-  const resultField = document.getElementById('hibp-result');
-  const btn = document.getElementById('hibp-btn');
-  if (!resultField || !btn) return;
-
-  if (!password) {
-    resultField.innerText = '⚠ Enter a password first.';
-    resultField.style.color = '#ef4444';
-    return;
-  }
-
-  btn.disabled = true;
-  btn.innerText = 'Querying HIBP...';
-  resultField.innerText = 'Querying breach database...';
-  resultField.style.color = 'var(--text-muted)';
-
-  try {
-    const msgBuffer = new TextEncoder().encode(password);
-    const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
-
-    const first5 = hashHex.slice(0, 5);
-    const suffix = hashHex.slice(5);
-
-    const response = await fetch(`https://api.pwnedpasswords.com/range/${first5}`);
-    if (!response.ok) throw new Error('HIBP API error');
-
-    const responseText = await response.text();
-    const lines = responseText.split('\n');
-    let leakCount = 0;
-    
-    for (let line of lines) {
-      const parts = line.split(':');
-      if (parts[0].trim() === suffix) {
-        leakCount = parseInt(parts[1], 10);
-        break;
-      }
-    }
-
-    if (leakCount > 0) {
-      resultField.innerHTML = `⚠ PWNED! Found in <strong style="color: #ef4444">${leakCount.toLocaleString()}</strong> data breaches.`;
-      resultField.style.color = '#ef4444';
-    } else {
-      resultField.innerHTML = `✓ SECURE! No known database leaks detected.`;
-      resultField.style.color = 'var(--accent-green)';
-    }
-  } catch (err) {
-    console.error('HIBP query failed:', err);
-    resultField.innerText = '⚠ API Query failed. Try again.';
-    resultField.style.color = '#ef4444';
-  } finally {
-    btn.disabled = false;
-    btn.innerText = 'Check Breach Database (HIBP)';
-  }
-}
-
-// ── EMAIL BREACH CHECKER (XposedOrNot API Lookup) ──
-async function checkEmailBreach() {
-  const emailInput = document.getElementById('breach-email-input');
-  const resultsDiv = document.getElementById('email-breach-results');
-  const statusDiv = document.getElementById('email-breach-status');
-  if (!emailInput || !resultsDiv || !statusDiv) return;
-
-  const email = emailInput.value.trim();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-  if (!email || !emailRegex.test(email)) {
-    statusDiv.innerHTML = '<span style="color: #ef4444">>> ERROR: Enter a valid email address.</span>';
-    resultsDiv.style.display = 'none';
-    return;
-  }
-
-  statusDiv.innerHTML = 'Scanning database directory...';
-  statusDiv.style.color = 'var(--accent-cyan)';
-  resultsDiv.style.display = 'none';
-
-  try {
-    const response = await fetch(`https://api.xposedornot.com/v1/breach-analytics?email=${encodeURIComponent(email)}`);
-    if (!response.ok) throw new Error('Breach directory response failed');
-
-    const data = await response.json();
-    
-    if (!data.ExposedBreaches || !data.ExposedBreaches.breaches_details) {
-      statusDiv.innerHTML = '<span style="color: var(--accent-green); font-weight: bold;">✓ SECURE! This email address was not found in any known public data leaks.</span>';
-      return;
-    }
-
-    const breaches = data.ExposedBreaches.breaches_details;
-    statusDiv.innerHTML = `⚠ ALERT! Found in <strong style="color: #ef4444">${breaches.length}</strong> public data breaches.`;
-    statusDiv.style.color = '#ef4444';
-    resultsDiv.innerHTML = '';
-
-    breaches.forEach(item => {
-      const name = item.breach || 'Unknown Leak';
-      const date = item.xposed_date || 'Unknown Date';
-      const desc = item.details || 'No details provided.';
-      const rawCategories = item.xposed_data || '';
-      const categories = rawCategories.split(';').map(c => c.trim()).filter(c => c.length > 0);
-
-      const card = document.createElement('div');
-      card.className = 'hash-results';
-      card.style.marginTop = '16px';
-      card.style.textAlign = 'left';
-      card.style.border = '1px solid rgba(239, 68, 68, 0.15)';
-      card.innerHTML = `
-        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
-          <strong style="color: var(--accent-cyan); font-size: 1.05rem;">${escapeHTML(name)}</strong>
-          <span style="font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-muted);">${escapeHTML(date)}</span>
-        </div>
-        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
-          ${desc}
-        </p>
-        <div style="font-size: 0.82rem; color: var(--text-muted);">
-          <strong style="color: var(--accent-pink);">Compromised Data:</strong> 
-          <span style="color: var(--text-secondary);">${escapeHTML(categories.join(', '))}</span>
-        </div>
-      `;
-      resultsDiv.appendChild(card);
-    });
-
-    resultsDiv.style.display = 'block';
-  } catch (err) {
-    console.error('Email breach scan failed:', err);
-    statusDiv.innerHTML = '<span style="color: #ef4444">>> ERROR: Connection to breach database failed. Try again.</span>';
-    resultsDiv.style.display = 'none';
-  }
-}
-
-// ── INTERACTIVE GLASS DUST PARTICLES CANVAS ──
-function initAmbientCanvas() {
-  const canvas = document.getElementById('ambient-canvas');
-  if (!canvas) return;
-  if (window.innerWidth <= 768) {
-    canvas.style.display = 'none';
-    return;
-  }
-  const ctx = canvas.getContext('2d');
-  
-  let width = canvas.width = window.innerWidth;
-  let height = canvas.height = window.innerHeight;
-  
-  const particles = [];
-  const particleCount = Math.min(60, Math.floor((width * height) / 20000));
-  
-  let mouse = { x: null, y: null, radius: 150 };
-  
-  window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  });
-  
-  window.addEventListener('mouseleave', () => {
-    mouse.x = null;
-    mouse.y = null;
-  });
-  
-  window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  });
-  
-  class Particle {
-    constructor() {
-      this.reset();
-      this.y = Math.random() * height; // distribute initially
-    }
-    
-    reset() {
-      this.x = Math.random() * width;
-      this.y = -10;
-      this.size = Math.random() * 3.5 + 1.2; // 1.2px to 4.7px
-      this.speedX = Math.random() * 0.5 - 0.25; // sway side to side
-      this.speedY = Math.random() * 0.35 + 0.15;  // drift down slowly
-      this.opacity = Math.random() * 0.3 + 0.08; // soft glow
-      this.color = '255, 255, 255'; // silver glass dust
-      this.angle = Math.random() * 360;
-      this.spinSpeed = Math.random() * 0.02 - 0.01;
-    }
-    
-    update() {
-      if (isFooterHovered) return;
-      this.y += this.speedY;
-      this.x += this.speedX + Math.sin(this.angle) * 0.15;
-      this.angle += this.spinSpeed;
-      
-      // Mouse interaction (gravity attraction)
-      if (mouse.x !== null && mouse.y !== null) {
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < mouse.radius) {
-          const force = (mouse.radius - distance) / mouse.radius;
-          this.x += (dx / distance) * force * 0.8;
-          this.y += (dy / distance) * force * 0.8;
-        }
-      }
-      
-      // Reset when going off screen
-      if (this.y > height + 10 || this.x < -10 || this.x > width + 10) {
-        this.reset();
-      }
-    }
-    
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = `rgba(${this.color}, ${this.opacity})`;
-      ctx.fill();
-      ctx.shadowBlur = 0; // reset shadow
-    }
-  }
-  
-  for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
-  }
-  
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    for (let i = 0; i < particles.length; i++) {
-      particles[i].update();
-      particles[i].draw();
-    }
-    requestAnimationFrame(animate);
-  }
-  animate();
-}
-
-// ── INTERACTIVE GLASS SPOTLIGHT COORDINATES TRACKER ──
-function initGlassTilt() {
-  const cards = document.querySelectorAll('.glass, .glass-light');
-  
-  cards.forEach(card => {
-    let rect = null;
-    
-    card.addEventListener('mouseenter', () => {
-      rect = card.getBoundingClientRect();
-    });
-    
-    card.addEventListener('mousemove', e => {
-      if (!rect) rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      rect = null;
-    });
-  });
-}
-
-// ── OPTIMIZED SMOOTH SCROLLING WITH NAVBAR OFFSET ──
-function initSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
-      
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        e.preventDefault();
-        
-        // Close mobile menu if open
-        const menu = document.getElementById('mobile-menu');
-        const btn = document.getElementById('mobile-menu-btn');
-        if (menu && menu.style.display === 'flex') {
-          menu.style.display = 'none';
-          if (btn) btn.innerText = '☰';
-        }
-        
-        // Scroll to target element smoothly with nav offset
-        const nav = document.querySelector('nav');
-        const navHeight = nav ? nav.offsetHeight + 10 : 80;
-        const elementPosition = targetElement.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - navHeight;
-        
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    });
-  });
-}
-
-// ── INIT INITIALIZATION ──
-document.addEventListener('DOMContentLoaded', () => {
-  initAmbientCanvas(); // Fire particle canvas loop
-  runFingerprinting();
-  initContactForm();
-  initNavbarScroll();
-  fetchGitHubProjects();
-  initFooterInteraction();
-  initGlassTilt();
-  initSmoothScroll();
 });

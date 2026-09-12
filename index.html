@@ -1,387 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kuldeep Shukla | Cybersecurity & Software Engineer</title>
-  
-  <!-- Modern Sans-Serif Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Premium Glass Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=preview-aurora">
-  
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  
-  <!-- Interaction Scripts -->
-  <script src="script.js?v=preview-aurora" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuldeep Shukla — Cybersecurity Engineer</title>
+<meta name="description" content="Recent Computing graduate. EC-Council Android Bug Bounty Hunter. ML intrusion detection. Junior Penetration Tester — Ireland.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="aurora">
+  <div class="aurora-blob a"></div>
+  <div class="aurora-blob b"></div>
+  <div class="aurora-blob c"></div>
+</div>
+<div class="grid-bg"></div>
 
-  <!-- Ambient Drifting Aurora Clouds -->
-  <div class="ambient-orbs-container">
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
-    <div class="ambient-orb orb-3"></div>
-    <div class="ambient-orb orb-4"></div>
+<nav class="nav glass glass-glow" id="nav">
+  <a href="#" class="logo">kuldeep<span>.shukla</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#lab">Lab</a>
+    <a href="#path">Path</a>
+    <a href="#contact" class="nav-cta">Hire me</a>
   </div>
+</nav>
 
-  <!-- Ambient Interactive Particles Canvas -->
-  <canvas id="ambient-canvas"></canvas>
+<header class="hero">
+  <div>
+    <div class="terminal glass"><span class="dot"></span> open_to_work · graduate 2026 · Dublin</div>
+    <h1>I find the cracks<br><span class="line2">before attackers do.</span></h1>
+    <p class="hero-lead">
+      <strong>2026 BSc (Hons) Computing & IT graduate</strong>, CCT College Dublin.
+      EC-Council Android Bug Bounty Hunter. Building ML intrusion detection —
+      seeking a <strong>Junior Penetration Tester</strong> role in Ireland.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-fill" href="#work">See the work</a>
+      <a class="btn btn-line" href="CV.docx" download>Resume</a>
+      <a class="btn btn-line" href="#contact">Contact</a>
+    </div>
+    <div class="proof glass">
+      <div class="proof-item"><strong>&gt;97%</strong><span>NIDS accuracy</span></div>
+      <div class="proof-item"><strong>14</strong><span>attack types</span></div>
+      <div class="proof-item"><strong>EC-Council</strong><span>Android cert</span></div>
+      <div class="proof-item"><strong>CEH</strong><span>in progress</span></div>
+    </div>
+  </div>
+</header>
 
-  <div class="site-wrap">
-    <!-- Floating Capsule Navbar -->
-    <nav>
-      <div class="nav-inner">
-        <a href="#" class="nav-logo">
-          Kuldeep<span class="accent">.Shukla</span>
-        </a>
-        <div class="nav-links">
-          <a href="#about">About</a>
-          <a href="#toolbox">Tools</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <button id="mobile-menu-btn" onclick="toggleMobileMenu()">
-          ☰
-        </button>
+<section class="section" id="about">
+  <div class="sec-num reveal">01 — About</div>
+  <h2 class="reveal">Not another “passionate coder.”</h2>
+  <div class="story">
+    <div class="story-text reveal">
+      <p>I’m <strong>Kuldeep Shukla</strong> — a <strong>2026 graduate</strong> of BSc (Hons) Computing & IT at <strong>CCT College Dublin</strong>, focused on cybersecurity, penetration testing, and machine learning.</p>
+      <p>I care about <strong>outcomes</strong>: can the system detect real attacks? Can the app be broken? What’s the false-positive rate?</p>
+      <div class="highlight-box glass">
+        <p><strong>Capstone — 1DayCrew AI:</strong> NIDS classifying 14 attack types with &gt;97% accuracy (Python, XGBoost, NFStream, SHAP).</p>
       </div>
-      <div id="mobile-menu">
-        <a href="#about" onclick="toggleMobileMenu()">About</a>
-        <a href="#toolbox" onclick="toggleMobileMenu()">Tools</a>
-        <a href="#projects" onclick="toggleMobileMenu()">Projects</a>
-        <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
-      </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero">
-      <div class="hero-text">
-        <div class="hero-tag">Welcome to my space</div>
-        <h1>Securing systems. <br>Building <span class="name">solutions</span>.</h1>
-        <p class="hero-sub">Cybersecurity Specialist &amp; BSc Computing Student</p>
-        <div class="hero-desc glass tilt-card">
-          Final-year BSc (Hons) Computing &amp; IT student at CCT College Dublin specializing in cybersecurity, penetration testing, and machine learning. EC-Council Certified Android Bug Bounty Hunter with a passion for ethical hacking, secure system design, and AI-powered threat analysis.
-        </div>
-        <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">Explore Work</a>
-          <a href="CV.docx" download class="btn btn-secondary">Get Resume</a>
-        </div>
-      </div>
-      <div class="avatar-wrap tilt-card">
-        <img src="../img.PNG" alt="Portrait" />
+      <p>Seeking a <strong>Junior Penetration Tester</strong> role in Ireland.</p>
+      <div class="skills">
+        <span class="skill">Kali Linux</span><span class="skill">Nmap</span><span class="skill">Wireshark</span><span class="skill">Burp Suite</span>
+        <span class="skill">Metasploit</span><span class="skill">Python</span><span class="skill">XGBoost</span><span class="skill">NFStream</span>
+        <span class="skill">SHAP</span><span class="skill">Android</span><span class="skill">OWASP</span>
       </div>
     </div>
-
-    <!-- About Biography & Professional Timeline -->
-    <section id="about">
-      <h2 class="section-title">About Me</h2>
-      <div class="bio-panel glass tilt-card">
-        <div class="bio-grid">
-          <!-- Profile columns -->
-          <div class="bio-details">
-            <h3>Who I Am</h3>
-            <p>
-              I am a final-year BSc (Hons) Computing &amp; IT student at CCT College Dublin, specializing in cybersecurity, penetration testing, and machine learning. As an EC-Council Certified Android Bug Bounty Hunter with my CEH (Certified Ethical Hacker) certification in progress, I focus on identifying vulnerabilities in mobile apps, auditing network protocols, and developing AI-powered security systems.
-            </p>
-            <p style="margin-top: 16px;">
-              My major capstone project is <strong>1DayCrew AI</strong>—a machine learning Network Intrusion Detection System (NIDS) built using Python, XGBoost, and NFStream. It classifies 14 attack types with >97% detection accuracy on network flows. I am currently seeking a Junior Penetration Tester role in Ireland to apply my technical skills in a professional, growth-oriented environment.
-            </p>
-          </div>
-          <div class="bio-timeline">
-            <h3>Specializations</h3>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <h4>Mobile OS &amp; Android Security</h4>
-                <p>EC-Council Certified Android Bug Bounty Hunter specializing in mobile app auditing and security research.</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <h4>Penetration Testing</h4>
-                <p>Vulnerability assessment and network auditing using Kali Linux, Nmap, Wireshark, Burp Suite, and Metasploit.</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <h4>AI &amp; Network Security</h4>
-                <p>Developing ML-driven intrusion detection systems using NFStream, XGBoost, and SHAP explainability.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Toolbox Section -->
-    <section id="toolbox">
-      <h2 class="section-title">Developer Utilities</h2>
-      <div class="toolbox-card glass tilt-card">
-        <!-- Tab buttons -->
-        <div class="toolbox-tabs">
-          <button class="tab-btn active" onclick="switchToolboxTab(event, 'hash-generator-tab')">Hash Generator</button>
-          <button class="tab-btn" onclick="switchToolboxTab(event, 'cipher-tab')">Encoder/Decoder</button>
-          <button class="tab-btn" onclick="switchToolboxTab(event, 'password-tab')">Strength Gauge</button>
-          <button class="tab-btn" onclick="switchToolboxTab(event, 'email-breach-tab')">Breach Check</button>
-          <button class="tab-btn" onclick="switchToolboxTab(event, 'threat-intel-tab')">Visitor Insights</button>
-        </div>
-        
-        <!-- Tab Content panels -->
-        <div class="toolbox-content">
-          <!-- Tab 1: Hash Generator -->
-          <div id="hash-generator-tab" class="tab-panel active">
-            <p class="tool-desc">Generate standard SHA-1 and SHA-256 cryptographic hashes locally using the Web Crypto API.</p>
-            <div class="form-group">
-              <input type="text" id="hash-input" placeholder="Enter text to hash..." oninput="calculateHashes()">
-            </div>
-            <div class="hash-results">
-              <div class="hash-row">
-                <span class="hash-algo">SHA-1</span>
-                <span class="hash-val" id="hash-sha1">Type something to generate hash...</span>
-              </div>
-              <div class="hash-row">
-                <span class="hash-algo">SHA-256</span>
-                <span class="hash-val" id="hash-sha256">Type something to generate hash...</span>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Tab 2: Cipher encoder/decoder -->
-          <div id="cipher-tab" class="tab-panel">
-            <p class="tool-desc">Encode or decode Base64 data and translate text strings using the ROT13 cipher.</p>
-            <div class="form-group">
-              <textarea id="cipher-input" placeholder="Enter text to process..." oninput="processCipher()"></textarea>
-            </div>
-            <div class="cipher-controls">
-              <button class="btn-sub-small" onclick="setCipherMode('encode')">Base64 Encode</button>
-              <button class="btn-sub-small" onclick="setCipherMode('decode')">Base64 Decode</button>
-              <button class="btn-sub-small" onclick="setCipherMode('rot13')">ROT13 Rotator</button>
-            </div>
-            <div class="cipher-result-box">
-              <span class="result-label">Output Result</span>
-              <div class="result-text" id="cipher-output">Output will appear here...</div>
-            </div>
-          </div>
-          
-          <!-- Tab 3: Password Analyzer -->
-          <div id="password-tab" class="tab-panel">
-            <p class="tool-desc">Measure password complexity, entropy levels, and estimate brute-force decryption timelines.</p>
-            <div class="form-group">
-              <input type="password" id="password-input" placeholder="Enter password to analyze..." oninput="analyzePassword()">
-            </div>
-            
-            <div class="password-strength-meter">
-              <div class="strength-bar-bg">
-                <div class="strength-bar-fill" id="strength-bar"></div>
-              </div>
-              <div class="strength-text-row">
-                <span>Strength Assessment: <strong id="strength-label">Too Short</strong></span>
-                <span>Entropy: <strong id="entropy-label">0</strong> bits</span>
-              </div>
-            </div>
-
-            <!-- Have I Been Pwned Check Panel -->
-            <div class="hibp-check-panel" style="margin: 24px 0; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-              <button type="button" class="btn btn-sub-small" id="hibp-btn" onclick="checkHIBP()">Query Breach Databases (HIBP)</button>
-              <span id="hibp-result" style="font-size: 0.9rem; color: var(--text-muted)">Not queried.</span>
-            </div>
-            
-            <div class="password-details">
-              <div class="detail-row">
-                <span>Estimated Time to Crack:</span>
-                <strong id="crack-time">Instantly</strong>
-              </div>
-              <div class="detail-row">
-                <span>Complexity Audit:</span>
-                <span id="complexity-audit" style="color: var(--text-muted)">Too short</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tab 4: Email Breach Checker -->
-          <div id="email-breach-tab" class="tab-panel">
-            <p class="tool-desc">Check if an email address is associated with historical database breaches via anonymous directory scans.</p>
-            <div class="form-group" style="display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;">
-              <input type="email" id="breach-email-input" placeholder="Enter email address..." style="flex: 1; min-width: 250px;">
-              <button type="button" class="btn" style="border-radius: 50px; padding: 14px 28px;" onclick="checkEmailBreach()">Scan Database</button>
-            </div>
-            
-            <div id="email-breach-status" style="font-size: 0.95rem; color: var(--text-muted); text-align: center; padding: 12px 0;">
-              Enter an email address and trigger the scan to fetch leak analytics.
-            </div>
-
-            <div id="email-breach-results" style="display: none; max-height: 400px; overflow-y: auto; padding-right: 8px;">
-              <!-- Dynamic breach results cards will be inserted here -->
-            </div>
-            
-            <div style="margin-top: 30px; font-size: 0.82rem; color: var(--text-muted); text-align: center; border-top: 1px dashed var(--glass-border); padding-top: 15px;">
-              Data sourced securely in real-time from the <a href="https://xposedornot.com" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan); text-decoration: none; font-weight: 500;">XposedOrNot Directory</a> (free, open-source alternative to Have I Been Pwned API).
-            </div>
-          </div>
-
-          <!-- Tab 5: Visitor Insights -->
-          <div id="threat-intel-tab" class="tab-panel">
-            <p class="tool-desc">Inspect your dynamic system parameters and network details fetched on load. Demonstrates what information browsers leak automatically to scripts.</p>
-            
-            <div class="hash-results" style="margin-top: 0; text-align: left;">
-              <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px; margin-bottom: 15px; font-weight: 700; color: var(--accent-cyan); letter-spacing: 0.05em;">
-                Visitor Diagnostic Report
-              </div>
-              
-              <div class="footprint-grid">
-                <!-- Column 1: Connection -->
-                <div class="footprint-col">
-                  <div class="hash-row">
-                    <span class="hash-algo">IP & ISP</span>
-                    <span class="hash-val" id="intel-ip">Resolving...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">VPN/Proxy</span>
-                    <span class="hash-val" id="intel-vpn">Evaluating...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">Connection</span>
-                    <span class="hash-val" id="intel-conn">Querying...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">Referrer</span>
-                    <span class="hash-val" id="intel-ref">Evaluating...</span>
-                  </div>
-                </div>
-
-                <!-- Column 2: System -->
-                <div class="footprint-col">
-                  <div class="hash-row">
-                    <span class="hash-algo">Device Class</span>
-                    <span class="hash-val" id="intel-device">Determining...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">Platform OS</span>
-                    <span class="hash-val" id="intel-os">Parsing...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">Browser</span>
-                    <span class="hash-val" id="intel-browser">Parsing...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">Timezone</span>
-                    <span class="hash-val" id="intel-tz">Reading...</span>
-                  </div>
-                </div>
-
-                <!-- Column 3: Hardware -->
-                <div class="footprint-col">
-                  <div class="hash-row">
-                    <span class="hash-algo">CPU Cores</span>
-                    <span class="hash-val" id="intel-cores">Checking...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">System RAM</span>
-                    <span class="hash-val" id="intel-ram">Estimating...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">WebGL GPU</span>
-                    <span class="hash-val" id="intel-gpu" style="font-size: 0.8rem;">Querying...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">Resolution</span>
-                    <span class="hash-val" id="intel-screen">Measuring...</span>
-                  </div>
-                </div>
-
-                <!-- Column 4: Diagnostics -->
-                <div class="footprint-col">
-                  <div class="hash-row">
-                    <span class="hash-algo">Battery</span>
-                    <span class="hash-val" id="intel-battery">Reading...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">Canvas Hash</span>
-                    <span class="hash-val" id="intel-canvas" style="font-size: 0.82rem;">Calculating...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">Automation</span>
-                    <span class="hash-val" id="intel-bot">Checking...</span>
-                  </div>
-                  <div class="hash-row">
-                    <span class="hash-algo">Session Time</span>
-                    <span class="hash-val" id="intel-time">0s on page</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Transparency Warning Banner -->
-            <div class="privacy-disclaimer-banner">
-              <div class="disclaimer-header">
-                <span class="warning-icon">⚠</span> PRIVACY AUDIT & SURVEILLANCE WARNING
-              </div>
-              <p class="disclaimer-text">
-                <strong>Zero Data Storage Notice:</strong> None of this digital footprint metadata is collected, logged, or transmitted to any server. This is a local, client-side transparency utility built to demonstrate how standard tracking scripts, ad networks, and corporate platforms silently harvest your hardware, connection, and battery specs to profile and monitor your online actions without your knowledge or consent.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects Section (GitHub API Loaded Dynamically) -->
-    <section id="projects">
-      <h2 class="section-title">Featured Projects</h2>
-      <div class="projects-grid" id="github-projects-grid">
-        <div class="loading-projects" style="grid-column: 1 / -1; text-align: center; color: var(--accent-cyan); padding: 40px;">
-          Loading transmissions from GitHub...
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-      <h2 class="section-title">Get In Touch</h2>
-      <div class="contact-panel glass tilt-card">
-        <p class="contact-subtitle">Have a query or want to work together? Drop a message below:</p>
-        <form id="contact-form">
-          <div class="form-group">
-            <input type="text" name="handle" placeholder="Your Name / Handle" required autocomplete="off">
-          </div>
-          <div class="form-group">
-            <input type="email" name="email" placeholder="Your Email" required autocomplete="off">
-          </div>
-          <div class="form-group">
-            <textarea name="message" placeholder="Your Message" required></textarea>
-          </div>
-
-          <!-- Honeypot — invisible to humans, bots fill it -->
-          <input type="text" name="honeypot"
-            style="display:none;position:absolute;left:-9999px;"
-            tabindex="-1" autocomplete="off">
-
-          <!-- Hidden fingerprint fields -->
-          <input type="hidden" name="ip_address"   id="fp_ip">
-          <input type="hidden" name="vpn_flag"     id="fp_vpn">
-          <input type="hidden" name="user_agent"   id="fp_ua">
-          <input type="hidden" name="screen"       id="fp_screen">
-          <input type="hidden" name="timezone"     id="fp_tz">
-          <input type="hidden" name="language"     id="fp_lang">
-          <input type="hidden" name="referrer"     id="fp_ref">
-          <input type="hidden" name="time_on_page" id="fp_time">
-
-          <button type="submit" class="btn-submit">
-            <span>Send Message</span>
-          </button>
-        </form>
-        <p id="status" style="margin-top:1.5rem;font-weight:bold;text-align:center;"></p>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <div>© 2026 1Day_crew. Keep securing the cyber world.</div>
-    </footer>
+    <div class="focus-stack reveal">
+      <div class="focus glass"><div class="focus-icon">📱</div><h3>Mobile & Android security</h3><p>EC-Council certified. App auditing, threat modeling, responsible disclosure.</p></div>
+      <div class="focus glass"><div class="focus-icon">🔓</div><h3>Penetration testing</h3><p>Network and app assessment with professional red-team tooling.</p></div>
+      <div class="focus glass"><div class="focus-icon">🧠</div><h3>AI for defense</h3><p>ML intrusion detection with explainable models — accuracy you can audit.</p></div>
+    </div>
   </div>
+</section>
+
+<section class="section" id="work">
+  <div class="sec-num reveal">02 — Work</div>
+  <h2 class="reveal">Things I’ve actually built</h2>
+  <p class="section-lead reveal">Clear problem, approach, measurable result.</p>
+  <article class="proj glass reveal">
+    <div>
+      <span class="proj-badge">Capstone · ML Security</span>
+      <h3>1DayCrew AI — NIDS</h3>
+      <p class="desc">ML network intrusion detection: 14 attack types, NFStream features, XGBoost, SHAP explainability.</p>
+      <div class="proj-metrics">
+        <div class="metric"><strong>&gt;97%</strong><span>accuracy</span></div>
+        <div class="metric"><strong>14</strong><span>attack classes</span></div>
+        <div class="metric"><strong>Python</strong><span>stack</span></div>
+      </div>
+      <div class="proj-tags"><span class="tag">Python</span><span class="tag">XGBoost</span><span class="tag">NFStream</span><span class="tag">SHAP</span></div>
+    </div>
+    <div class="proj-side"><a href="https://github.com/kuldeepshukla01" target="_blank" rel="noopener">Code ↗</a></div>
+  </article>
+  <article class="proj glass reveal">
+    <div>
+      <span class="proj-badge">Certification · Offensive</span>
+      <h3>Android Bug Bounty Hunter</h3>
+      <p class="desc">EC-Council: mobile threats, insecure storage, weak crypto, responsible disclosure.</p>
+      <div class="proj-tags"><span class="tag">Android</span><span class="tag">OWASP MASVS</span><span class="tag">Bug Bounty</span></div>
+    </div>
+    <div class="proj-side"><a href="https://github.com/kuldeepshukla01" target="_blank" rel="noopener">Details ↗</a></div>
+  </article>
+  <div id="github-grid" class="reveal"></div>
+</section>
+
+<section class="section" id="lab">
+  <div class="sec-num reveal">03 — Live lab</div>
+  <h2 class="reveal">Don’t take my word for it</h2>
+  <p class="section-lead reveal">Full toolkit. Sensitive work stays in your browser.</p>
+  <div class="toolbox glass glass-glow reveal">
+    <div class="toolbox-tabs">
+      <button class="tab-btn active" data-tab="hash">Hash</button>
+      <button class="tab-btn" data-tab="cipher">Encoder</button>
+      <button class="tab-btn" data-tab="password">Strength</button>
+      <button class="tab-btn" data-tab="breach">Breach</button>
+      <button class="tab-btn" data-tab="intel">Insights</button>
+    </div>
+    <div class="toolbox-content">
+      <div id="hash" class="tab-panel active">
+        <p class="tool-desc">SHA-1 & SHA-256 via Web Crypto — on your device only.</p>
+        <input type="text" id="hash-input" placeholder="Enter text to hash…">
+        <div class="hash-results">
+          <div class="hash-row"><span class="hash-algo">SHA-1</span><span class="hash-val" id="hash-sha1">—</span></div>
+          <div class="hash-row"><span class="hash-algo">SHA-256</span><span class="hash-val" id="hash-sha256">—</span></div>
+        </div>
+      </div>
+      <div id="cipher" class="tab-panel">
+        <p class="tool-desc">Base64 encode/decode and ROT13.</p>
+        <textarea id="cipher-input" placeholder="Enter text…"></textarea>
+        <div class="cipher-controls">
+          <button class="btn-sub on" data-mode="encode">Base64 Encode</button>
+          <button class="btn-sub" data-mode="decode">Base64 Decode</button>
+          <button class="btn-sub" data-mode="rot13">ROT13</button>
+        </div>
+        <div class="result-box"><span class="result-label">OUTPUT</span><div class="result-text" id="cipher-output">—</div></div>
+      </div>
+      <div id="password" class="tab-panel">
+        <p class="tool-desc">Entropy, strength, crack-time. Optional HIBP check.</p>
+        <input type="password" id="password-input" placeholder="Password to analyse…">
+        <div class="strength-bar-bg"><div class="strength-bar-fill" id="strength-bar"></div></div>
+        <div class="strength-row"><span>Strength: <strong id="strength-label">—</strong></span><span>Entropy: <strong id="entropy-label">0</strong> bits</span></div>
+        <div style="margin:12px 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <button class="btn-sub" type="button" id="hibp-btn">Check HIBP</button>
+          <span id="hibp-result" style="font-size:.85rem;color:var(--muted)">Not queried.</span>
+        </div>
+        <div class="detail-box">
+          <div class="detail-row"><span>Time to crack</span><strong id="crack-time">—</strong></div>
+          <div class="detail-row"><span>Complexity</span><span id="complexity-audit" style="color:var(--muted)">—</span></div>
+        </div>
+      </div>
+      <div id="breach" class="tab-panel">
+        <p class="tool-desc">Email breach lookup via XposedOrNot.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+          <input type="email" id="breach-email" placeholder="email@example.com" style="flex:1;min-width:180px">
+          <button class="btn btn-fill" type="button" id="breach-btn" style="padding:12px 18px">Scan</button>
+        </div>
+        <div id="breach-status" style="font-size:.9rem;color:var(--muted);margin-bottom:10px">Enter an email to scan.</div>
+        <div id="breach-results"></div>
+      </div>
+      <div id="intel" class="tab-panel">
+        <p class="tool-desc">Browser footprint — local only. Not stored or sent.</p>
+        <div class="hash-results" style="margin-top:0">
+          <div class="footprint-grid">
+            <div class="hash-row"><span class="hash-algo">IP / ISP</span><span class="hash-val" id="intel-ip">…</span></div>
+            <div class="hash-row"><span class="hash-algo">VPN</span><span class="hash-val" id="intel-vpn">…</span></div>
+            <div class="hash-row"><span class="hash-algo">Connection</span><span class="hash-val" id="intel-conn">…</span></div>
+            <div class="hash-row"><span class="hash-algo">OS</span><span class="hash-val" id="intel-os">…</span></div>
+            <div class="hash-row"><span class="hash-algo">Browser</span><span class="hash-val" id="intel-browser">…</span></div>
+            <div class="hash-row"><span class="hash-algo">CPU</span><span class="hash-val" id="intel-cores">…</span></div>
+            <div class="hash-row"><span class="hash-algo">RAM</span><span class="hash-val" id="intel-ram">…</span></div>
+            <div class="hash-row"><span class="hash-algo">Screen</span><span class="hash-val" id="intel-screen">…</span></div>
+            <div class="hash-row"><span class="hash-algo">Timezone</span><span class="hash-val" id="intel-tz">…</span></div>
+            <div class="hash-row"><span class="hash-algo">Bot check</span><span class="hash-val" id="intel-bot">…</span></div>
+            <div class="hash-row"><span class="hash-algo">Session</span><span class="hash-val" id="intel-time">0s</span></div>
+            <div class="hash-row"><span class="hash-algo">Canvas</span><span class="hash-val" id="intel-canvas">…</span></div>
+          </div>
+        </div>
+        <div class="privacy-banner"><strong>⚠ Zero storage</strong><p>Computed in your browser only.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="path">
+  <div class="sec-num reveal">04 — Path</div>
+  <h2 class="reveal">How I got here</h2>
+  <div class="timeline reveal">
+    <div class="tl"><div class="tl-when">2022 — 2026</div><h3>BSc (Hons) Computing & IT</h3><div class="org">CCT College Dublin · Graduated 2026</div><p>Cybersecurity and ML focus. Capstone: production-minded intrusion detection.</p></div>
+    <div class="tl"><div class="tl-when">Certified</div><h3>Android Bug Bounty Hunter</h3><div class="org">EC-Council</div><p>Mobile application security and ethical vulnerability research.</p></div>
+    <div class="tl"><div class="tl-when">In progress</div><h3>Certified Ethical Hacker (CEH)</h3><div class="org">EC-Council</div><p>Offensive methodology for junior pen-test roles.</p></div>
+    <div class="tl"><div class="tl-when">Now</div><h3>Junior Penetration Tester</h3><div class="org">Ireland · Open to opportunities</div><p>Recent graduate, ready to assess and grow under senior leadership.</p></div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="cta-band glass glass-glow reveal">
+    <div class="sec-num" style="justify-content:center">05 — Contact</div>
+    <h2>If you’re hiring for security — let’s talk.</h2>
+    <p>Junior pen-test or security roles in Ireland. Recent graduate, certified, ready to start.</p>
+    <div class="cta-links" style="justify-content:center;gap:14px;flex-wrap:wrap">
+      <a class="btn btn-fill" href="mailto:kuldeepshukla01@gmail.com?subject=Hello%20Kuldeep%20—%20from%20your%20portfolio">Email me</a>
+      <a class="btn btn-line" href="https://github.com/kuldeepshukla01" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-line" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© 2026 Kuldeep Shukla</span>
+  <span>Graduate · Cybersecurity · Dublin</span>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
