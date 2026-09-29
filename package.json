@@ -1,0 +1,27 @@
+{
+  "name": "portfolio-3d",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "threejs",
+    "gsap",
+    "portfolio",
+    "creative-developer",
+    "webgl",
+    "interactive"
+  ],
+  "author": "Kuldeep Shukla",
+  "license": "MIT",
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
