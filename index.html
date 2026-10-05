@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CORE DEFENSE™ // Kuldeep Shukla — Cybersecurity Operations Portfolio</title>
-  <meta name="description" content="Cybersecurity Analyst, SOC Operator & Threat Hunter Portfolio. 2026 Computing & IT graduate (CCT College Dublin). EC-Council Android Bug Bounty Hunter. Creator of 1DayCrew AI." />
+  <meta name="description" content="Cybersecurity Analyst, SOC Operator & Threat Hunter. 2026 Computing & IT graduate (CCT College Dublin). EC-Council Android Bug Bounty Hunter. Creator of 1DayCrew AI." />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
 
   <!-- Tactical Cyber Typography -->
@@ -13,21 +13,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-  <!-- CDNs: Three.js, GSAP, Chart.js -->
+  <!-- CDNs: Three.js, Chart.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     :root {
       --bg-dark: #03070d;
       --bg-surface: #06111c;
-      --panel-bg: rgba(6, 17, 28, 0.88);
-      --card-bg: rgba(8, 22, 36, 0.75);
-      --card-inner: rgba(5, 15, 25, 0.65);
-      --border-cyan: rgba(0, 240, 255, 0.24);
+      --panel-bg: rgba(6, 17, 28, 0.90);
+      --card-bg: rgba(8, 22, 36, 0.78);
+      --card-inner: rgba(4, 12, 22, 0.75);
+      --border-cyan: rgba(0, 240, 255, 0.22);
       --border-cyan-glow: rgba(0, 240, 255, 0.55);
-      --border-emerald: rgba(0, 255, 170, 0.28);
+      --border-emerald: rgba(0, 255, 170, 0.35);
       --border-amber: rgba(255, 183, 0, 0.35);
       --cyan: #00f0ff;
       --cyan-bright: #38f8ff;
@@ -46,6 +45,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      scroll-behavior: smooth;
     }
 
     html, body {
@@ -68,17 +68,16 @@
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       background:
-        radial-gradient(circle at 50% 25%, rgba(0, 240, 255, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 15% 80%, rgba(0, 255, 170, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 85% 80%, rgba(0, 180, 255, 0.05) 0%, transparent 50%),
-        linear-gradient(rgba(0, 240, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px);
+        radial-gradient(circle at 50% 15%, rgba(0, 240, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 10% 60%, rgba(0, 255, 170, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 90% 70%, rgba(0, 180, 255, 0.05) 0%, transparent 50%),
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
       background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
       pointer-events: none;
       z-index: 1;
     }
 
-    /* CRT Subtle Scanlines Overlay */
     .crt-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -89,7 +88,6 @@
       opacity: 0.6;
     }
 
-    /* Background Ambient Canvas */
     #ambientCanvas {
       position: fixed;
       inset: 0;
@@ -99,38 +97,23 @@
       pointer-events: none;
     }
 
-    /* Global Glass Panel HUD Styling */
-    .glass-hud {
-      background: var(--panel-bg);
-      border: 1px solid var(--border-cyan);
-      border-radius: 20px;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      position: relative;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .glass-hud:hover {
-      border-color: var(--border-cyan-glow);
-      box-shadow: 0 12px 45px rgba(0, 240, 255, 0.12), inset 0 1px 0 rgba(0, 240, 255, 0.2);
-    }
-
     /* TOP COMMAND NAVIGATION BAR */
     .top-command-bar {
       position: fixed;
-      top: 20px;
+      top: 18px;
       left: 50%;
       transform: translateX(-50%);
-      width: min(92vw, 1180px);
+      width: min(92vw, 1060px);
       z-index: 100;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 24px;
-      background: rgba(6, 17, 28, 0.85);
+      background: rgba(6, 17, 28, 0.88);
       border: 1px solid var(--border-cyan);
       border-radius: 999px;
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 240, 255, 0.1);
     }
 
@@ -140,12 +123,6 @@
       gap: 10px;
       text-decoration: none;
       color: #fff;
-    }
-    .brand-logo-shield {
-      width: 24px;
-      height: 24px;
-      color: var(--cyan);
-      filter: drop-shadow(0 0 8px var(--cyan));
     }
     .brand-text {
       font-family: var(--font-display);
@@ -162,7 +139,7 @@
 
     .nav-bar {
       display: flex;
-      gap: 6px;
+      gap: 4px;
       list-style: none;
     }
     .nav-btn {
@@ -170,121 +147,131 @@
       border: 1px solid transparent;
       color: var(--text-muted);
       font-family: var(--font-hud);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
-      padding: 7px 18px;
+      padding: 7px 15px;
       border-radius: 999px;
-      cursor: pointer;
+      text-decoration: none;
       transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      display: inline-block;
     }
     .nav-btn:hover {
       color: var(--text-main);
-      border-color: rgba(0, 240, 255, 0.3);
-      background: rgba(0, 240, 255, 0.05);
+      background: rgba(0, 240, 255, 0.08);
     }
     .nav-btn.active {
       color: #fff;
-      background: rgba(0, 240, 255, 0.15);
+      background: rgba(0, 240, 255, 0.16);
       border-color: var(--cyan);
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
     }
 
-    .status-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--emerald);
-      letter-spacing: 1px;
-    }
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--emerald);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--emerald);
-      animation: pulseAnim 2s infinite ease-in-out;
-    }
-    @keyframes pulseAnim {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
-
-    /* MAIN THREE-COLUMN PANORAMIC WORKSPACE */
-    .dashboard-viewport {
-      margin-top: 96px;
-      padding: 16px 2.5vw 40px;
-      display: grid;
-      grid-template-columns: 360px 1.4fr 400px;
-      gap: 22px;
+    /* CONTINUOUS SCROLL CONTAINER */
+    .continuous-container {
+      width: min(92vw, 1080px);
+      margin: 110px auto 60px;
       position: relative;
       z-index: 10;
-      max-width: 1720px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* COLUMN 1: LEFT PANEL (CORE DEFENSE / ABOUT) */
-    .panel-left {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 70px;
     }
 
-    /* Section Headings */
-    .panel-header-block {
-      text-align: center;
-      padding: 6px 0 12px;
+    /* Glass Section Cards */
+    .glass-section-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-cyan);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(0, 240, 255, 0.06);
+      padding: 34px 38px;
+      position: relative;
     }
-    .panel-title {
+
+    /* Section Decorative Header */
+    .circuit-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .circuit-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 170, 0.35), rgba(0, 240, 255, 0.35), transparent);
+      position: relative;
+    }
+    .circuit-line::after {
+      content: '';
+      position: absolute;
+      top: -3px; right: 0;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+    }
+    .circuit-line.left::after {
+      right: auto; left: 0;
+    }
+    .section-title {
       font-family: var(--font-display);
-      font-size: 1.8rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      letter-spacing: 2px;
-      color: #fff;
+      letter-spacing: 3px;
       text-transform: uppercase;
+      color: var(--cyan);
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
       margin: 0;
-      line-height: 1.1;
+      line-height: 1;
+      text-align: center;
     }
-    .panel-subtitle {
+    .section-subtitle {
       font-family: var(--font-hud);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
-      letter-spacing: 1px;
-      margin-top: 4px;
+      letter-spacing: 1.5px;
+      text-align: center;
+      margin-top: 5px;
     }
 
-    /* Operator Portrait & Roles */
-    .operator-card {
+    /* SECTION 1: ABOUT // OPERATOR DOSSIER */
+    .about-main-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+    .operator-profile-card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 240, 255, 0.16);
+      border-radius: 18px;
       padding: 22px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 16px;
     }
-    .portrait-hud-wrapper {
-      position: relative;
+    .portrait-hud-frame {
       width: 140px;
       height: 140px;
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--border-cyan);
       box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
+      position: relative;
       background: #02060c;
     }
-    .portrait-hud-wrapper img {
+    .portrait-hud-frame img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-    .laser-scan-bar {
+    .laser-scan-line {
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
@@ -297,7 +284,6 @@
       50% { top: 95%; opacity: 1; }
       100% { top: 0%; opacity: 0.2; }
     }
-
     .roles-telemetry-list {
       list-style: none;
       width: 100%;
@@ -305,196 +291,101 @@
       flex-direction: column;
       gap: 8px;
     }
-    .role-telemetry-item {
+    .roles-telemetry-list li {
       display: flex;
       align-items: center;
       gap: 10px;
       font-size: 0.82rem;
       font-weight: 600;
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
       color: var(--text-main);
       padding: 6px 12px;
       background: rgba(0, 240, 255, 0.04);
       border-left: 2px solid var(--emerald);
       border-radius: 4px;
     }
-    .spec-emerald-dot {
+    .spec-dot {
       width: 6px;
       height: 6px;
-      background: var(--emerald);
       border-radius: 50%;
+      background: var(--emerald);
       box-shadow: 0 0 8px var(--emerald);
       flex-shrink: 0;
     }
 
-    /* Core Architecture / Telemetry & Threat Map */
-    .telemetry-threat-card {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .telemetry-row-stat {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(0, 240, 255, 0.12);
-      border-radius: 8px;
-    }
-    .stat-label-box {
-      display: flex;
-      flex-direction: column;
-    }
-    .stat-title {
-      font-family: var(--font-hud);
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-    }
-    .stat-val {
-      font-family: var(--font-mono);
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--cyan);
-    }
-    .stat-sparkline {
-      width: 90px;
-      height: 28px;
-    }
-
-    .world-threat-map-box {
-      width: 100%;
-      height: 120px;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid rgba(0, 240, 255, 0.15);
-      position: relative;
-      background: #020509;
-    }
-    .world-threat-map-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.85;
-    }
-    .map-pulse-ping {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--emerald);
-      box-shadow: 0 0 10px var(--emerald);
-    }
-
-    /* Live Vuln Lab Summary (Left Column) */
-    .vuln-summary-card {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .vuln-sub-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .sub-col-title {
-      font-size: 0.75rem;
-      letter-spacing: 1px;
-      color: var(--cyan);
-      margin-bottom: 8px;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-    .tool-checklist-item {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .sim-progress-row {
-      margin-bottom: 8px;
-    }
-    .sim-progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.72rem;
-      font-family: var(--font-mono);
-      margin-bottom: 3px;
-    }
-    .progress-track-bar {
-      width: 100%;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .progress-fill-emerald {
-      height: 100%;
-      background: linear-gradient(90deg, var(--cyan), var(--emerald));
-      box-shadow: 0 0 8px var(--emerald);
-      border-radius: 999px;
-    }
-
-    /* COLUMN 2: CENTER PANEL (ARSENAL // TOOLS & PROJECTS) */
-    .panel-center {
+    .core-architecture-box {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 240, 255, 0.16);
+      border-radius: 18px;
+      padding: 22px;
       display: flex;
       flex-direction: column;
       gap: 18px;
     }
-
-    /* Main Arsenal Outer Frame */
-    .arsenal-master-card {
-      padding: 24px 28px 20px;
-      border: 1px solid var(--border-cyan-glow);
-      box-shadow: 0 14px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 240, 255, 0.08);
+    .telemetry-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .telemetry-stat-card {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(0, 240, 255, 0.12);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .threat-map-container {
+      width: 100%;
+      height: 160px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 240, 255, 0.16);
+      background: #020509;
       position: relative;
     }
+    .threat-map-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.88;
+    }
 
+    /* SECTION 2: ARSENAL // TOOLS & PROJECTS (2x2 GRID) */
     .arsenal-grid-2x2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-top: 10px;
+      gap: 22px;
     }
-
     .project-holo-card {
       background: var(--card-bg);
-      border: 1px solid rgba(0, 240, 255, 0.16);
-      border-radius: 16px;
-      padding: 16px;
+      border: 1px solid rgba(0, 240, 255, 0.18);
+      border-radius: 18px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-      overflow: hidden;
     }
     .project-holo-card:hover {
       border-color: var(--cyan);
       transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(0, 240, 255, 0.15);
+      box-shadow: 0 14px 35px rgba(0, 240, 255, 0.16);
     }
-
-    /* 3D Isometric Hologram Pedestal Box */
     .holo-pedestal-box {
       width: 100%;
-      height: 110px;
+      height: 130px;
       border-radius: 12px;
       background: radial-gradient(circle at 50% 60%, rgba(0, 240, 255, 0.1) 0%, rgba(3, 10, 18, 0.6) 70%);
       border: 1px solid rgba(0, 240, 255, 0.1);
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
     }
     .holo-pedestal-box img {
-      height: 85%;
+      height: 88%;
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 0 14px rgba(0, 255, 170, 0.45));
@@ -504,329 +395,379 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-4px); }
     }
-
     .project-title {
       font-family: var(--font-display);
-      font-size: 1.35rem;
+      font-size: 1.45rem;
       font-weight: 700;
       color: #fff;
-      letter-spacing: 1px;
       margin: 0;
     }
-    .project-desc-text {
-      font-size: 0.84rem;
+    .project-desc {
+      font-size: 0.85rem;
       color: var(--text-muted);
       line-height: 1.45;
       min-height: 2.8em;
     }
-
-    /* Embedded Project Widgets */
-    /* 1. Wave Area Chart (1DayCrew AI) */
     .widget-wave-chart {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(0, 240, 255, 0.12);
       border-radius: 8px;
-      padding: 8px 10px;
+      padding: 8px 12px;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
-    .chart-header-stat {
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--emerald);
-    }
-
-    /* 2. Map Viz Checklist (Aegis Recon Suite) */
     .widget-checklist-box {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(0, 240, 255, 0.12);
       border-radius: 8px;
-      padding: 8px 10px;
+      padding: 8px 12px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       align-items: center;
     }
-    .check-tags-list {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      font-size: 0.75rem;
-    }
-    .check-tag-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      color: var(--text-main);
-    }
-    .check-tag-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--cyan);
-    }
-    .mini-threat-map {
-      height: 48px;
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1px solid rgba(0, 240, 255, 0.1);
-    }
-    .mini-threat-map img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* 3. Bug Bounty Dual Matrix */
     .widget-bug-matrix {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(0, 240, 255, 0.12);
       border-radius: 8px;
-      padding: 8px 10px;
+      padding: 8px 12px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
     }
-    .scorecard-mini-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.7rem;
-      font-family: var(--font-mono);
-      margin-bottom: 2px;
-    }
-
-    /* 4. Crypto SHA-256 Input/Output */
     .widget-crypto-calc {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(0, 240, 255, 0.12);
       border-radius: 8px;
-      padding: 8px 10px;
+      padding: 8px 12px;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
-    .crypto-input-field {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      border-radius: 4px;
-      color: var(--cyan);
+
+    /* SECTION 3: LIVE VULN LAB // 5 WORKING TOOLS */
+    .toolbox-tabs-bar {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+    }
+    .toolbox-tab-btn {
+      background: transparent;
+      border: 1px solid rgba(0, 240, 255, 0.18);
+      color: var(--text-muted);
       font-family: var(--font-mono);
-      font-size: 0.72rem;
-      padding: 5px 8px;
+      font-size: 0.8rem;
+      padding: 7px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+    }
+    .toolbox-tab-btn.active {
+      color: var(--cyan);
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+    }
+    .tool-panel {
+      display: none;
+    }
+    .tool-panel.active {
+      display: block;
+    }
+    .form-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
       outline: none;
     }
-    .crypto-output-field {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--emerald);
-      word-break: break-all;
-      background: rgba(0, 255, 170, 0.05);
-      border-radius: 4px;
-      padding: 4px 6px;
-      min-height: 20px;
+    .form-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
     }
-
-    /* Carousel Pagination Indicator Dots */
-    .carousel-dots-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      margin-top: 18px;
-    }
-    .carousel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .carousel-dot.active {
-      width: 22px;
-      border-radius: 999px;
+    .btn-tool {
       background: var(--cyan);
-      box-shadow: 0 0 12px var(--cyan);
+      color: #000;
+      font-family: var(--font-hud);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      padding: 9px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-tool:hover {
+      background: var(--emerald);
+      box-shadow: 0 0 14px var(--emerald);
     }
 
-    /* COLUMN 3: RIGHT PANEL (VULN LAB, SKILLS RADAR, TIMELINE, CONTACT) */
-    .panel-right {
+    /* SECTION 4: SKILLS MATRIX & EXACT TIMELINE */
+    .matrix-timeline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 30px;
+    }
+
+    /* EXACT TIMELINE IMPLEMENTATION MATCHING MOCKUP */
+    .timeline-exact-card {
+      background: rgba(0, 0, 0, 0.40);
+      border: 1px solid rgba(0, 240, 255, 0.20);
+      border-radius: 20px;
+      padding: 24px 28px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
-    }
-
-    /* Live Vuln Lab & Skills Matrix Top Card */
-    .vuln-radar-card {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .radar-container {
-      width: 100%;
-      height: 160px;
       position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
     }
 
-    /* Timeline Section with Rotating Globe */
-    .timeline-card {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    /* Ambient card corner glow */
+    .timeline-exact-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle at top right, rgba(0, 255, 170, 0.08), transparent 70%);
+      pointer-events: none;
     }
-    .timeline-content-split {
+
+    /* Header title */
+    .timeline-circuit-head-row {
+      position: relative;
+      margin-bottom: 22px;
+      z-index: 3;
+    }
+    .timeline-head-title {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 2.8px;
+      margin: 0;
+      line-height: 1;
+      display: inline-block;
+    }
+
+    /* Dynamic SVG circuit overlay that runs from under TIMELINE to the vertical dots */
+    .timeline-circuit-svg-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      overflow: visible;
+    }
+
+    /* Main body layout: Globe on Left, Vertical Milestones on Right */
+    .timeline-body-split {
       display: grid;
-      grid-template-columns: 95px 1fr;
-      gap: 14px;
+      grid-template-columns: 140px 1fr;
+      gap: 20px;
       align-items: center;
+      position: relative;
+      z-index: 3;
+      flex: 1;
     }
-    .globe-canvas-box {
-      width: 95px;
-      height: 95px;
-      border-radius: 50%;
+
+    /* 3D Cyber Earth Globe Container */
+    .globe-holder-box {
+      width: 140px;
+      height: 140px;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+      user-select: none;
     }
-    .globe-canvas-box img {
-      width: 90px;
-      height: 90px;
+
+    /* Accurate Mockup Globe Image with Living Animations */
+    .exact-globe-overlay {
+      position: absolute;
+      width: 126px;
+      height: 126px;
       object-fit: contain;
-      filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.5));
-      animation: rotateGlobe 20s infinite linear;
+      filter: drop-shadow(0 0 18px rgba(0, 240, 255, 0.70)) drop-shadow(0 0 28px rgba(255, 183, 0, 0.40));
+      z-index: 3;
+      pointer-events: auto;
+      transition: opacity 0.35s ease, transform 0.4s ease;
+      animation: globeFloatPulse 4s ease-in-out infinite alternate;
     }
-    @keyframes rotateGlobe {
+    .exact-globe-overlay:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 24px rgba(0, 240, 255, 0.90)) drop-shadow(0 0 36px rgba(255, 183, 0, 0.65));
+    }
+
+    @keyframes globeFloatPulse {
+      0% {
+        transform: translateY(0px) scale(1);
+      }
+      100% {
+        transform: translateY(-4px) scale(1.02);
+      }
+    }
+
+    /* Live 3D Interactive Three.js WebGL Canvas */
+    .globe-interactive-canvas {
+      position: absolute;
+      inset: 0;
+      width: 140px;
+      height: 140px;
+      z-index: 4;
+      border-radius: 50%;
+      cursor: grab;
+      display: none; /* Shown when in 3D interactive mode */
+    }
+    .globe-interactive-canvas:active {
+      cursor: grabbing;
+    }
+
+    /* Rotating Cyber Orbit Ring around Globe */
+    .globe-orbit-ring {
+      position: absolute;
+      width: 136px;
+      height: 136px;
+      border-radius: 50%;
+      border: 1px dashed rgba(0, 240, 255, 0.35);
+      pointer-events: none;
+      z-index: 2;
+      animation: orbitSpin 18s linear infinite;
+    }
+    @keyframes orbitSpin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
 
-    .timeline-items-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      list-style: none;
-    }
-    .timeline-entry {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 0.8rem;
-      padding-bottom: 6px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .entry-info {
-      display: flex;
-      flex-direction: column;
-    }
-    .entry-year {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--cyan);
-      font-weight: 700;
-    }
-    .entry-desc {
-      color: var(--text-main);
-      font-weight: 500;
-    }
-    .entry-badge-img {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-      flex-shrink: 0;
-      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
-    }
-
-    /* Contact & Cyber Intel Feed Card */
-    .contact-intel-card {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .intel-feed-col {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .intel-threat-item {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      line-height: 1.35;
-      padding-bottom: 6px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .intel-threat-item strong {
-      color: var(--red);
-      font-family: var(--font-mono);
-    }
-    .intel-threat-item.warn strong {
-      color: var(--amber);
-    }
-
-    .contact-terminal-col {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .contact-terminal-box {
-      background: rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(0, 240, 255, 0.15);
-      border-radius: 8px;
-      padding: 10px;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--text-main);
-      min-height: 70px;
-      overflow-y: auto;
-    }
-    .terminal-input-row {
-      display: flex;
-      gap: 6px;
-    }
-    .terminal-input {
-      flex: 1;
-      background: rgba(0, 0, 0, 0.4);
+    /* Mode Toggle Pill */
+    .globe-toggle-pill {
+      position: absolute;
+      bottom: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(3, 7, 13, 0.92);
       border: 1px solid var(--border-cyan);
-      border-radius: 4px;
-      color: #fff;
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 0.62rem;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
-      padding: 6px 8px;
-      outline: none;
+      color: var(--cyan);
+      cursor: pointer;
+      z-index: 6;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
     }
-    .terminal-send-btn {
+    .globe-toggle-pill:hover {
       background: var(--cyan);
       color: #000;
-      border: none;
-      border-radius: 4px;
-      padding: 0 12px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: all 0.2s ease;
+      box-shadow: 0 0 14px var(--cyan);
     }
-    .terminal-send-btn:hover {
+
+    /* Milestone Vertical Chain */
+    .timeline-exact-chain {
+      list-style: none;
+      position: relative;
+      padding: 4px 0;
+      margin: 0;
+    }
+
+    .timeline-exact-row {
+      display: grid;
+      grid-template-columns: 52px 20px 1fr 34px;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .timeline-exact-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .tl-year {
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      color: #8fa9be;
+      text-align: right;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .tl-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
       background: var(--emerald);
-      box-shadow: 0 0 10px var(--emerald);
+      box-shadow: 0 0 12px var(--emerald), 0 0 20px rgba(0, 255, 170, 0.6);
+      margin: 0 auto;
+      z-index: 5;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .timeline-exact-row:hover .tl-dot {
+      transform: scale(1.35);
+      box-shadow: 0 0 18px #fff, 0 0 26px var(--emerald);
+    }
+
+    .tl-content {
+      display: flex;
+      flex-direction: column;
+    }
+    .tl-heading {
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.25;
+      font-family: var(--font-sans);
+    }
+    .tl-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-family: var(--font-sans);
+    }
+
+    .tl-badge-img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.75));
+      transition: transform 0.2s ease;
+    }
+    .timeline-exact-row:hover .tl-badge-img {
+      transform: scale(1.18);
+    }
+
+    /* SECTION 5: CYBER INTEL FEED & CONTACT TERMINAL */
+    .intel-contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 26px;
     }
 
     /* FOOTER */
     footer {
       border-top: 1px solid rgba(0, 240, 255, 0.12);
-      padding: 24px 5vw;
+      padding: 30px 5vw;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
       position: relative;
       z-index: 10;
@@ -834,37 +775,21 @@
     footer a {
       color: var(--cyan);
       text-decoration: none;
-      margin-left: 16px;
+      margin-left: 18px;
       transition: color 0.2s;
     }
     footer a:hover {
       color: var(--emerald);
     }
 
-    /* RESPONSIVE LAYOUT */
-    @media (max-width: 1360px) {
-      .dashboard-viewport {
-        grid-template-columns: 320px 1fr 340px;
-        gap: 16px;
-      }
-    }
-
-    @media (max-width: 1100px) {
-      .top-command-bar {
-        width: 95vw;
-        padding: 8px 16px;
-      }
+    @media (max-width: 960px) {
+      .top-command-bar { width: 96vw; padding: 8px 16px; }
       .nav-bar { display: none; }
-      .dashboard-viewport {
-        grid-template-columns: 1fr;
-        padding: 16px 4vw 40px;
-      }
-      .arsenal-grid-2x2 {
+      .about-main-grid, .arsenal-grid-2x2, .matrix-timeline-grid, .intel-contact-grid {
         grid-template-columns: 1fr;
       }
-      .vuln-radar-card, .contact-intel-card {
-        grid-template-columns: 1fr;
-      }
+      .telemetry-stats-row { grid-template-columns: 1fr; }
+      .glass-section-card { padding: 24px 20px; }
     }
   </style>
 </head>
@@ -872,398 +797,455 @@
   <div class="crt-overlay"></div>
   <canvas id="ambientCanvas"></canvas>
 
-  <!-- TOP COMMAND BAR NAVIGATION -->
+  <!-- TOP COMMAND NAVIGATION BAR (CLICK TO SMOOTH SCROLL) -->
   <header class="top-command-bar">
-    <a href="#about" class="brand-hud" onclick="focusPanel(0)">
-      <svg class="brand-logo-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-      </svg>
+    <a href="#about" class="brand-hud">
       <div class="brand-text">CORE DEFENSE<span>™</span></div>
     </a>
 
-    <ul class="nav-bar">
-      <li><button class="nav-btn" onclick="focusPanel(0)">MISSION LOGS</button></li>
-      <li><button class="nav-btn active" onclick="focusPanel(1)">ARSENAL</button></li>
-      <li><button class="nav-btn" onclick="focusPanel(2)">LIVE VULN LAB</button></li>
-      <li><button class="nav-btn" onclick="focusPanel(2)">INTEL FEED</button></li>
-      <li><button class="nav-btn" onclick="focusPanel(2)">CONTACT // ACCESS</button></li>
-    </ul>
+    <nav class="nav-bar">
+      <a href="#about" class="nav-btn active">MISSION LOGS</a>
+      <a href="#arsenal" class="nav-btn">ARSENAL</a>
+      <a href="#lab" class="nav-btn">LIVE VULN LAB</a>
+      <a href="#matrix" class="nav-btn">SKILLS MATRIX</a>
+      <a href="#timeline" class="nav-btn">TIMELINE</a>
+      <a href="#contact" class="nav-btn">CONTACT // ACCESS</a>
+    </nav>
 
-    <div class="status-pill">
-      <span class="pulse-dot"></span>
-      <span>ONLINE // DUBLIN, IE</span>
+    <div style="display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:0.75rem; color:var(--emerald);">
+      <span style="width:8px; height:8px; background:var(--emerald); border-radius:50%; box-shadow:0 0 8px var(--emerald);"></span>
+      <span>ONLINE</span>
     </div>
   </header>
 
-  <!-- MAIN 3-COLUMN WORKSPACE (EXACT VISUAL MOCKUP CORRESPONDENCE) -->
-  <main class="dashboard-viewport" id="workspace">
+  <!-- CONTINUOUS SCROLL CONTAINER -->
+  <main class="continuous-container">
 
     <!-- ========================================================
-         COLUMN 1 (LEFT): CORE DEFENSE™ // ABOUT & TELEMETRY
+         SECTION 1: CORE DEFENSE™ // ABOUT (DOSSIER)
          ======================================================== -->
-    <aside class="panel-left" id="panelLeft">
-      
-      <!-- Operator Profile Card -->
-      <div class="glass-hud operator-card">
-        <div class="panel-header-block">
-          <h2 class="panel-title">CORE DEFENSE<span>™</span></h2>
-          <div class="panel-subtitle">About</div>
-        </div>
-
-        <div class="portrait-hud-wrapper">
-          <div class="laser-scan-bar"></div>
-          <img src="assets/cyber_assets/kuldeep_operator_hud.png" alt="Kuldeep Shukla Tactical Cyber Portrait" />
-        </div>
-
-        <ul class="roles-telemetry-list">
-          <li class="role-telemetry-item">
-            <span class="spec-emerald-dot"></span>
-            <span>CYBERSECURITY ANALYST</span>
-          </li>
-          <li class="role-telemetry-item">
-            <span class="spec-emerald-dot"></span>
-            <span>SOC OPERATOR</span>
-          </li>
-          <li class="role-telemetry-item">
-            <span class="spec-emerald-dot"></span>
-            <span>THREAT HUNTER</span>
-          </li>
-          <li class="role-telemetry-item">
-            <span class="spec-emerald-dot"></span>
-            <span>REVERSE ENGINEER</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Core Architecture Telemetry & World Threat Map -->
-      <div class="glass-hud telemetry-threat-card">
+    <section id="about" class="glass-section-card">
+      <div class="circuit-section-header">
+        <div class="circuit-line left"></div>
         <div>
-          <h3 style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:#fff; letter-spacing:1.5px;">CORE ARCHITECTURE</h3>
-          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">Professional, advanced cybersecurity portfolio</p>
+          <h2 class="section-title">CORE DEFENSE<span>™</span></h2>
+          <div class="section-subtitle">About & Mission Logs</div>
         </div>
-
-        <div style="display:flex; flex-direction:column; gap:8px;">
-          <!-- Metric 1: Correlation -->
-          <div class="telemetry-row-stat">
-            <div class="stat-label-box">
-              <span class="stat-title">CORRELATION</span>
-              <span class="stat-val">133.7 GB/s</span>
-            </div>
-            <svg class="stat-sparkline" viewBox="0 0 100 30">
-              <path d="M0,25 Q20,10 40,18 T80,8 T100,5" fill="none" stroke="#00ffaa" stroke-width="2"></path>
-            </svg>
-          </div>
-
-          <!-- Metric 2: Alerts -->
-          <div class="telemetry-row-stat">
-            <div class="stat-label-box">
-              <span class="stat-title">ALERTS</span>
-              <span class="stat-val">1,003</span>
-            </div>
-            <svg class="stat-sparkline" viewBox="0 0 100 30">
-              <path d="M0,22 L15,18 L30,24 L45,10 L60,16 L75,8 L100,12" fill="none" stroke="#ffb700" stroke-width="2"></path>
-            </svg>
-          </div>
-
-          <!-- Metric 3: Deviations -->
-          <div class="telemetry-row-stat">
-            <div class="stat-label-box">
-              <span class="stat-title">DEVIATIONS</span>
-              <span class="stat-val">3396 ms</span>
-            </div>
-            <svg class="stat-sparkline" viewBox="0 0 100 30">
-              <path d="M0,20 Q30,5 60,15 T100,25" fill="none" stroke="#00f0ff" stroke-width="2"></path>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Threat World Map -->
-        <div class="world-threat-map-box">
-          <img src="assets/cyber_assets/threat_world_map.png" alt="Global Threat Telemetry Map" />
-          <div class="map-pulse-ping" style="top:35%; left:48%;"></div>
-          <div class="map-pulse-ping" style="top:42%; left:28%; background:var(--amber); box-shadow:0 0 10px var(--amber);"></div>
-          <div class="map-pulse-ping" style="top:50%; left:78%; background:var(--cyan); box-shadow:0 0 10px var(--cyan);"></div>
-        </div>
+        <div class="circuit-line"></div>
       </div>
 
-      <!-- Live Vuln Lab Summary -->
-      <div class="glass-hud vuln-summary-card">
-        <div>
-          <h4 style="font-family:var(--font-display); font-size:1.15rem; font-weight:700; color:#fff; letter-spacing:1px;">LIVE VULN LAB</h4>
-          <p style="font-size:0.75rem; color:var(--text-muted);">Interactive tools and simulations, tools and simulations.</p>
-        </div>
-
-        <div class="vuln-sub-grid">
-          <div>
-            <div class="sub-col-title">INTERACTIVE TOOLS</div>
-            <div class="tool-checklist-item"><i class="fa-solid fa-bug" style="color:var(--cyan); font-size:0.7rem;"></i> Exploit Validation</div>
-            <div class="tool-checklist-item"><i class="fa-solid fa-folder-tree" style="color:var(--emerald); font-size:0.7rem;"></i> Basic Projects</div>
-            <div class="tool-checklist-item"><i class="fa-solid fa-shield-virus" style="color:var(--cyan); font-size:0.7rem;"></i> Pentest Tools</div>
-            <div class="tool-checklist-item"><i class="fa-solid fa-network-wired" style="color:var(--emerald); font-size:0.7rem;"></i> SMA IDS Sim</div>
-          </div>
-          <div>
-            <div class="sub-col-title">SIMULATIONS</div>
-            <div class="sim-progress-row">
-              <div class="sim-progress-label"><span>Interactive</span> <span>100%</span></div>
-              <div class="progress-track-bar"><div class="progress-fill-emerald" style="width:100%;"></div></div>
-            </div>
-            <div class="sim-progress-row">
-              <div class="sim-progress-label"><span>Simulations</span> <span>50%</span></div>
-              <div class="progress-track-bar"><div class="progress-fill-emerald" style="width:50%;"></div></div>
-            </div>
-            <div class="sim-progress-row">
-              <div class="sim-progress-label"><span>Simulated AI</span> <span>100%</span></div>
-              <div class="progress-track-bar"><div class="progress-fill-emerald" style="width:100%;"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </aside>
-
-
-    <!-- ========================================================
-         COLUMN 2 (CENTER): ARSENAL // TOOLS & PROJECTS (FOCAL)
-         ======================================================== -->
-    <main class="panel-center" id="panelCenter">
-      <div class="glass-hud arsenal-master-card">
-        
-        <div class="panel-header-block">
-          <h2 class="panel-title" style="color:var(--cyan); text-shadow:0 0 20px rgba(0,240,255,0.4);">ARSENAL</h2>
-          <div class="panel-subtitle">Tools & Projects</div>
-        </div>
-
-        <div class="arsenal-grid-2x2">
-
-          <!-- Card 1: 1DayCrew AI -->
-          <div class="project-holo-card">
-            <div class="holo-pedestal-box">
-              <img src="assets/cyber_assets/holo_1daycrew_ai.png" alt="1DayCrew AI 3D Isometric Hologram" />
-            </div>
-            <div>
-              <h3 class="project-title">1DayCrew AI</h3>
-              <p class="project-desc-text">NIDS/IDS model, intelligence of zero-day attacks using machine learning on network data.</p>
-            </div>
-            <!-- Embedded Area Wave Chart -->
-            <div class="widget-wave-chart">
-              <div class="chart-header-stat">
-                <span>Graphs <i class="fa-solid fa-chart-simple"></i> 97%</span>
-                <span>Progress 20 0%</span>
-              </div>
-              <svg viewBox="0 0 200 50" style="width:100%; height:45px;">
-                <defs>
-                  <linearGradient id="gradEmerald" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#00ffaa" stop-opacity="0.4"></stop>
-                    <stop offset="100%" stop-color="#00ffaa" stop-opacity="0"></stop>
-                  </linearGradient>
-                </defs>
-                <path d="M0,40 Q30,10 60,35 T120,15 T160,28 T200,8 L200,50 L0,50 Z" fill="url(#gradEmerald)"></path>
-                <path d="M0,40 Q30,10 60,35 T120,15 T160,28 T200,8" fill="none" stroke="#00ffaa" stroke-width="2"></path>
-              </svg>
-              <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.6rem; color:var(--text-muted);">
-                <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
-              </div>
-            </div>
+      <div class="about-main-grid">
+        <!-- Operator Identification Card -->
+        <div class="operator-profile-card">
+          <div class="portrait-hud-frame">
+            <div class="laser-scan-line"></div>
+            <img src="assets/cyber_assets/kuldeep_operator_hud.png" alt="Kuldeep Shukla Tactical Operator Portrait" />
           </div>
 
-          <!-- Card 2: Aegis Recon Suite -->
-          <div class="project-holo-card">
-            <div class="holo-pedestal-box">
-              <img src="assets/cyber_assets/holo_aegis_recon.png" alt="Aegis Recon Suite 3D Hologram" />
-            </div>
-            <div>
-              <h3 class="project-title">Aegis Recon Suite</h3>
-              <p class="project-desc-text">Network Scanner with map viz, intelligence security forensic data.</p>
-            </div>
-            <!-- Map Viz Checklist Widget -->
-            <div class="widget-checklist-box">
-              <div class="check-tags-list">
-                <div class="check-tag-item"><span class="check-tag-dot"></span> Network</div>
-                <div class="check-tag-item"><span class="check-tag-dot"></span> Scanner</div>
-                <div class="check-tag-item"><span class="check-tag-dot"></span> Map</div>
-                <div class="check-tag-item"><span class="check-tag-dot"></span> Command</div>
-                <div class="check-tag-item"><span class="check-tag-dot"></span> Reports</div>
-              </div>
-              <div class="mini-threat-map">
-                <img src="assets/cyber_assets/threat_world_map.png" alt="Aegis Threat Map" />
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3: Bug Bounty Hunting -->
-          <div class="project-holo-card">
-            <div class="holo-pedestal-box">
-              <img src="assets/cyber_assets/holo_android_audit.png" alt="Android Bug Bounty 3D Hologram" />
-            </div>
-            <div>
-              <h3 class="project-title">Bug Bounty Hunting</h3>
-              <p class="project-desc-text">Android auditing, OWASP MASVS and compliance scorecards.</p>
-            </div>
-            <!-- Dual Matrix Widget -->
-            <div class="widget-bug-matrix">
-              <div>
-                <div style="font-size:0.7rem; color:var(--cyan); margin-bottom:4px; font-weight:600;">Android auditing</div>
-                <div style="font-size:0.7rem; color:var(--text-main); margin-bottom:2px;">☑ Auditing</div>
-                <div style="font-size:0.7rem; color:var(--text-main); margin-bottom:2px;">☑ Vulnerabilities</div>
-                <div style="font-size:0.7rem; color:var(--text-main); margin-bottom:2px;">☑ Permissions</div>
-                <div style="font-size:0.7rem; color:var(--text-main);">☑ Protections</div>
-              </div>
-              <div>
-                <div style="font-size:0.7rem; color:var(--amber); margin-bottom:4px; font-weight:600;">OWASP MASVS</div>
-                <div class="scorecard-mini-bar"><span>Scorecard</span> <span style="color:var(--amber)">80</span></div>
-                <div class="scorecard-mini-bar"><span>Scorecard</span> <span style="color:var(--amber)">88</span></div>
-                <div class="scorecard-mini-bar"><span>Scorecard</span> <span style="color:var(--amber)">90</span></div>
-                <div class="scorecard-mini-bar"><span>Scorecard</span> <span style="color:var(--amber)">79</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 4: Crypto Forensic Toolkit -->
-          <div class="project-holo-card">
-            <div class="holo-pedestal-box">
-              <img src="assets/cyber_assets/holo_crypto_lock.png" alt="Crypto Forensic Lock 3D Hologram" />
-            </div>
-            <div>
-              <h3 class="project-title">Crypto Forensic Toolkit</h3>
-              <p class="project-desc-text">SHA-256 calculator, to input the output SHA-256 calculator.</p>
-            </div>
-            <!-- Live Working Crypto Engine Widget -->
-            <div class="widget-crypto-calc">
-              <div style="font-size:0.68rem; color:var(--text-muted); font-family:var(--font-mono);">INPUT:</div>
-              <input type="text" id="cryptoInput" class="crypto-input-field" value="SHA-256: A615a1479158688359888888" />
-              <div style="font-size:0.68rem; color:var(--text-muted); font-family:var(--font-mono); margin-top:2px;">OUTPUT:</div>
-              <div id="cryptoOutput" class="crypto-output-field">Computing hash...</div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- 3-Dot Carousel Indicator for Panoramic Sliding -->
-        <div class="carousel-dots-row">
-          <div class="carousel-dot" onclick="focusPanel(0)" title="Focus Mission Logs (Left)"></div>
-          <div class="carousel-dot active" onclick="focusPanel(1)" title="Focus Arsenal (Center)"></div>
-          <div class="carousel-dot" onclick="focusPanel(2)" title="Focus Live Lab & Intel (Right)"></div>
-        </div>
-
-      </div>
-    </main>
-
-
-    <!-- ========================================================
-         COLUMN 3 (RIGHT): LIVE VULN LAB, SKILLS MATRIX, TIMELINE, CONTACT
-         ======================================================== -->
-    <aside class="panel-right" id="panelRight">
-
-      <!-- Live Vuln Lab & Skills Matrix Top Card -->
-      <div class="glass-hud vuln-radar-card">
-        <div>
-          <div style="font-family:var(--font-display); font-size:1.15rem; font-weight:700; color:#fff; letter-spacing:1px;">LIVE VULN LAB</div>
-          <p style="font-size:0.75rem; color:var(--text-muted); line-height:1.4; margin-top:4px;">
-            Interactive tools and deep simulation scoring, 3js radar and advanced Threat Hunter actions.
-          </p>
-          <div style="margin-top:10px;">
-            <div style="font-size:0.72rem; color:var(--cyan); margin-bottom:4px;">INTERACTIVE TOOLS: 0%</div>
-            <div style="font-size:0.72rem; color:var(--emerald); margin-bottom:4px;">SKILLS SIMULATIONS: 20%</div>
-            <div style="font-size:0.72rem; color:var(--amber);">SIMULATION: 84.5%</div>
-          </div>
-        </div>
-
-        <div>
-          <div style="font-family:var(--font-display); font-size:1.15rem; font-weight:700; color:#fff; letter-spacing:1px;">SKILLS MATRIX</div>
-          <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:6px;">Radar chart driven metrics</p>
-          <div class="radar-container">
-            <canvas id="radarChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <!-- Career Timeline with Glowing Earth Globe -->
-      <div class="glass-hud timeline-card">
-        <h3 style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:#fff; letter-spacing:1.5px;">TIMELINE</h3>
-
-        <div class="timeline-content-split">
-          <!-- Glowing 3D Earth Globe -->
-          <div class="globe-canvas-box">
-            <img src="assets/cyber_assets/holo_timeline_globe.png" alt="Glowing 3D Cyber Globe" />
-          </div>
-
-          <!-- Timeline Entries with Badges -->
-          <ul class="timeline-items-list">
-            <li class="timeline-entry">
-              <div class="entry-info">
-                <span class="entry-year">2026</span>
-                <span class="entry-desc">BSc (Hons) Computing & IT - CCT College Dublin</span>
-              </div>
-              <img src="assets/cyber_assets/badge_cct_college.png" alt="CCT Shield" class="entry-badge-img" />
-            </li>
-
-            <li class="timeline-entry">
-              <div class="entry-info">
-                <span class="entry-year">2022</span>
-                <span class="entry-desc">EC-Council Android Bug Bounty Hunter</span>
-              </div>
-              <img src="assets/cyber_assets/badge_ec_council.png" alt="EC-Council Badge" class="entry-badge-img" />
-            </li>
-
-            <li class="timeline-entry">
-              <div class="entry-info">
-                <span class="entry-year">2023</span>
-                <span class="entry-desc">CCT (In Progress)</span>
-              </div>
-              <img src="assets/cyber_assets/badge_cct_inprogress.png" alt="CCT In Progress Badge" class="entry-badge-img" />
-            </li>
-
-            <li class="timeline-entry">
-              <div class="entry-info">
-                <span class="entry-year">2025</span>
-                <span class="entry-desc">CEH (Next Target)</span>
-              </div>
-              <img src="assets/cyber_assets/badge_ceh.png" alt="CEH Next Target Badge" class="entry-badge-img" />
-            </li>
+          <ul class="roles-telemetry-list">
+            <li><span class="spec-dot"></span> CYBERSECURITY ANALYST</li>
+            <li><span class="spec-dot"></span> SOC OPERATOR</li>
+            <li><span class="spec-dot"></span> THREAT HUNTER</li>
+            <li><span class="spec-dot"></span> REVERSE ENGINEER</li>
           </ul>
         </div>
+
+        <!-- Core Architecture & Telemetry -->
+        <div class="core-architecture-box">
+          <div>
+            <h3 style="font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:#fff; letter-spacing:1px; margin-bottom:4px;">CORE ARCHITECTURE</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+              Professional, advanced cybersecurity portfolio specializing in Machine Learning NIDS, Android reverse engineering, and hands-on threat simulation.
+            </p>
+          </div>
+
+          <!-- Telemetry Stats Row -->
+          <div class="telemetry-stats-row">
+            <div class="telemetry-stat-card">
+              <span style="font-size:0.7rem; color:var(--text-muted);">CORRELATION</span>
+              <span style="font-family:var(--font-mono); font-size:1.1rem; font-weight:700; color:var(--cyan);">139.7 GB/s</span>
+              <svg width="100%" height="22" viewBox="0 0 100 25">
+                <path d="M0,20 Q20,5 40,15 T80,6 T100,3" fill="none" stroke="#00ffaa" stroke-width="2"></path>
+              </svg>
+            </div>
+
+            <div class="telemetry-stat-card">
+              <span style="font-size:0.7rem; color:var(--text-muted);">ALERTS</span>
+              <span style="font-family:var(--font-mono); font-size:1.1rem; font-weight:700; color:var(--amber);">1,003</span>
+              <svg width="100%" height="22" viewBox="0 0 100 25">
+                <path d="M0,18 L15,14 L30,20 L45,8 L60,14 L75,6 L100,10" fill="none" stroke="#ffb700" stroke-width="2"></path>
+              </svg>
+            </div>
+
+            <div class="telemetry-stat-card">
+              <span style="font-size:0.7rem; color:var(--text-muted);">DEVIATIONS</span>
+              <span style="font-family:var(--font-mono); font-size:1.1rem; font-weight:700; color:var(--cyan);">3396 ms</span>
+              <svg width="100%" height="22" viewBox="0 0 100 25">
+                <path d="M0,18 Q30,4 60,14 T100,22" fill="none" stroke="#00f0ff" stroke-width="2"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Threat World Map -->
+          <div class="threat-map-container">
+            <img src="assets/cyber_assets/threat_world_map.png" alt="Global Threat Telemetry Map" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 2: ARSENAL // TOOLS & PROJECTS (2x2 GRID)
+         ======================================================== -->
+    <section id="arsenal" class="glass-section-card">
+      <div class="circuit-section-header">
+        <div class="circuit-line left"></div>
+        <div>
+          <h2 class="section-title">ARSENAL</h2>
+          <div class="section-subtitle">Tools & Projects</div>
+        </div>
+        <div class="circuit-line"></div>
       </div>
 
-      <!-- Contact Terminal & Cyber Intel Feed -->
-      <div class="glass-hud contact-intel-card">
+      <div class="arsenal-grid-2x2">
+
+        <!-- Card 1: 1DayCrew AI -->
+        <div class="project-holo-card">
+          <div class="holo-pedestal-box">
+            <img src="assets/cyber_assets/holo_1daycrew_ai.png" alt="1DayCrew AI 3D Hologram" />
+          </div>
+          <div>
+            <h3 class="project-title">1DayCrew AI</h3>
+            <p class="project-desc">NIDS/IDS model, intelligence of zero-day attacks using machine learning on network data.</p>
+          </div>
+          <div class="widget-wave-chart">
+            <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.72rem; color:var(--emerald);">
+              <span>Graphs <i class="fa-solid fa-chart-simple"></i> 97%</span>
+              <span>Progress 20 0%</span>
+            </div>
+            <svg viewBox="0 0 200 50" style="width:100%; height:45px;">
+              <defs>
+                <linearGradient id="gEmerald" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#00ffaa" stop-opacity="0.45"></stop>
+                  <stop offset="100%" stop-color="#00ffaa" stop-opacity="0"></stop>
+                </linearGradient>
+              </defs>
+              <path d="M0,40 Q30,10 60,35 T120,15 T160,28 T200,8 L200,50 L0,50 Z" fill="url(#gEmerald)"></path>
+              <path d="M0,40 Q30,10 60,35 T120,15 T160,28 T200,8" fill="none" stroke="#00ffaa" stroke-width="2"></path>
+            </svg>
+            <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.6rem; color:var(--text-muted);">
+              <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Aegis Recon Suite -->
+        <div class="project-holo-card">
+          <div class="holo-pedestal-box">
+            <img src="assets/cyber_assets/holo_aegis_recon.png" alt="Aegis Recon Suite 3D Hologram" />
+          </div>
+          <div>
+            <h3 class="project-title">Aegis Recon Suite</h3>
+            <p class="project-desc">Network Scanner with map viz, intelligence security forensic data.</p>
+          </div>
+          <div class="widget-checklist-box">
+            <div style="display:flex; flex-direction:column; gap:3px; font-size:0.75rem;">
+              <div style="display:flex; align-items:center; gap:5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Network</div>
+              <div style="display:flex; align-items:center; gap:5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Scanner</div>
+              <div style="display:flex; align-items:center; gap:5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Map</div>
+              <div style="display:flex; align-items:center; gap:5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Command</div>
+              <div style="display:flex; align-items:center; gap:5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Reports</div>
+            </div>
+            <div style="height:55px; border-radius:6px; overflow:hidden; border:1px solid rgba(0,240,255,0.15);">
+              <img src="assets/cyber_assets/threat_world_map.png" alt="Threat Map Mini" style="width:100%; height:100%; object-fit:cover;" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Bug Bounty Hunting -->
+        <div class="project-holo-card">
+          <div class="holo-pedestal-box">
+            <img src="assets/cyber_assets/holo_android_audit.png" alt="Android Bug Bounty 3D Hologram" />
+          </div>
+          <div>
+            <h3 class="project-title">Bug Bounty Hunting</h3>
+            <p class="project-desc">Android auditing, OWASP MASVS and compliance scorecards.</p>
+          </div>
+          <div class="widget-bug-matrix">
+            <div>
+              <div style="font-size:0.7rem; color:var(--cyan); margin-bottom:4px; font-weight:600;">Android auditing</div>
+              <div style="font-size:0.7rem; color:var(--text-main); margin-bottom:2px;">☑ Auditing</div>
+              <div style="font-size:0.7rem; color:var(--text-main); margin-bottom:2px;">☑ Vulnerabilities</div>
+              <div style="font-size:0.7rem; color:var(--text-main); margin-bottom:2px;">☑ Permissions</div>
+              <div style="font-size:0.7rem; color:var(--text-main);">☑ Protections</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem; color:var(--amber); margin-bottom:4px; font-weight:600;">OWASP MASVS</div>
+              <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-family:var(--font-mono);"><span>Scorecard</span> <span style="color:var(--amber)">80</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-family:var(--font-mono);"><span>Scorecard</span> <span style="color:var(--amber)">88</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-family:var(--font-mono);"><span>Scorecard</span> <span style="color:var(--amber)">90</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-family:var(--font-mono);"><span>Scorecard</span> <span style="color:var(--amber)">79</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Crypto Forensic Toolkit -->
+        <div class="project-holo-card">
+          <div class="holo-pedestal-box">
+            <img src="assets/cyber_assets/holo_crypto_lock.png" alt="Crypto Lock 3D Hologram" />
+          </div>
+          <div>
+            <h3 class="project-title">Crypto Forensic Toolkit</h3>
+            <p class="project-desc">SHA-256 calculator, to input the output SHA-256 calculator.</p>
+          </div>
+          <div class="widget-crypto-calc">
+            <div style="font-size:0.68rem; color:var(--text-muted); font-family:var(--font-mono);">INPUT:</div>
+            <input type="text" id="arsenalCryptoInput" class="form-input" style="padding:6px 10px; font-size:0.75rem;" value="SHA-256: A615a1479158688359888888" />
+            <div style="font-size:0.68rem; color:var(--text-muted); font-family:var(--font-mono); margin-top:2px;">OUTPUT:</div>
+            <div id="arsenalCryptoOutput" style="font-family:var(--font-mono); font-size:0.7rem; color:var(--emerald); word-break:break-all; background:rgba(0,255,170,0.06); padding:6px; border-radius:4px;">Computing...</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 3: LIVE VULN LAB // WORKING TOOLBOX
+         ======================================================== -->
+    <section id="lab" class="glass-section-card">
+      <div class="circuit-section-header">
+        <div class="circuit-line left"></div>
+        <div>
+          <h2 class="section-title">LIVE VULN LAB</h2>
+          <div class="section-subtitle">Interactive Tools & Deep Simulation Scoring</div>
+        </div>
+        <div class="circuit-line"></div>
+      </div>
+
+      <!-- Toolbox Tabs -->
+      <div class="toolbox-tabs-bar">
+        <button class="toolbox-tab-btn active" data-tab="tool-hash">01 // HASH</button>
+        <button class="toolbox-tab-btn" data-tab="tool-cipher">02 // ENCODER</button>
+        <button class="toolbox-tab-btn" data-tab="tool-pw">03 // PW STRENGTH</button>
+        <button class="toolbox-tab-btn" data-tab="tool-breach">04 // BREACH CHECK</button>
+        <button class="toolbox-tab-btn" data-tab="tool-intel">05 // DEVICE INTEL</button>
+      </div>
+
+      <!-- Tool 1: Live WebCrypto Hasher -->
+      <div id="tool-hash" class="tool-panel active">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Real-time SHA-1 & SHA-256 cryptographic digest computation via native browser Web Crypto API.</p>
+        <input type="text" id="labHashInput" class="form-input" placeholder="Type text to compute live cryptographic hash..." style="margin-bottom:12px;" />
+        <div style="display:flex; flex-direction:column; gap:8px; font-family:var(--font-mono); font-size:0.8rem; background:rgba(0,0,0,0.3); padding:14px; border-radius:8px;">
+          <div><strong style="color:var(--cyan)">SHA-1:</strong> <span id="labSha1Val" style="color:#fff">—</span></div>
+          <div><strong style="color:var(--emerald)">SHA-256:</strong> <span id="labSha256Val" style="color:#fff">—</span></div>
+        </div>
+      </div>
+
+      <!-- Tool 2: Encoder / Cipher -->
+      <div id="tool-cipher" class="tool-panel">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Payload transformations for reverse engineering, Base64 decoding, and ROT13 inspection.</p>
+        <textarea id="labCipherInput" class="form-input" placeholder="Enter payload to transform..." style="height:70px; resize:none; margin-bottom:12px;"></textarea>
+        <div style="display:flex; gap:8px; margin-bottom:12px;">
+          <button class="btn-tool" onclick="setCipherMode('encode')">BASE64 ENCODE</button>
+          <button class="btn-tool" onclick="setCipherMode('decode')">BASE64 DECODE</button>
+          <button class="btn-tool" onclick="setCipherMode('rot13')">ROT13 CAESAR</button>
+        </div>
+        <div id="labCipherOutput" style="font-family:var(--font-mono); font-size:0.8rem; color:var(--emerald); word-break:break-all; background:rgba(0,0,0,0.35); padding:12px; border-radius:8px; min-height:36px;">—</div>
+      </div>
+
+      <!-- Tool 3: Password Strength & HIBP API -->
+      <div id="tool-pw" class="tool-panel">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Shannon entropy evaluation, crack time estimation, and live HaveIBeenPwned breach leak query.</p>
+        <input type="password" id="labPwInput" class="form-input" placeholder="Enter password to audit..." style="margin-bottom:12px;" />
+        <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-family:var(--font-mono); margin-bottom:8px;">
+          <span>ENTROPY: <strong id="labPwEntropy" style="color:var(--cyan)">0 BITS</strong></span>
+          <span>ESTIMATED CRACK TIME: <strong id="labPwCrack" style="color:var(--emerald)">—</strong></span>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center; margin-top:12px;">
+          <button class="btn-tool" onclick="checkHIBP()">QUERY HIBP DATABASE</button>
+          <span id="labHibpResult" style="font-size:0.85rem; color:var(--text-muted);">Database not queried yet.</span>
+        </div>
+      </div>
+
+      <!-- Tool 4: Email Breach Reconnaissance -->
+      <div id="tool-breach" class="tool-panel">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Threat intelligence lookup scanning public breach repositories via XposedOrNot.</p>
+        <div style="display:flex; gap:8px; margin-bottom:12px;">
+          <input type="email" id="labBreachEmail" class="form-input" placeholder="analyst@domain.com" style="flex:1;" />
+          <button class="btn-tool" onclick="scanBreachEmail()">SCAN INTELLIGENCE</button>
+        </div>
+        <div id="labBreachStatus" style="font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">Enter email to search intelligence feeds.</div>
+        <div id="labBreachList" style="display:flex; flex-direction:column; gap:4px; max-height:100px; overflow-y:auto; font-size:0.8rem;"></div>
+      </div>
+
+      <!-- Tool 5: Device Intel Telemetry -->
+      <div id="tool-intel" class="tool-panel">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Client browser footprint analysis — computed locally without recording or transmitting any telemetry.</p>
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; font-family:var(--font-mono); font-size:0.8rem; background:rgba(0,0,0,0.3); padding:16px; border-radius:10px;">
+          <div><span style="color:var(--text-muted)">Target OS:</span> <span id="intelOs">…</span></div>
+          <div><span style="color:var(--text-muted)">Browser:</span> <span id="intelBrowser">…</span></div>
+          <div><span style="color:var(--text-muted)">CPU Cores:</span> <span id="intelThreads">…</span></div>
+          <div><span style="color:var(--text-muted)">Device RAM:</span> <span id="intelRam">…</span></div>
+          <div><span style="color:var(--text-muted)">Resolution:</span> <span id="intelScreen">…</span></div>
+          <div><span style="color:var(--text-muted)">Session Clock:</span> <span id="intelTimer">0s</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 4: SKILLS MATRIX & EXACT TIMELINE
+         ======================================================== -->
+    <div class="matrix-timeline-grid">
+      
+      <!-- Skills Matrix Radar -->
+      <section id="matrix" class="glass-section-card" style="padding:28px 24px; display:flex; flex-direction:column;">
+        <div style="text-align:center; margin-bottom:16px;">
+          <h2 style="font-family:var(--font-display); font-size:1.8rem; font-weight:700; color:var(--cyan); letter-spacing:2px; margin:0;">SKILLS MATRIX</h2>
+          <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Radar chart driven coding graphics tools and advanced "Threat Hunter"</div>
+        </div>
+        <div style="flex:1; min-height:260px; position:relative;">
+          <canvas id="skillsRadarCanvas"></canvas>
+        </div>
+      </section>
+
+      <!-- EXACT TIMELINE (PIXEL-FOR-PIXEL CORRESPONDENCE WITH MOCKUP) -->
+      <section id="timeline" class="glass-section-card timeline-exact-card">
         
+        <!-- Connected Circuit SVG Overlay -->
+        <svg class="timeline-circuit-svg-overlay" id="timelineSvgOverlay">
+          <defs>
+            <filter id="emeraldGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <path id="timelineConnectedPath" fill="none" stroke="#00ffaa" stroke-width="2.2" filter="url(#emeraldGlowFilter)"></path>
+        </svg>
+
+        <!-- Timeline Title Row -->
+        <div class="timeline-circuit-head-row">
+          <h2 class="timeline-head-title" id="timelineTitle">TIMELINE</h2>
+        </div>
+
+        <div class="timeline-body-split">
+          <!-- 3D Earth Globe (Exact Mockup Asset + Live Holographic Atmosphere & 3D Interactive WebGL) -->
+          <div class="globe-holder-box" id="timelineGlobeWrapper">
+            <div class="globe-orbit-ring"></div>
+            <img src="assets/cyber_assets/timeline_globe_exact.png" id="exactGlobeImg" alt="Cyber 3D Earth Globe with Golden Beacon Ray" class="exact-globe-overlay" title="Cyber 3D Earth Globe // Primary Node: Dublin, Ireland" />
+            <canvas id="timelineGlobeCanvas" class="globe-interactive-canvas"></canvas>
+            <div class="globe-toggle-pill" id="globeToggleBtn" onclick="toggleGlobeMode()" title="Switch between Accurate Mockup Globe and Interactive 3D WebGL Globe">
+              <span id="globeModeLabel">3D INTERACTIVE</span>
+            </div>
+          </div>
+
+          <!-- Vertical Timeline with Exact Year on Left & Badges on Right -->
+          <ul class="timeline-exact-chain" id="timelineChain">
+            
+            <!-- Milestone 1: 2025 -->
+            <li class="timeline-exact-row">
+              <span class="tl-year">2025</span>
+              <div class="tl-dot"></div>
+              <div class="tl-content">
+                <span class="tl-heading">BSc (Hons) Computing & IT - CCT College Dublin</span>
+                <span class="tl-sub">College Dublin</span>
+              </div>
+              <img src="assets/cyber_assets/badge_cct_college.png" alt="CCT College Dublin Shield Badge" class="tl-badge-img" title="CCT College Dublin" />
+            </li>
+
+            <!-- Milestone 2: 2022 -->
+            <li class="timeline-exact-row">
+              <span class="tl-year">2022</span>
+              <div class="tl-dot"></div>
+              <div class="tl-content">
+                <span class="tl-heading">EC-Council Android Bug Bounty Hunter</span>
+                <span class="tl-sub">Badges</span>
+              </div>
+              <img src="assets/cyber_assets/badge_ec_council.png" alt="EC-Council Badge" class="tl-badge-img" title="EC-Council Certified" />
+            </li>
+
+            <!-- Milestone 3: 2023 -->
+            <li class="timeline-exact-row">
+              <span class="tl-year">2023</span>
+              <div class="tl-dot"></div>
+              <div class="tl-content">
+                <span class="tl-heading">CCT (In Progress)</span>
+                <span class="tl-sub">Milestone</span>
+              </div>
+              <img src="assets/cyber_assets/badge_cct_inprogress.png" alt="CCT Milestone Badge" class="tl-badge-img" title="CCT In Progress" />
+            </li>
+
+            <!-- Milestone 4: 2021 (CEH Next Target) -->
+            <li class="timeline-exact-row">
+              <span class="tl-year">2021</span>
+              <div class="tl-dot"></div>
+              <div class="tl-content">
+                <span class="tl-heading">CEH (Next Target)</span>
+                <span class="tl-sub">Milestone</span>
+              </div>
+              <img src="assets/cyber_assets/badge_ceh.png" alt="CEH Target Shield Badge" class="tl-badge-img" title="CEH Milestone" />
+            </li>
+
+          </ul>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ========================================================
+         SECTION 5: CYBER INTEL FEED & CONTACT TERMINAL
+         ======================================================== -->
+    <section id="contact" class="glass-section-card">
+      <div class="circuit-section-header">
+        <div class="circuit-line left"></div>
+        <div>
+          <h2 class="section-title">COMMUNICATIONS</h2>
+          <div class="section-subtitle">Cyber Intel Feed & Recruiter Terminal</div>
+        </div>
+        <div class="circuit-line"></div>
+      </div>
+
+      <div class="intel-contact-grid">
         <!-- Cyber Intel Feed -->
-        <div class="intel-feed-col">
-          <div style="font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:#fff; letter-spacing:1px;">CYBER INTEL FEED</div>
+        <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(0,240,255,0.16); border-radius:18px; padding:22px;">
+          <h3 style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:#fff; letter-spacing:1px; margin-bottom:12px;">CYBER INTEL FEED</h3>
           
-          <div class="intel-threat-item">
-            <strong>● Recent Threat</strong> (5m ago)<br>
-            Zero-day telemetry anomaly detected on port 8080.
-          </div>
-          <div class="intel-threat-item">
-            <strong>● Recent Threat</strong> (1h ago)<br>
-            Suricata NIDS rule triggered: Brute-force ingress pattern.
-          </div>
-          <div class="intel-threat-item warn">
-            <strong>● Detected Threat</strong> (1h ago)<br>
-            Threat actor reconnaissance pattern matched.
+          <div style="display:flex; flex-direction:column; gap:10px; font-size:0.8rem; color:var(--text-muted);">
+            <div style="padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06);">
+              <strong style="color:var(--red);">● Recent Threats</strong> (5m ago)<br>
+              Zero-day telemetry anomaly detected on port 8080.
+            </div>
+            <div style="padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06);">
+              <strong style="color:var(--red);">● Recent Threat</strong> (1h ago)<br>
+              Suricata NIDS rule triggered: Brute-force ingress pattern.
+            </div>
+            <div>
+              <strong style="color:var(--amber);">● Detected Threat</strong> (1h ago)<br>
+              Threat actor connected with advanced reconnaissance traffic patterns.
+            </div>
           </div>
         </div>
 
         <!-- Contact Terminal -->
-        <div class="contact-terminal-col">
-          <div style="font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:#fff; letter-spacing:1px;">CONTACT</div>
-          <div style="font-size:0.7rem; color:var(--text-muted);">Secure terminal uplink</div>
-          
-          <div class="contact-terminal-box" id="termFeed">
-            <div><span style="color:var(--emerald);">[OPERATOR]:</span> Ready for SOC / Junior Pentester roles in Ireland.</div>
-            <div><span style="color:var(--cyan);">[CHANNEL]:</span> kuldeepshukla01@gmail.com</div>
+        <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(0,240,255,0.16); border-radius:18px; padding:22px; display:flex; flex-direction:column;">
+          <h3 style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:#fff; letter-spacing:1px; margin-bottom:2px;">CONTACT</h3>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Secure message terminal, send your direct message.</div>
+
+          <div id="contactTerminalLog" style="flex:1; background:rgba(0,0,0,0.45); border:1px solid rgba(0,240,255,0.18); border-radius:8px; padding:12px; font-family:var(--font-mono); font-size:0.75rem; min-height:80px; margin-bottom:12px; overflow-y:auto;">
+            <div><span style="color:var(--emerald);">[OPERATOR]:</span> Available for SOC Analyst / Junior Pentester roles in Ireland.</div>
+            <div><span style="color:var(--cyan);">[COMMS]:</span> kuldeepshukla01@gmail.com</div>
           </div>
 
-          <div class="terminal-input-row">
-            <input type="text" id="termInput" class="terminal-input" placeholder="Type a message..." />
-            <button class="terminal-send-btn" onclick="sendTerminalMsg()">➤</button>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="contactTerminalInput" class="form-input" placeholder="Type a message..." style="flex:1;" />
+            <button class="btn-tool" onclick="sendTerminalTransmission()">➤ SEND</button>
           </div>
         </div>
-
       </div>
-
-    </aside>
+    </section>
 
   </main>
 
@@ -1277,66 +1259,48 @@
     </div>
   </footer>
 
-  <!-- TACTICAL SCRIPT LOGIC -->
+  <!-- SCRIPT ENGINE -->
   <script>
-    /* 1. BACKGROUND PARTICLES CANVAS */
-    (function initAmbientBackground() {
-      const canvas = document.getElementById('ambientCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let w, h;
-      function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-      }
-      resize();
-      window.addEventListener('resize', resize);
+    /* ==========================================================
+       1. ACTIVE NAV SCROLLSPY
+       ========================================================== */
+    const navLinks = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('section');
 
-      const particles = Array.from({ length: 45 }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        size: Math.random() * 1.8 + 0.5,
-        alpha: Math.random() * 0.5 + 0.2
-      }));
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 150;
+        if (window.scrollY >= top) {
+          current = sec.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    }, { passive: true });
 
-      function render() {
-        requestAnimationFrame(render);
-        ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = '#00f0ff';
-        particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0) p.x = w;
-          if (p.x > w) p.x = 0;
-          if (p.y < 0) p.y = h;
-          if (p.y > h) p.y = 0;
-          ctx.globalAlpha = p.alpha;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fill();
-        });
-      }
-      render();
-    })();
-
-    /* 2. SKILLS MATRIX RADAR CHART */
+    /* ==========================================================
+       2. SKILLS MATRIX RADAR CHART (EXACT 5 AXES IN MOCKUP)
+       ========================================================== */
     (function initRadarChart() {
-      const el = document.getElementById('radarChart');
+      const el = document.getElementById('skillsRadarCanvas');
       if (!el) return;
       new Chart(el.getContext('2d'), {
         type: 'radar',
         data: {
-          labels: ['Network', 'Target', 'Exploit', 'Defense', 'Forensics', 'Pentest'],
+          labels: ['Radar', 'Chart', 'Target', 'Stok', 'Block'],
           datasets: [{
-            data: [94, 92, 88, 96, 90, 89],
+            data: [95, 92, 88, 96, 90],
             backgroundColor: 'rgba(0, 255, 170, 0.22)',
             borderColor: '#00ffaa',
-            borderWidth: 1.8,
+            borderWidth: 2,
             pointBackgroundColor: '#00f0ff',
             pointBorderColor: '#fff',
-            pointRadius: 3
+            pointRadius: 4
           }]
         },
         options: {
@@ -1344,11 +1308,11 @@
           maintainAspectRatio: false,
           scales: {
             r: {
-              angleLines: { color: 'rgba(0, 240, 255, 0.2)' },
+              angleLines: { color: 'rgba(0, 240, 255, 0.25)' },
               grid: { color: 'rgba(0, 240, 255, 0.12)' },
               pointLabels: {
                 color: '#6b869e',
-                font: { family: "'JetBrains Mono', monospace", size: 8 }
+                font: { family: "'JetBrains Mono', monospace", size: 10 }
               },
               ticks: { display: false, max: 100, min: 0 }
             }
@@ -1360,79 +1324,446 @@
       });
     })();
 
-    /* 3. WORKING CRYPTO TOOLKIT SHA-256 HASHER */
-    (function initCryptoTool() {
-      const inp = document.getElementById('cryptoInput');
-      const out = document.getElementById('cryptoOutput');
+    /* ==========================================================
+       3. ARSENAL CRYPTO TOOLKIT HASHER
+       ========================================================== */
+    (function initArsenalHasher() {
+      const inp = document.getElementById('arsenalCryptoInput');
+      const out = document.getElementById('arsenalCryptoOutput');
       if (!inp || !out) return;
 
-      async function computeHash(val) {
-        if (!val) {
-          out.textContent = "Empty input";
-          return;
-        }
+      async function hash(val) {
+        if (!val) { out.textContent = 'Empty input'; return; }
         const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
-        const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-        out.textContent = hash;
+        out.textContent = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
       }
-
-      inp.addEventListener('input', () => computeHash(inp.value));
-      computeHash(inp.value);
+      inp.addEventListener('input', () => hash(inp.value));
+      hash(inp.value);
     })();
 
-    /* 4. RECRUITER CONTACT TERMINAL DISPATCH */
-    function sendTerminalMsg() {
-      const input = document.getElementById('termInput');
-      const feed = document.getElementById('termFeed');
-      if (!input || !feed) return;
-      const val = input.value.trim();
-      if (!val) return;
-
-      feed.innerHTML += `<div><span style="color:var(--cyan)">[YOU]:</span> ${val}</div>`;
-      feed.innerHTML += `<div><span style="color:var(--emerald)">[SYSTEM]:</span> Transmission encrypted. Launching mail client...</div>`;
-      feed.scrollTop = feed.scrollHeight;
-      input.value = "";
-
-      setTimeout(() => {
-        window.location.href = `mailto:kuldeepshukla01@gmail.com?subject=Cybersecurity%20Opportunity&body=${encodeURIComponent(val)}`;
-      }, 600);
-    }
-    document.getElementById('termInput')?.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') sendTerminalMsg();
+    /* ==========================================================
+       4. RESTORED FULL CYBERSECURITY LIVE LAB (ALL 5 TOOLS!)
+       ========================================================== */
+    // Tab switching
+    document.querySelectorAll('.toolbox-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.toolbox-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const target = document.getElementById(btn.getAttribute('data-tab'));
+        if (target) target.classList.add('active');
+      });
     });
 
-    /* 5. INTERACTIVE PANEL FOCUS / CAROUSEL NAVIGATION */
-    function focusPanel(index) {
-      const dots = document.querySelectorAll('.carousel-dot');
-      dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    // Tool 1: Live WebCrypto Hasher
+    const labHashInput = document.getElementById('labHashInput');
+    const labSha1 = document.getElementById('labSha1Val');
+    const labSha256 = document.getElementById('labSha256Val');
+    if (labHashInput && labSha1 && labSha256) {
+      async function runLabHash() {
+        const v = labHashInput.value;
+        if (!v) { labSha1.textContent = '—'; labSha256.textContent = '—'; return; }
+        const b1 = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(v));
+        const b2 = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
+        labSha1.textContent = Array.from(new Uint8Array(b1)).map(b => b.toString(16).padStart(2, '0')).join('');
+        labSha256.textContent = Array.from(new Uint8Array(b2)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+      labHashInput.addEventListener('input', runLabHash);
+    }
 
-      const navBtns = document.querySelectorAll('.nav-btn');
-      navBtns.forEach((b, i) => b.classList.toggle('active', i === index));
-
-      const panels = [
-        document.getElementById('panelLeft'),
-        document.getElementById('panelCenter'),
-        document.getElementById('panelRight')
-      ];
-
-      if (window.innerWidth <= 1100) {
-        panels[index]?.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        // Desktop highlight focus
-        panels.forEach((p, i) => {
-          if (!p) return;
-          if (i === index) {
-            p.style.transform = 'scale(1.015)';
-            p.style.zIndex = '20';
-            p.style.borderColor = 'var(--cyan)';
-          } else {
-            p.style.transform = 'scale(1)';
-            p.style.zIndex = '10';
-            p.style.borderColor = 'var(--border-cyan)';
-          }
-        });
+    // Tool 2: Encoder / Cipher
+    let cipherMode = 'encode';
+    function setCipherMode(m) {
+      cipherMode = m;
+      runCipher();
+    }
+    function runCipher() {
+      const inp = document.getElementById('labCipherInput');
+      const out = document.getElementById('labCipherOutput');
+      if (!inp || !out) return;
+      const v = inp.value;
+      if (!v) { out.textContent = '—'; return; }
+      try {
+        if (cipherMode === 'encode') {
+          out.textContent = btoa(unescape(encodeURIComponent(v)));
+        } else if (cipherMode === 'decode') {
+          out.textContent = decodeURIComponent(escape(atob(v.trim())));
+        } else {
+          // ROT13
+          out.textContent = v.replace(/[a-zA-Z]/g, c =>
+            String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26)
+          );
+        }
+      } catch {
+        out.textContent = '[ERROR: INVALID PAYLOAD]';
       }
     }
-  </script>
+    document.getElementById('labCipherInput')?.addEventListener('input', runCipher);
+
+    // Tool 3: Password Strength & HIBP API
+    const pwInp = document.getElementById('labPwInput');
+    const pwEntropy = document.getElementById('labPwEntropy');
+    const pwCrack = document.getElementById('labPwCrack');
+    if (pwInp) {
+      pwInp.addEventListener('input', () => {
+        const pw = pwInp.value;
+        if (!pw) {
+          pwEntropy.textContent = '0 BITS';
+          pwCrack.textContent = '—';
+          return;
+        }
+        let pool = 0;
+        if (/[a-z]/.test(pw)) pool += 26;
+        if (/[A-Z]/.test(pw)) pool += 26;
+        if (/[0-9]/.test(pw)) pool += 10;
+        if (/[^a-zA-Z0-9]/.test(pw)) pool += 33;
+        const bits = Math.round(pw.length * (pool ? Math.log2(pool) : 0));
+        pwEntropy.textContent = `${bits} BITS`;
+
+        const secs = pool && pw.length ? Math.pow(pool, pw.length) / 1e10 : 0;
+        let time = 'Instantly';
+        if (secs >= 1 && secs < 60) time = Math.round(secs) + ' sec';
+        else if (secs >= 60 && secs < 3600) time = Math.round(secs / 60) + ' min';
+        else if (secs >= 3600 && secs < 86400) time = Math.round(secs / 3600) + ' hours';
+        else if (secs >= 86400 && secs < 31536000) time = Math.round(secs / 86400) + ' days';
+        else if (secs >= 31536000) time = (secs / 31536000 > 1000 ? '> 1,000' : Math.round(secs / 31536000)) + ' years';
+        pwCrack.textContent = time;
+      });
+    }
+
+    async function checkHIBP() {
+      const resEl = document.getElementById('labHibpResult');
+      if (!pwInp || !pwInp.value) {
+        resEl.textContent = 'Input password first';
+        resEl.style.color = '#ff3355';
+        return;
+      }
+      resEl.textContent = 'Scanning HIBP database...';
+      resEl.style.color = 'var(--cyan)';
+      try {
+        const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(pwInp.value));
+        const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+        const prefix = hash.slice(0, 5);
+        const suffix = hash.slice(5);
+        const r = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+        const text = await r.text();
+        let matches = 0;
+        for (const line of text.split('\n')) {
+          const [h, count] = line.split(':');
+          if (h.trim() === suffix) {
+            matches = parseInt(count, 10);
+            break;
+          }
+        }
+        if (matches > 0) {
+          resEl.innerHTML = `<span style="color:#ff3355">⚠ Found in ${matches.toLocaleString()} leaks!</span>`;
+        } else {
+          resEl.innerHTML = `<span style="color:var(--emerald)">✓ Clean: Zero occurrences</span>`;
+        }
+      } catch {
+        resEl.textContent = 'Database offline or query blocked';
+      }
+    }
+
+    // Tool 4: Email Breach Scanner (XposedOrNot API)
+    async function scanBreachEmail() {
+      const emailInput = document.getElementById('labBreachEmail');
+      const status = document.getElementById('labBreachStatus');
+      const list = document.getElementById('labBreachList');
+      if (!emailInput || !status || !list) return;
+      const email = emailInput.value.trim();
+      if (!email || !email.includes('@')) {
+        status.textContent = 'Valid email required';
+        status.style.color = '#ff3355';
+        return;
+      }
+      status.textContent = 'Scanning threat feeds...';
+      status.style.color = 'var(--cyan)';
+      list.innerHTML = '';
+      try {
+        const res = await fetch(`https://api.xposedornot.com/v1/breach-analytics?email=${encodeURIComponent(email)}`);
+        const data = await res.json();
+        if (!data.ExposedBreaches?.breaches_details) {
+          status.innerHTML = '<span style="color:var(--emerald)">✓ No breaches found</span>';
+          return;
+        }
+        const b = data.ExposedBreaches.breaches_details;
+        status.innerHTML = `<span style="color:#ff3355">⚠ Found in ${b.length} breaches:</span>`;
+        b.slice(0, 4).forEach(item => {
+          const div = document.createElement('div');
+          div.style.cssText = 'padding:3px 6px; margin-top:3px; background:rgba(255,0,85,0.1); border-left:2px solid #ff3355;';
+          div.textContent = `${item.breach} (${item.domain || 'N/A'})`;
+          list.appendChild(div);
+        });
+      } catch {
+        status.textContent = 'Query completed or rate-limited.';
+      }
+    }
+
+    // Tool 5: Device Intel Telemetry
+    (function initDeviceIntel() {
+      const ua = navigator.userAgent;
+      let os = 'Unknown OS';
+      if (ua.includes('Mac')) os = 'macOS';
+      else if (ua.includes('Win')) os = 'Windows';
+      else if (ua.includes('Linux')) os = 'Linux';
+      else if (ua.includes('Android')) os = 'Android';
+      else if (ua.includes('iPhone')) os = 'iOS';
+
+      let browser = 'Chromium';
+      if (ua.includes('Firefox')) browser = 'Firefox';
+      else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari';
+      else if (ua.includes('Edg')) browser = 'Edge';
+
+      const el = id => document.getElementById(id);
+      if (el('intelOs')) el('intelOs').textContent = os;
+      if (el('intelBrowser')) el('intelBrowser').textContent = browser;
+      if (el('intelThreads')) el('intelThreads').textContent = `${navigator.hardwareConcurrency || 8} Cores`;
+      if (el('intelRam')) el('intelRam').textContent = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Protected';
+      if (el('intelScreen')) el('intelScreen').textContent = `${window.screen.width}x${window.screen.height}`;
+
+      const start = Date.now();
+      setInterval(() => {
+        if (el('intelTimer')) el('intelTimer').textContent = `${Math.floor((Date.now() - start) / 1000)}s`;
+      }, 1000);
+    })();
+
+    // Contact Terminal Transmission
+    function sendTerminalTransmission() {
+      const inp = document.getElementById('contactTerminalInput');
+      const log = document.getElementById('contactTerminalLog');
+      if (!inp || !log) return;
+      const v = inp.value.trim();
+      if (!v) return;
+      log.innerHTML += `<div><span style="color:var(--cyan)">[YOU]:</span> ${v}</div>`;
+      log.innerHTML += `<div><span style="color:var(--emerald)">[DISPATCH]:</span> Encrypted & logged. Opening mail uplink...</div>`;
+      log.scrollTop = log.scrollHeight;
+      inp.value = '';
+      setTimeout(() => {
+        window.location.href = `mailto:kuldeepshukla01@gmail.com?subject=Cybersecurity%20Opportunity&body=${encodeURIComponent(v)}`;
+      }, 600);
+    }
+    document.getElementById('contactTerminalInput')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendTerminalTransmission();
+    });
+
+    // Ambient Cyber Particles
+    (function initParticles() {
+      const cvs = document.getElementById('ambientCanvas');
+      if (!cvs) return;
+      const ctx = cvs.getContext('2d');
+      let w, h;
+      function sz() { w = cvs.width = window.innerWidth; h = cvs.height = window.innerHeight; }
+      sz(); window.addEventListener('resize', sz);
+      const pts = Array.from({ length: 45 }, () => ({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.6 + 0.5, a: Math.random() * 0.5 + 0.2
+      }));
+      function anim() {
+        requestAnimationFrame(anim);
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#00f0ff';
+        pts.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+          ctx.globalAlpha = p.a;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+        });
+      }
+      anim();
+    })();
+  
+    /* ==========================================================
+       6. EXACT TIMELINE CIRCUIT TRACE & 3D INTERACTIVE GLOBE
+       ========================================================== */
+    // A. Dynamic mathematically-aligned circuit line connecting TIMELINE header to dots
+    function updateTimelineCircuit() {
+      const card = document.getElementById('timeline');
+      const title = document.getElementById('timelineTitle');
+      const dots = document.querySelectorAll('.tl-dot');
+      const path = document.getElementById('timelineConnectedPath');
+      if (!card || !title || !dots.length || !path) return;
+
+      const cardRect = card.getBoundingClientRect();
+      const titleRect = title.getBoundingClientRect();
+      const firstDotRect = dots[0].getBoundingClientRect();
+      const lastDotRect = dots[dots.length - 1].getBoundingClientRect();
+
+      // Start right underneath the letters of TIMELINE
+      const startX = Math.round(titleRect.left - cardRect.left);
+      const startY = Math.round(titleRect.bottom - cardRect.top + 7);
+
+      // Target X is the exact center of the green dots
+      const targetX = Math.round((firstDotRect.left + firstDotRect.right) / 2 - cardRect.left);
+      const cornerRadius = 14;
+
+      // Bottom Y reaches past the last dot
+      const endY = Math.round((lastDotRect.top + lastDotRect.bottom) / 2 - cardRect.top + 10);
+
+      // SVG path: Horizontal line from title -> Rounded 90-degree corner -> Vertical trunk through dots
+      const d = `M ${startX},${startY} L ${targetX - cornerRadius},${startY} Q ${targetX},${startY} ${targetX},${startY + cornerRadius} L ${targetX},${endY}`;
+      path.setAttribute('d', d);
+    }
+
+    // Call update on mount, load, and window resize
+    window.addEventListener('resize', updateTimelineCircuit);
+    window.addEventListener('load', updateTimelineCircuit);
+    setTimeout(updateTimelineCircuit, 100);
+    setTimeout(updateTimelineCircuit, 500);
+
+    // B. Globe Mode Switcher (Accurate Mockup Image <-> 3D WebGL Interactive Globe)
+    let globeCurrentMode = 'mockup'; // 'mockup' (default) or '3d'
+    let threeGlobeInitialized = false;
+
+    function toggleGlobeMode() {
+      const img = document.getElementById('exactGlobeImg');
+      const canvas = document.getElementById('timelineGlobeCanvas');
+      const label = document.getElementById('globeModeLabel');
+
+      if (globeCurrentMode === 'mockup') {
+        globeCurrentMode = '3d';
+        img.style.display = 'none';
+        canvas.style.display = 'block';
+        label.textContent = 'EXACT MOCKUP';
+        if (!threeGlobeInitialized) {
+          initThreeGlobe();
+          threeGlobeInitialized = true;
+        }
+      } else {
+        globeCurrentMode = 'mockup';
+        img.style.display = 'block';
+        canvas.style.display = 'none';
+        label.textContent = '3D INTERACTIVE';
+      }
+    }
+
+    // C. Live Three.js WebGL Interactive 3D Earth Globe
+    function initThreeGlobe() {
+      const canvas = document.getElementById('timelineGlobeCanvas');
+      if (!canvas) return;
+
+      const width = 140;
+      const height = 140;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      camera.position.z = 21;
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true
+      });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const globeGroup = new THREE.Group();
+      scene.add(globeGroup);
+
+      // Inner Dark Specular Core Sphere
+      const sphereGeo = new THREE.SphereGeometry(6.8, 32, 32);
+      const sphereMat = new THREE.MeshBasicMaterial({
+        color: 0x020d18,
+        transparent: true,
+        opacity: 0.85
+      });
+      globeGroup.add(new THREE.Mesh(sphereGeo, sphereMat));
+
+      // Wireframe Outer Mesh (Cyan Icosahedron)
+      const wireGeo = new THREE.IcosahedronGeometry(7.0, 2);
+      const wireMat = new THREE.MeshBasicMaterial({
+        color: 0x00f0ff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35
+      });
+      globeGroup.add(new THREE.Mesh(wireGeo, wireMat));
+
+      // Continents Point Cloud (Emerald & Cyan)
+      const ptCount = 380;
+      const ptGeo = new THREE.BufferGeometry();
+      const coords = new Float32Array(ptCount * 3);
+      for (let i = 0; i < ptCount * 3; i += 3) {
+        const u = Math.random();
+        const v = Math.random();
+        const theta = u * 2.0 * Math.PI;
+        const phi = Math.acos(2.0 * v - 1.0);
+        const r = 7.15 + (Math.random() - 0.5) * 0.35;
+        coords[i] = r * Math.sin(phi) * Math.cos(theta);
+        coords[i + 1] = r * Math.sin(phi) * Math.sin(theta);
+        coords[i + 2] = r * Math.cos(phi);
+      }
+      ptGeo.setAttribute('position', new THREE.BufferAttribute(coords, 3));
+      const ptMat = new THREE.PointsMaterial({
+        color: 0x00ffaa,
+        size: 0.42,
+        transparent: true,
+        opacity: 0.85
+      });
+      globeGroup.add(new THREE.Points(ptGeo, ptMat));
+
+      // Golden Sunburst Beacon (Shooting Ray from Dublin / Europe)
+      const rayGeo = new THREE.BufferGeometry();
+      rayGeo.setAttribute('position', new THREE.Float32BufferAttribute([
+        4.0, 3.8, 4.2,
+        10.2, 9.6, 9.8
+      ], 3));
+      const rayMat = new THREE.LineBasicMaterial({
+        color: 0xffd700,
+        transparent: true,
+        opacity: 0.95
+      });
+      globeGroup.add(new THREE.Line(rayGeo, rayMat));
+
+      // Golden Atmosphere Burst Particles
+      const burstCount = 80;
+      const burstGeo = new THREE.BufferGeometry();
+      const bCoords = new Float32Array(burstCount * 3);
+      for (let i = 0; i < burstCount * 3; i += 3) {
+        bCoords[i] = 4.0 + (Math.random() - 0.5) * 3.0;
+        bCoords[i + 1] = 3.8 + (Math.random() - 0.5) * 3.0;
+        bCoords[i + 2] = 4.2 + (Math.random() - 0.5) * 3.0;
+      }
+      burstGeo.setAttribute('position', new THREE.BufferAttribute(bCoords, 3));
+      const burstMat = new THREE.PointsMaterial({
+        color: 0xffb700,
+        size: 0.50,
+        transparent: true,
+        opacity: 0.92
+      });
+      globeGroup.add(new THREE.Points(burstGeo, burstMat));
+
+      // Interactive Mouse Drag
+      let isDragging = false;
+      let prevX = 0, prevY = 0;
+      canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        prevX = e.clientX;
+        prevY = e.clientY;
+      });
+      window.addEventListener('mouseup', () => isDragging = false);
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - prevX;
+        const dy = e.clientY - prevY;
+        globeGroup.rotation.y += dx * 0.012;
+        globeGroup.rotation.x += dy * 0.012;
+        prevX = e.clientX;
+        prevY = e.clientY;
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        if (!isDragging) {
+          globeGroup.rotation.y += 0.006;
+          globeGroup.rotation.x += 0.002;
+        }
+        renderer.render(scene, camera);
+      }
+      animate();
+    }
+  
+</script>
 </body>
 </html>
