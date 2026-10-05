@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CORE DEFENSE™ // Kuldeep Shukla — Cybersecurity Operations Portfolio</title>
-  <meta name="description" content="Cybersecurity Analyst, SOC Operator & Threat Hunter. 2026 Computing & IT graduate (CCT College Dublin). EC-Council Android Bug Bounty Hunter. Creator of 1DayCrew AI." />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+  <title>Kuldeep Shukla</title>
+  <meta name="description" content="Cybersecurity Analyst, SOC Operator & Threat Hunter. BSc (Hons) Computing & IT Graduate (CCT College Dublin). EC-Council Android Bug Bounty Hunter. Creator of 1DayCrew AI." />
+  <!-- Empty Favicon - No Logo in Title Bar -->
+  <link rel="icon" href="data:,">
+  <link rel="shortcut icon" href="data:,">
 
   <!-- Tactical Cyber Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,823 +15,90 @@
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-  <!-- CDNs: Three.js, Chart.js -->
+  <!-- CDNs: Three.js, Chart.js, Puter.js (Public AI API) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://js.puter.com/v2/"></script>
 
-  <style>
-    :root {
-      --bg-dark: #03070d;
-      --bg-surface: #06111c;
-      --panel-bg: rgba(6, 17, 28, 0.90);
-      --card-bg: rgba(8, 22, 36, 0.78);
-      --card-inner: rgba(4, 12, 22, 0.75);
-      --border-cyan: rgba(0, 240, 255, 0.22);
-      --border-cyan-glow: rgba(0, 240, 255, 0.55);
-      --border-emerald: rgba(0, 255, 170, 0.35);
-      --border-amber: rgba(255, 183, 0, 0.35);
-      --cyan: #00f0ff;
-      --cyan-bright: #38f8ff;
-      --emerald: #00ffaa;
-      --emerald-glow: rgba(0, 255, 170, 0.6);
-      --amber: #ffb700;
-      --red: #ff3355;
-      --text-main: #dbe9f5;
-      --text-muted: #6b869e;
-      --font-display: 'Rajdhani', sans-serif;
-      --font-hud: 'Chakra Petch', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      scroll-behavior: smooth;
-    }
-
-    html, body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: var(--font-hud);
-      overflow-x: hidden;
-      min-height: 100vh;
-      line-height: 1.5;
-    }
-
-    ::selection {
-      background: var(--cyan);
-      color: #000;
-    }
-
-    /* Ambient Tactical Background Grid & Vignette */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background:
-        radial-gradient(circle at 50% 15%, rgba(0, 240, 255, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 10% 60%, rgba(0, 255, 170, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 90% 70%, rgba(0, 180, 255, 0.05) 0%, transparent 50%),
-        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .crt-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.22) 50%);
-      background-size: 100% 4px;
-      z-index: 2;
-      pointer-events: none;
-      opacity: 0.6;
-    }
-
-    #ambientCanvas {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* TOP COMMAND NAVIGATION BAR */
-    .top-command-bar {
-      position: fixed;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(92vw, 1060px);
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 24px;
-      background: rgba(6, 17, 28, 0.88);
-      border: 1px solid var(--border-cyan);
-      border-radius: 999px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 240, 255, 0.1);
-    }
-
-    .brand-hud {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: #fff;
-    }
-    .brand-text {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    .brand-text span {
-      font-size: 0.75rem;
-      vertical-align: super;
-      color: var(--cyan);
-    }
-
-    .nav-bar {
-      display: flex;
-      gap: 4px;
-      list-style: none;
-    }
-    .nav-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      color: var(--text-muted);
-      font-family: var(--font-hud);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      padding: 7px 15px;
-      border-radius: 999px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      display: inline-block;
-    }
-    .nav-btn:hover {
-      color: var(--text-main);
-      background: rgba(0, 240, 255, 0.08);
-    }
-    .nav-btn.active {
-      color: #fff;
-      background: rgba(0, 240, 255, 0.16);
-      border-color: var(--cyan);
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
-    }
-
-    /* CONTINUOUS SCROLL CONTAINER */
-    .continuous-container {
-      width: min(92vw, 1080px);
-      margin: 110px auto 60px;
-      position: relative;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      gap: 70px;
-    }
-
-    /* Glass Section Cards */
-    .glass-section-card {
-      background: var(--panel-bg);
-      border: 1px solid var(--border-cyan);
-      border-radius: 24px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(0, 240, 255, 0.06);
-      padding: 34px 38px;
-      position: relative;
-    }
-
-    /* Section Decorative Header */
-    .circuit-section-header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-    .circuit-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 170, 0.35), rgba(0, 240, 255, 0.35), transparent);
-      position: relative;
-    }
-    .circuit-line::after {
-      content: '';
-      position: absolute;
-      top: -3px; right: 0;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--emerald);
-      box-shadow: 0 0 8px var(--emerald);
-    }
-    .circuit-line.left::after {
-      right: auto; left: 0;
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--cyan);
-      text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
-      margin: 0;
-      line-height: 1;
-      text-align: center;
-    }
-    .section-subtitle {
-      font-family: var(--font-hud);
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      letter-spacing: 1.5px;
-      text-align: center;
-      margin-top: 5px;
-    }
-
-    /* SECTION 1: ABOUT // OPERATOR DOSSIER */
-    .about-main-grid {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 26px;
-      align-items: stretch;
-    }
-    .operator-profile-card {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(0, 240, 255, 0.16);
-      border-radius: 18px;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-    .portrait-hud-frame {
-      width: 140px;
-      height: 140px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--border-cyan);
-      box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
-      position: relative;
-      background: #02060c;
-    }
-    .portrait-hud-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .laser-scan-line {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-      box-shadow: 0 0 10px var(--cyan);
-      animation: scanAnim 3s infinite ease-in-out;
-    }
-    @keyframes scanAnim {
-      0% { top: 0%; opacity: 0.2; }
-      50% { top: 95%; opacity: 1; }
-      100% { top: 0%; opacity: 0.2; }
-    }
-    .roles-telemetry-list {
-      list-style: none;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .roles-telemetry-list li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      color: var(--text-main);
-      padding: 6px 12px;
-      background: rgba(0, 240, 255, 0.04);
-      border-left: 2px solid var(--emerald);
-      border-radius: 4px;
-    }
-    .spec-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--emerald);
-      box-shadow: 0 0 8px var(--emerald);
-      flex-shrink: 0;
-    }
-
-    .core-architecture-box {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(0, 240, 255, 0.16);
-      border-radius: 18px;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-    .telemetry-stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    .telemetry-stat-card {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(0, 240, 255, 0.12);
-      border-radius: 10px;
-      padding: 10px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .threat-map-container {
-      width: 100%;
-      height: 160px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(0, 240, 255, 0.16);
-      background: #020509;
-      position: relative;
-    }
-    .threat-map-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.88;
-    }
-
-    /* SECTION 2: ARSENAL // TOOLS & PROJECTS (2x2 GRID) */
-    .arsenal-grid-2x2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-    }
-    .project-holo-card {
-      background: var(--card-bg);
-      border: 1px solid rgba(0, 240, 255, 0.18);
-      border-radius: 18px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .project-holo-card:hover {
-      border-color: var(--cyan);
-      transform: translateY(-5px);
-      box-shadow: 0 14px 35px rgba(0, 240, 255, 0.16);
-    }
-    .holo-pedestal-box {
-      width: 100%;
-      height: 130px;
-      border-radius: 12px;
-      background: radial-gradient(circle at 50% 60%, rgba(0, 240, 255, 0.1) 0%, rgba(3, 10, 18, 0.6) 70%);
-      border: 1px solid rgba(0, 240, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .holo-pedestal-box img {
-      height: 88%;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 0 14px rgba(0, 255, 170, 0.45));
-      animation: floatHolo 4s infinite ease-in-out;
-    }
-    @keyframes floatHolo {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-    .project-title {
-      font-family: var(--font-display);
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: #fff;
-      margin: 0;
-    }
-    .project-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-      min-height: 2.8em;
-    }
-    .widget-wave-chart {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(0, 240, 255, 0.12);
-      border-radius: 8px;
-      padding: 8px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .widget-checklist-box {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(0, 240, 255, 0.12);
-      border-radius: 8px;
-      padding: 8px 12px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      align-items: center;
-    }
-    .widget-bug-matrix {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(0, 240, 255, 0.12);
-      border-radius: 8px;
-      padding: 8px 12px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .widget-crypto-calc {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(0, 240, 255, 0.12);
-      border-radius: 8px;
-      padding: 8px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    /* SECTION 3: LIVE VULN LAB // 5 WORKING TOOLS */
-    .toolbox-tabs-bar {
-      display: flex;
-      gap: 8px;
-      border-bottom: 1px solid rgba(0, 240, 255, 0.2);
-      padding-bottom: 12px;
-      margin-bottom: 18px;
-      overflow-x: auto;
-    }
-    .toolbox-tab-btn {
-      background: transparent;
-      border: 1px solid rgba(0, 240, 255, 0.18);
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      padding: 7px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.25s ease;
-    }
-    .toolbox-tab-btn.active {
-      color: var(--cyan);
-      background: rgba(0, 240, 255, 0.15);
-      border-color: var(--cyan);
-      box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
-    }
-    .tool-panel {
-      display: none;
-    }
-    .tool-panel.active {
-      display: block;
-    }
-    .form-input {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(0, 240, 255, 0.22);
-      border-radius: 8px;
-      padding: 10px 14px;
-      color: #fff;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      outline: none;
-    }
-    .form-input:focus {
-      border-color: var(--cyan);
-      box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
-    }
-    .btn-tool {
-      background: var(--cyan);
-      color: #000;
-      font-family: var(--font-hud);
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      padding: 9px 18px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .btn-tool:hover {
-      background: var(--emerald);
-      box-shadow: 0 0 14px var(--emerald);
-    }
-
-    /* SECTION 4: SKILLS MATRIX & EXACT TIMELINE */
-    .matrix-timeline-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.25fr;
-      gap: 28px;
-      align-items: stretch;
-      margin-bottom: 30px;
-    }
-
-    /* EXACT TIMELINE IMPLEMENTATION MATCHING MOCKUP */
-    .timeline-exact-card {
-      background: rgba(0, 0, 0, 0.40);
-      border: 1px solid rgba(0, 240, 255, 0.20);
-      border-radius: 20px;
-      padding: 24px 28px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
-    }
-
-    /* Ambient card corner glow */
-    .timeline-exact-card::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 160px;
-      height: 160px;
-      background: radial-gradient(circle at top right, rgba(0, 255, 170, 0.08), transparent 70%);
-      pointer-events: none;
-    }
-
-    /* Header title */
-    .timeline-circuit-head-row {
-      position: relative;
-      margin-bottom: 22px;
-      z-index: 3;
-    }
-    .timeline-head-title {
-      font-family: var(--font-display);
-      font-size: 1.7rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 2.8px;
-      margin: 0;
-      line-height: 1;
-      display: inline-block;
-    }
-
-    /* Dynamic SVG circuit overlay that runs from under TIMELINE to the vertical dots */
-    .timeline-circuit-svg-overlay {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 2;
-      overflow: visible;
-    }
-
-    /* Main body layout: Globe on Left, Vertical Milestones on Right */
-    .timeline-body-split {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 20px;
-      align-items: center;
-      position: relative;
-      z-index: 3;
-      flex: 1;
-    }
-
-    /* 3D Cyber Earth Globe Container */
-    .globe-holder-box {
-      width: 140px;
-      height: 140px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-    }
-
-    /* Accurate Mockup Globe Image with Living Animations */
-    .exact-globe-overlay {
-      position: absolute;
-      width: 126px;
-      height: 126px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 18px rgba(0, 240, 255, 0.70)) drop-shadow(0 0 28px rgba(255, 183, 0, 0.40));
-      z-index: 3;
-      pointer-events: auto;
-      transition: opacity 0.35s ease, transform 0.4s ease;
-      animation: globeFloatPulse 4s ease-in-out infinite alternate;
-    }
-    .exact-globe-overlay:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 24px rgba(0, 240, 255, 0.90)) drop-shadow(0 0 36px rgba(255, 183, 0, 0.65));
-    }
-
-    @keyframes globeFloatPulse {
-      0% {
-        transform: translateY(0px) scale(1);
-      }
-      100% {
-        transform: translateY(-4px) scale(1.02);
-      }
-    }
-
-    /* Live 3D Interactive Three.js WebGL Canvas */
-    .globe-interactive-canvas {
-      position: absolute;
-      inset: 0;
-      width: 140px;
-      height: 140px;
-      z-index: 4;
-      border-radius: 50%;
-      cursor: grab;
-      display: none; /* Shown when in 3D interactive mode */
-    }
-    .globe-interactive-canvas:active {
-      cursor: grabbing;
-    }
-
-    /* Rotating Cyber Orbit Ring around Globe */
-    .globe-orbit-ring {
-      position: absolute;
-      width: 136px;
-      height: 136px;
-      border-radius: 50%;
-      border: 1px dashed rgba(0, 240, 255, 0.35);
-      pointer-events: none;
-      z-index: 2;
-      animation: orbitSpin 18s linear infinite;
-    }
-    @keyframes orbitSpin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Mode Toggle Pill */
-    .globe-toggle-pill {
-      position: absolute;
-      bottom: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(3, 7, 13, 0.92);
-      border: 1px solid var(--border-cyan);
-      border-radius: 999px;
-      padding: 3px 10px;
-      font-size: 0.62rem;
-      font-family: var(--font-mono);
-      color: var(--cyan);
-      cursor: pointer;
-      z-index: 6;
-      white-space: nowrap;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-    }
-    .globe-toggle-pill:hover {
-      background: var(--cyan);
-      color: #000;
-      box-shadow: 0 0 14px var(--cyan);
-    }
-
-    /* Milestone Vertical Chain */
-    .timeline-exact-chain {
-      list-style: none;
-      position: relative;
-      padding: 4px 0;
-      margin: 0;
-    }
-
-    .timeline-exact-row {
-      display: grid;
-      grid-template-columns: 52px 20px 1fr 34px;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 20px;
-      position: relative;
-    }
-    .timeline-exact-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .tl-year {
-      font-family: var(--font-mono);
-      font-size: 0.86rem;
-      color: #8fa9be;
-      text-align: right;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    .tl-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--emerald);
-      box-shadow: 0 0 12px var(--emerald), 0 0 20px rgba(0, 255, 170, 0.6);
-      margin: 0 auto;
-      z-index: 5;
-      position: relative;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .timeline-exact-row:hover .tl-dot {
-      transform: scale(1.35);
-      box-shadow: 0 0 18px #fff, 0 0 26px var(--emerald);
-    }
-
-    .tl-content {
-      display: flex;
-      flex-direction: column;
-    }
-    .tl-heading {
-      font-size: 0.94rem;
-      font-weight: 600;
-      color: #ffffff;
-      line-height: 1.25;
-      font-family: var(--font-sans);
-    }
-    .tl-sub {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 3px;
-      font-family: var(--font-sans);
-    }
-
-    .tl-badge-img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-      flex-shrink: 0;
-      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.75));
-      transition: transform 0.2s ease;
-    }
-    .timeline-exact-row:hover .tl-badge-img {
-      transform: scale(1.18);
-    }
-
-    /* SECTION 5: CYBER INTEL FEED & CONTACT TERMINAL */
-    .intel-contact-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 26px;
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid rgba(0, 240, 255, 0.12);
-      padding: 30px 5vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      position: relative;
-      z-index: 10;
-    }
-    footer a {
-      color: var(--cyan);
-      text-decoration: none;
-      margin-left: 18px;
-      transition: color 0.2s;
-    }
-    footer a:hover {
-      color: var(--emerald);
-    }
-
-    @media (max-width: 960px) {
-      .top-command-bar { width: 96vw; padding: 8px 16px; }
-      .nav-bar { display: none; }
-      .about-main-grid, .arsenal-grid-2x2, .matrix-timeline-grid, .intel-contact-grid {
-        grid-template-columns: 1fr;
-      }
-      .telemetry-stats-row { grid-template-columns: 1fr; }
-      .glass-section-card { padding: 24px 20px; }
-    }
-  </style>
+  <!-- Main Stylesheet -->
+  <link rel=stylesheet href=style.css />
 </head>
 <body>
+  <!-- 1. PAGE LOADING SCREEN (PRELOADER) -->
+  <div id="cyberPreloader" aria-label="Loading Kuldeep Shukla Portfolio">
+    <div class="preloader-bg-glow"></div>
+    <div class="preloader-content">
+      <div class="preloader-badge">
+        <span class="preloader-badge-dot"></span>
+        <span>TACTICAL CYBER ENVIRONMENT</span>
+      </div>
+      <h1 class="preloader-name">KULDEEP SHUKLA</h1>
+      <div class="preloader-role">Cybersecurity Analyst • Offensive Operations</div>
+      
+      <div class="preloader-progress-wrap">
+        <div id="preloaderProgressBar" class="preloader-progress-bar"></div>
+      </div>
+
+      <div class="preloader-telemetry-row">
+        <span id="preloaderLogStatus" class="preloader-log-status">INITIALIZING SYSTEM...</span>
+        <span id="preloaderPercent" class="preloader-percent">00%</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="webgl-bg"></div>
   <div class="crt-overlay"></div>
   <canvas id="ambientCanvas"></canvas>
 
-  <!-- TOP COMMAND NAVIGATION BAR (CLICK TO SMOOTH SCROLL) -->
+  <!-- 2. TOP NAVIGATION BAR -->
   <header class="top-command-bar">
-    <a href="#about" class="brand-hud">
-      <div class="brand-text">CORE DEFENSE<span>™</span></div>
+    <a href="#about" class="brand-hud" title="Kuldeep Shukla">
+      <span class="brand-text">KULDEEP SHUKLA</span>
     </a>
 
     <nav class="nav-bar">
       <a href="#about" class="nav-btn active">MISSION LOGS</a>
       <a href="#arsenal" class="nav-btn">ARSENAL</a>
+      <a href="#credentials" class="nav-btn">CERTIFICATIONS</a>
       <a href="#lab" class="nav-btn">LIVE VULN LAB</a>
       <a href="#matrix" class="nav-btn">SKILLS MATRIX</a>
       <a href="#timeline" class="nav-btn">TIMELINE</a>
       <a href="#contact" class="nav-btn">CONTACT // ACCESS</a>
     </nav>
 
-    <div style="display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:0.75rem; color:var(--emerald);">
-      <span style="width:8px; height:8px; background:var(--emerald); border-radius:50%; box-shadow:0 0 8px var(--emerald);"></span>
+    <div class="top-status-indicator">
+      <span class="status-pulse-dot"></span>
       <span>ONLINE</span>
     </div>
+
+    <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
   </header>
+
+  <!-- 3. MOBILE NAVIGATION MENU -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <a href="#about" class="nav-btn active" onclick="closeMobileMenu()">MISSION LOGS</a>
+    <a href="#arsenal" class="nav-btn" onclick="closeMobileMenu()">ARSENAL</a>
+    <a href="#credentials" class="nav-btn" onclick="closeMobileMenu()">CERTIFICATIONS</a>
+    <a href="#lab" class="nav-btn" onclick="closeMobileMenu()">LIVE VULN LAB</a>
+    <a href="#matrix" class="nav-btn" onclick="closeMobileMenu()">SKILLS MATRIX</a>
+    <a href="#timeline" class="nav-btn" onclick="closeMobileMenu()">TIMELINE</a>
+    <a href="#contact" class="nav-btn" onclick="closeMobileMenu()">CONTACT // ACCESS</a>
+  </div>
 
   <!-- CONTINUOUS SCROLL CONTAINER -->
   <main class="continuous-container">
 
     <!-- ========================================================
-         SECTION 1: CORE DEFENSE™ // ABOUT (DOSSIER)
+         SECTION 1: ABOUT ME & INTERACTIVE AI TERMINAL
          ======================================================== -->
     <section id="about" class="glass-section-card">
       <div class="circuit-section-header">
         <div class="circuit-line left"></div>
         <div>
           <h2 class="section-title">CORE DEFENSE<span>™</span></h2>
-          <div class="section-subtitle">About & Mission Logs</div>
+          <div class="section-subtitle">Verified Operator Dossier & Interactive AI Terminal</div>
         </div>
         <div class="circuit-line"></div>
       </div>
@@ -837,72 +106,133 @@
       <div class="about-main-grid">
         <!-- Operator Identification Card -->
         <div class="operator-profile-card">
-          <div class="portrait-hud-frame">
+          <div class="cyber-insignia-frame">
+            <div class="insignia-radar-ring"></div>
             <div class="laser-scan-line"></div>
-            <img src="assets/cyber_assets/kuldeep_operator_hud.png" alt="Kuldeep Shukla Tactical Operator Portrait" />
+            <div class="insignia-bracket top-left"></div>
+            <div class="insignia-bracket top-right"></div>
+            <div class="insignia-bracket bottom-left"></div>
+            <div class="insignia-bracket bottom-right"></div>
+            <div class="insignia-core-icon">
+              <span style="font-family:var(--font-mono); font-weight:900; font-size:1.85rem; color:var(--cyan); letter-spacing:1px; line-height:1;">KS</span>
+            </div>
+            <div class="insignia-hash-tag">0xKULDEEP // AUTH</div>
+            <div class="insignia-status-dot" title="Authenticated Operator"></div>
+          </div>
+
+          <div style="text-align:center; margin-top:-6px;">
+            <div style="font-family:var(--font-display); font-size:1.35rem; font-weight:700; color:#fff; letter-spacing:1px;">KULDEEP SHUKLA</div>
+            <div style="font-family:var(--font-mono); font-size:0.74rem; color:var(--cyan); letter-spacing:1.2px;">DUBLIN, IRELAND • BSc (Hons) IT</div>
           </div>
 
           <ul class="roles-telemetry-list">
-            <li><span class="spec-dot"></span> CYBERSECURITY ANALYST</li>
-            <li><span class="spec-dot"></span> SOC OPERATOR</li>
-            <li><span class="spec-dot"></span> THREAT HUNTER</li>
-            <li><span class="spec-dot"></span> REVERSE ENGINEER</li>
+            <li><span class="spec-dot"></span> JUNIOR PENTESTER</li>
+            <li><span class="spec-dot"></span> SOC / THREAT ANALYST</li>
+            <li><span class="spec-dot"></span> ML DEFENSE RESEARCHER</li>
+            <li><span class="spec-dot"></span> ANDROID SECURITY AUDITOR</li>
           </ul>
+
+          <div style="width:100%; background:rgba(0,0,0,0.35); border:1px solid rgba(0,240,255,0.14); border-radius:10px; padding:10px 12px; font-family:var(--font-mono); font-size:0.72rem; line-height:1.5;">
+            <div style="color:var(--text-muted);">EDUCATION: <span style="color:#fff;">BSc (Hons) Graduate • CCT Dublin</span></div>
+            <div style="color:var(--text-muted);">CAPSTONE: <span style="color:var(--emerald);">1DayCrew AI (>97% Acc)</span></div>
+            <div style="color:var(--text-muted);">STATUS: <span style="color:var(--cyan);">Available for Hire (IE)</span></div>
+          </div>
+
+          <div style="width:100%; display:flex; flex-direction:column; gap:6px;">
+            <a href="./Kuldeep_Shukla_CV.pdf" download="Kuldeep_Shukla_CV.pdf" class="btn-tool" style="width:100%; text-align:center; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px;">
+              <i class="fa-solid fa-file-arrow-down"></i> DOWNLOAD CV (PDF)
+            </a>
+            <div style="display:flex; gap:6px;">
+              <a href="https://github.com/kuldeepshukla01" target="_blank" rel="noopener" class="btn-tool" style="flex:1; background:rgba(0,240,255,0.12); color:var(--cyan); border:1px solid var(--border-cyan); text-align:center; text-decoration:none; font-size:0.72rem; padding:6px;">
+                <i class="fa-brands fa-github"></i> GITHUB
+              </a>
+              <a href="https://www.linkedin.com/in/1daycrew" target="_blank" rel="noopener" class="btn-tool" style="flex:1; background:rgba(0,255,170,0.12); color:var(--emerald); border:1px solid var(--border-emerald); text-align:center; text-decoration:none; font-size:0.72rem; padding:6px;">
+                <i class="fa-brands fa-linkedin"></i> LINKEDIN
+              </a>
+            </div>
+          </div>
         </div>
 
-        <!-- Core Architecture & Telemetry -->
-        <div class="core-architecture-box">
-          <div>
-            <h3 style="font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:#fff; letter-spacing:1px; margin-bottom:4px;">CORE ARCHITECTURE</h3>
-            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
-              Professional, advanced cybersecurity portfolio specializing in Machine Learning NIDS, Android reverse engineering, and hands-on threat simulation.
-            </p>
-          </div>
-
-          <!-- Telemetry Stats Row -->
-          <div class="telemetry-stats-row">
-            <div class="telemetry-stat-card">
-              <span style="font-size:0.7rem; color:var(--text-muted);">CORRELATION</span>
-              <span style="font-family:var(--font-mono); font-size:1.1rem; font-weight:700; color:var(--cyan);">139.7 GB/s</span>
-              <svg width="100%" height="22" viewBox="0 0 100 25">
-                <path d="M0,20 Q20,5 40,15 T80,6 T100,3" fill="none" stroke="#00ffaa" stroke-width="2"></path>
-              </svg>
-            </div>
-
-            <div class="telemetry-stat-card">
-              <span style="font-size:0.7rem; color:var(--text-muted);">ALERTS</span>
-              <span style="font-family:var(--font-mono); font-size:1.1rem; font-weight:700; color:var(--amber);">1,003</span>
-              <svg width="100%" height="22" viewBox="0 0 100 25">
-                <path d="M0,18 L15,14 L30,20 L45,8 L60,14 L75,6 L100,10" fill="none" stroke="#ffb700" stroke-width="2"></path>
-              </svg>
-            </div>
-
-            <div class="telemetry-stat-card">
-              <span style="font-size:0.7rem; color:var(--text-muted);">DEVIATIONS</span>
-              <span style="font-family:var(--font-mono); font-size:1.1rem; font-weight:700; color:var(--cyan);">3396 ms</span>
-              <svg width="100%" height="22" viewBox="0 0 100 25">
-                <path d="M0,18 Q30,4 60,14 T100,22" fill="none" stroke="#00f0ff" stroke-width="2"></path>
-              </svg>
+        <!-- Core Architecture: Real Details & Interactive Cyber Terminal with Public AI -->
+        <div class="core-terminal-architecture-box">
+          <div class="terminal-box-header">
+            <div>
+              <div class="terminal-badge-live"><span class="terminal-pulse-dot"></span> NEURAL AGENT // ONLINE</div>
+              <h3 style="font-family:var(--font-display); font-size:1.45rem; font-weight:700; color:#fff; letter-spacing:1px; margin:4px 0 2px;">
+                OPERATOR ARCHITECTURE & AI TERMINAL
+              </h3>
+              <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.45;">
+                Genuine portfolio intelligence. Type terminal commands (<code class="t-cmd">help</code>, <code class="t-cmd">skills</code>, <code class="t-cmd">projects</code>, <code class="t-cmd">education</code>, <code class="t-cmd">certs</code>, <code class="t-cmd">cv</code>) or ask <code class="t-cmd">ai &lt;question&gt;</code> to interact with live public AI.
+              </p>
             </div>
           </div>
 
-          <!-- Threat World Map -->
-          <div class="threat-map-container">
-            <img src="assets/cyber_assets/threat_world_map.png" alt="Global Threat Telemetry Map" />
+          <!-- THE INTERACTIVE TERMINAL -->
+          <div class="interactive-terminal-card" id="operatorTerminalCard">
+            <div class="terminal-top-hud">
+              <div class="terminal-traffic-lights">
+                <span class="t-light t-red"></span>
+                <span class="t-light t-yellow"></span>
+                <span class="t-light t-green"></span>
+              </div>
+              <div class="terminal-title">kuldeep@core-defense:~$ [TACTICAL AI TERMINAL v2.6]</div>
+              <div class="terminal-right-meta">
+                <span class="terminal-meta-tag">PUBLIC AI ACTIVE</span>
+              </div>
+            </div>
+
+            <!-- Terminal Output Log -->
+            <div class="terminal-screen" id="terminalOutputLog">
+              <div class="t-row t-banner">
+                <pre class="t-ascii-art">
+  ___ ___  ___ ___   ___  ___ ___ ___ _  _ ___ ___ 
+ / __/ _ \| _ \ __| |   \| __| __| __| \| / __| __|
+| (_| (_) |   / _|  | |) | _|| _|| _|| .` \__ \ _| 
+ \___\___/|_|_\___| |___/|___|_| |___|_|\_|___/___|
+                </pre>
+                <div class="t-welcome-text">
+                  <div style="color:var(--emerald); font-weight:700;">[IDENTITY VERIFIED]: KULDEEP SHUKLA // DUBLIN, IRELAND</div>
+                  <div style="color:var(--cyan); margin:3px 0;">BSc (Hons) Computing & IT Graduate • CCT College Dublin (Graduated)</div>
+                  <div style="color:var(--text-muted);">Offensive Security Associate • Android Bug Bounty Hunter • ML NIDS (1DayCrew AI)</div>
+                  <div style="margin-top:6px; color:#fff; border-top:1px dashed rgba(0,240,255,0.25); padding-top:6px;">
+                    Type <span class="t-hl">help</span> for command menu, or ask <span class="t-hl">ANY question</span> directly to the Public AI!
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Terminal Input Line -->
+            <div class="terminal-input-bar">
+              <span class="terminal-prompt-sym">guest@kuldeep:~$</span>
+              <input type="text" id="terminalCliInput" class="terminal-cli-input" placeholder="Type a command or ask AI anything... (e.g. 'skills', 'projects', 'ai why hire Kuldeep?')" autocomplete="off" spellcheck="false" />
+              <button class="terminal-exec-btn" id="terminalExecBtn" title="Run command or Query AI">EXEC ↵</button>
+            </div>
+          </div>
+
+          <!-- Quick Action Chips for Fast Interaction -->
+          <div class="terminal-chips-bar">
+            <span class="chips-label">QUICK AI PROMPTS:</span>
+            <button class="term-chip" onclick="terminalRunCommand('ai Tell me about your 1DayCrew AI capstone')">🤖 Ask AI: 1DayCrew AI</button>
+            <button class="term-chip" onclick="terminalRunCommand('ai Why should we hire Kuldeep for pentesting?')">Ask AI: Why Hire Kuldeep?</button>
+            <button class="term-chip" onclick="terminalRunCommand('ai What is your Android bug bounty methodology?')">📱 Ask AI: Android Pentest</button>
+            <button class="term-chip" onclick="terminalRunCommand('skills')">⚡ Type: 'skills'</button>
+            <button class="term-chip" onclick="terminalRunCommand('certs')">📜 Type: 'certs'</button>
+            <button class="term-chip" onclick="terminalRunCommand('projects')">🚀 Type: 'projects'</button>
+            <button class="term-chip" onclick="terminalRunCommand('cv')">📄 Download CV</button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ========================================================
-         SECTION 2: ARSENAL // TOOLS & PROJECTS (2x2 GRID)
+         SECTION 2: PROJECTS & ARSENAL (2x2 GRID)
          ======================================================== -->
     <section id="arsenal" class="glass-section-card">
       <div class="circuit-section-header">
         <div class="circuit-line left"></div>
         <div>
           <h2 class="section-title">ARSENAL</h2>
-          <div class="section-subtitle">Tools & Projects</div>
+          <div class="section-subtitle">Tools, Flagship Projects & GitHub Repositories</div>
         </div>
         <div class="circuit-line"></div>
       </div>
@@ -912,102 +242,462 @@
         <!-- Card 1: 1DayCrew AI -->
         <div class="project-holo-card">
           <div class="holo-pedestal-box">
-            <img src="assets/cyber_assets/holo_1daycrew_ai.png" alt="1DayCrew AI 3D Hologram" />
+            <div class="holo-badge-overlay"><span class="live-dot"></span> ML NIDS // CICIDS2017</div>
+            <img src="assets/cyber_assets/arsenal_1daycrew_nids.jpg" alt="1DayCrew AI Deep Learning Intrusion Detection System" />
           </div>
           <div>
-            <h3 class="project-title">1DayCrew AI</h3>
-            <p class="project-desc">NIDS/IDS model, intelligence of zero-day attacks using machine learning on network data.</p>
+            <h3 class="project-title">1DayCrew AI — ML NIDS</h3>
+            <p class="project-desc">Production-grade Network Intrusion Detection System trained on CICIDS2017 using Python & XGBoost. Classifies 14 attack types with >97% precision using NFStream flow extraction & SHAP explainability.</p>
           </div>
           <div class="widget-wave-chart">
             <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.72rem; color:var(--emerald);">
-              <span>Graphs <i class="fa-solid fa-chart-simple"></i> 97%</span>
-              <span>Progress 20 0%</span>
+              <span>CICIDS2017 BENCHMARK</span>
+              <span>PRECISION: >97.4%</span>
             </div>
-            <svg viewBox="0 0 200 50" style="width:100%; height:45px;">
+            <svg viewBox="0 0 200 48" style="width:100%; height:42px;">
               <defs>
                 <linearGradient id="gEmerald" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#00ffaa" stop-opacity="0.45"></stop>
                   <stop offset="100%" stop-color="#00ffaa" stop-opacity="0"></stop>
                 </linearGradient>
               </defs>
-              <path d="M0,40 Q30,10 60,35 T120,15 T160,28 T200,8 L200,50 L0,50 Z" fill="url(#gEmerald)"></path>
-              <path d="M0,40 Q30,10 60,35 T120,15 T160,28 T200,8" fill="none" stroke="#00ffaa" stroke-width="2"></path>
+              <path d="M0,38 Q30,10 60,32 T120,14 T160,25 T200,6 L200,48 L0,48 Z" fill="url(#gEmerald)"></path>
+              <path d="M0,38 Q30,10 60,32 T120,14 T160,25 T200,6" fill="none" stroke="#00ffaa" stroke-width="2"></path>
             </svg>
-            <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.6rem; color:var(--text-muted);">
-              <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
+            <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.62rem; color:var(--text-muted);">
+              <span>14 Attack Classes</span><span>XGBoost + SHAP</span><span>F1: 97.1%</span><span>FPR: &lt;0.8%</span>
             </div>
           </div>
         </div>
 
-        <!-- Card 2: Aegis Recon Suite -->
+        <!-- Card 2: KD-Teliport- (Real Project @kuldeepshukla01) -->
         <div class="project-holo-card">
           <div class="holo-pedestal-box">
-            <img src="assets/cyber_assets/holo_aegis_recon.png" alt="Aegis Recon Suite 3D Hologram" />
+            <div class="holo-badge-overlay"><span class="live-dot"></span> AI AGENT // RECON CLI</div>
+            <img src="assets/cyber_assets/arsenal_kd_teliport.jpg" alt="KD-Teliport Autonomous AI Agent and Offensive Reconnaissance Suite" />
           </div>
           <div>
-            <h3 class="project-title">Aegis Recon Suite</h3>
-            <p class="project-desc">Network Scanner with map viz, intelligence security forensic data.</p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="project-title">KD-Teliport-</h3>
+              <a href="https://github.com/kuldeepshukla01/KD-Teliport-" target="_blank" rel="noopener" style="font-family:var(--font-mono); font-size:0.7rem; color:var(--cyan); text-decoration:none; display:flex; align-items:center; gap:4px;">
+                <i class="fa-brands fa-github"></i> REPO <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.6rem;"></i>
+              </a>
+            </div>
+            <p class="project-desc">Terminal-based Autonomous AI Agent and offensive reconnaissance suite. Orchestrates automated port scans, service banner grabbing, live network topology mapping, and threat profiling.</p>
           </div>
           <div class="widget-checklist-box">
-            <div style="display:flex; flex-direction:column; gap:3px; font-size:0.75rem;">
-              <div style="display:flex; align-items:center; gap:5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Network</div>
-              <div style="display:flex; align-items:center; gap:5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Scanner</div>
-              <div style="display:flex; align-items:center; gap:5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Map</div>
-              <div style="display:flex; align-items:center; gap:5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Command</div>
-              <div style="display:flex; align-items:center; gap:5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Reports</div>
+            <div style="display:flex; flex-direction:column; gap:4px; font-size:0.72rem; font-family:var(--font-mono);">
+              <div style="display:flex; align-items:center; gap:6px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--emerald);"></span> Autonomous CLI Agent</div>
+              <div style="display:flex; align-items:center; gap:6px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Nmap / SynScan Telemetry</div>
+              <div style="display:flex; align-items:center; gap:6px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--cyan);"></span> Banner Grabber & Fingerprint</div>
+              <div style="display:flex; align-items:center; gap:6px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--amber);"></span> CVE Exploit Correlation</div>
             </div>
-            <div style="height:55px; border-radius:6px; overflow:hidden; border:1px solid rgba(0,240,255,0.15);">
-              <img src="assets/cyber_assets/threat_world_map.png" alt="Threat Map Mini" style="width:100%; height:100%; object-fit:cover;" />
+            <div style="height:62px; border-radius:6px; overflow:hidden; border:1px solid rgba(0,240,255,0.18); background:#02060c; padding:6px; font-family:var(--font-mono); font-size:0.65rem; color:#8ab1cb; display:flex; flex-direction:column; justify-content:space-between;">
+              <div style="color:var(--emerald); font-weight:700;">[AGENT TELEMETRY]</div>
+              <div>Target: Subnet /24 Live Scan</div>
+              <div style="color:var(--cyan);">Status: AI Recon Active</div>
             </div>
           </div>
         </div>
 
-        <!-- Card 3: Bug Bounty Hunting -->
+        <!-- Card 3: ai-check- (Real Project @kuldeepshukla01) -->
         <div class="project-holo-card">
           <div class="holo-pedestal-box">
-            <img src="assets/cyber_assets/holo_android_audit.png" alt="Android Bug Bounty 3D Hologram" />
+            <div class="holo-badge-overlay"><span class="live-dot"></span> THREAT VALIDATOR // AI SAFETY</div>
+            <img src="assets/cyber_assets/arsenal_ai_check.jpg" alt="ai-check AI Output Threat Verification and Anomaly Detection Engine" />
           </div>
           <div>
-            <h3 class="project-title">Bug Bounty Hunting</h3>
-            <p class="project-desc">Android auditing, OWASP MASVS and compliance scorecards.</p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="project-title">ai-check-</h3>
+              <a href="https://github.com/kuldeepshukla01/ai-check-" target="_blank" rel="noopener" style="font-family:var(--font-mono); font-size:0.7rem; color:var(--cyan); text-decoration:none; display:flex; align-items:center; gap:4px;">
+                <i class="fa-brands fa-github"></i> REPO <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.6rem;"></i>
+              </a>
+            </div>
+            <p class="project-desc">Python-driven AI output verification and threat anomaly detection validator. Inspects neural network inference outputs, screens against adversarial prompt injections, and computes model trust scores.</p>
           </div>
           <div class="widget-bug-matrix">
             <div>
-              <div style="font-size:0.7rem; color:var(--cyan); margin-bottom:4px; font-weight:600;">Android auditing</div>
-              <div style="font-size:0.7rem; color:var(--text-main); margin-bottom:2px;">☑ Auditing</div>
-              <div style="font-size:0.7rem; color:var(--text-main); margin-bottom:2px;">☑ Vulnerabilities</div>
-              <div style="font-size:0.7rem; color:var(--text-main); margin-bottom:2px;">☑ Permissions</div>
-              <div style="font-size:0.7rem; color:var(--text-main);">☑ Protections</div>
+              <div style="font-size:0.7rem; color:var(--cyan); margin-bottom:4px; font-weight:600; font-family:var(--font-mono);">AI THREAT VALIDATION</div>
+              <div style="font-size:0.68rem; color:var(--text-main); margin-bottom:2px;"><i class="fa-solid fa-check" style="color:var(--emerald);"></i> Adversarial Prompt Defense</div>
+              <div style="font-size:0.68rem; color:var(--text-main); margin-bottom:2px;"><i class="fa-solid fa-check" style="color:var(--emerald);"></i> Neural Anomaly Heatmaps</div>
+              <div style="font-size:0.68rem; color:var(--text-main); margin-bottom:2px;"><i class="fa-solid fa-check" style="color:var(--emerald);"></i> Model Output Verification</div>
+              <div style="font-size:0.68rem; color:var(--text-main);"><i class="fa-solid fa-check" style="color:var(--emerald);"></i> Hallucination & Leak Screen</div>
             </div>
             <div>
-              <div style="font-size:0.7rem; color:var(--amber); margin-bottom:4px; font-weight:600;">OWASP MASVS</div>
-              <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-family:var(--font-mono);"><span>Scorecard</span> <span style="color:var(--amber)">80</span></div>
-              <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-family:var(--font-mono);"><span>Scorecard</span> <span style="color:var(--amber)">88</span></div>
-              <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-family:var(--font-mono);"><span>Scorecard</span> <span style="color:var(--amber)">90</span></div>
-              <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-family:var(--font-mono);"><span>Scorecard</span> <span style="color:var(--amber)">79</span></div>
+              <div style="font-size:0.7rem; color:var(--amber); margin-bottom:4px; font-weight:600; font-family:var(--font-mono);">INSPECTION METRICS</div>
+              <div style="display:flex; justify-content:space-between; font-size:0.68rem; font-family:var(--font-mono); margin-bottom:2px;"><span>Model Trust</span> <span style="color:var(--emerald);">94.9%</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:0.68rem; font-family:var(--font-mono); margin-bottom:2px;"><span>Scan Latency</span> <span style="color:var(--cyan);">280ms</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:0.68rem; font-family:var(--font-mono); margin-bottom:2px;"><span>False Positives</span> <span style="color:var(--emerald);">&lt;1.2%</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:0.68rem; font-family:var(--font-mono);"><span>Engine Status</span> <span style="color:var(--cyan);">Secured</span></div>
             </div>
           </div>
         </div>
 
-        <!-- Card 4: Crypto Forensic Toolkit -->
+        <!-- Card 4: Offensive Cyber Lab & CTF Range (EC-Council CTF + TryHackMe + HackThisSite) -->
         <div class="project-holo-card">
-          <div class="holo-pedestal-box">
-            <img src="assets/cyber_assets/holo_crypto_lock.png" alt="Crypto Lock 3D Hologram" />
+          <div class="holo-pedestal-box" style="cursor:pointer;" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png', 'EC-Council Hackerverse CTF — Digital Forensics & Incident Response (DFIR)', 'EC-Council (Building A Culture Of Security)', '04 Oct 2026', 'Certificate #2126 • Level: GRANDMASTER (1 CPE Credit)', 'Digital Forensics & Incident Response (DFIR) competition; memory triage; network packet analysis (PCAP); file carving; malicious persistence detection; rapid flag solving under timed competition constraints, achieving official GRANDMASTER ranking.')" title="Click to inspect official EC-Council CTF Certificate">
+            <div class="holo-badge-overlay"><span class="live-dot"></span> CTF GRANDMASTER // ACTIVE</div>
+            <img src="assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png" alt="EC-Council Hackerverse CTF Competition Grandmaster Certificate" />
           </div>
           <div>
-            <h3 class="project-title">Crypto Forensic Toolkit</h3>
-            <p class="project-desc">SHA-256 calculator, to input the output SHA-256 calculator.</p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="project-title">Offensive CTF Range & Exploits</h3>
+              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--emerald); background:rgba(0,255,170,0.1); border:1px solid rgba(0,255,170,0.3); padding:2px 8px; border-radius:4px;">
+                ● ACTIVE PRACTICE
+              </span>
+            </div>
+            <p class="project-desc">Hands-on war-games range featuring the official EC-Council Hackerverse CTF Competition (DFIR track) — achieved Grandmaster rank (Cert #2126, 04 Oct 2026), alongside active challenge rooms on TryHackMe and Hack This Site realistic web exploits.</p>
           </div>
           <div class="widget-crypto-calc">
-            <div style="font-size:0.68rem; color:var(--text-muted); font-family:var(--font-mono);">INPUT:</div>
-            <input type="text" id="arsenalCryptoInput" class="form-input" style="padding:6px 10px; font-size:0.75rem;" value="SHA-256: A615a1479158688359888888" />
-            <div style="font-size:0.68rem; color:var(--text-muted); font-family:var(--font-mono); margin-top:2px;">OUTPUT:</div>
-            <div id="arsenalCryptoOutput" style="font-family:var(--font-mono); font-size:0.7rem; color:var(--emerald); word-break:break-all; background:rgba(0,255,170,0.06); padding:6px; border-radius:4px;">Computing...</div>
+            <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:var(--text-muted); font-family:var(--font-mono);">
+              <span>WAR-GAMES TARGET STATUS:</span>
+              <span style="color:var(--amber); font-weight:700;">★ GRANDMASTER RANK</span>
+            </div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:2px;">
+              <span style="font-family:var(--font-mono); font-size:0.65rem; background:rgba(255,183,0,0.12); color:var(--amber); border:1px solid rgba(255,183,0,0.4); padding:2px 6px; border-radius:3px;">EC-Council CTF: Grandmaster #2126</span>
+              <span style="font-family:var(--font-mono); font-size:0.65rem; background:rgba(255,51,85,0.12); color:#ff5f56; border:1px solid rgba(255,51,85,0.3); padding:2px 6px; border-radius:3px;">TryHackMe: Offensive Labs</span>
+              <span style="font-family:var(--font-mono); font-size:0.65rem; background:rgba(0,255,170,0.12); color:var(--emerald); border:1px solid var(--border-emerald); padding:2px 6px; border-radius:3px;">HackThisSite: Web Missions</span>
+            </div>
+            <div style="font-family:var(--font-mono); font-size:0.65rem; color:#8ab1cb; background:rgba(0,0,0,0.4); padding:4px 8px; border-radius:4px; margin-top:4px;">
+              <span style="color:var(--emerald);">LATEST FLAG:</span> FLAG{EC_DFIR_GRANDMASTER_2126} [SOLVED 04-OCT-2026]
+            </div>
           </div>
         </div>
 
       </div>
+
+      <!-- ========================================================
+           GITHUB REPOSITORIES TELEMETRY // LIVE SYNC (TASK 5)
+           ======================================================== -->
+      <div class="github-repos-container" id="githubReposSection">
+        <div class="github-repos-header">
+          <div>
+            <div class="terminal-badge-live"><span class="terminal-pulse-dot"></span> GITHUB API // LIVE RECONNAISSANCE</div>
+            <h3 style="font-family:var(--font-display); font-size:1.45rem; font-weight:700; color:#fff; letter-spacing:1px; margin:4px 0 2px;">
+              VERIFIED CODE REPOSITORIES (@kuldeepshukla01)
+            </h3>
+            <div style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">
+              Synchronized with GitHub public REST API • All repositories clickable & direct access enabled
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <span id="githubRepoCount" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--emerald); background:rgba(0,255,170,0.1); padding:4px 10px; border-radius:4px; border:1px solid var(--border-emerald);">
+              <i class="fa-solid fa-code-fork"></i> 11 REPOSITORIES INDEXED
+            </span>
+            <a href="https://github.com/kuldeepshukla01?tab=repositories" target="_blank" rel="noopener" class="btn-tool" style="text-decoration:none; padding:6px 12px; font-size:0.75rem;">
+              <i class="fa-brands fa-github"></i> VIEW ALL ON GITHUB ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Category Filter Bar -->
+        <div class="repo-filter-bar">
+          <button class="repo-filter-btn active" data-filter="all">ALL REPOSITORIES (11)</button>
+          <button class="repo-filter-btn" data-filter="Python">PYTHON & ML</button>
+          <button class="repo-filter-btn" data-filter="Jupyter Notebook">JUPYTER / CAPSTONE</button>
+          <button class="repo-filter-btn" data-filter="JavaScript">JAVASCRIPT & WEB</button>
+          <button class="repo-filter-btn" data-filter="Java">JAVA & SYSTEMS</button>
+        </div>
+
+        <!-- Repositories Grid Container -->
+        <div id="githubReposGrid" class="github-repos-grid">
+          <!-- Populated dynamically via JS with instant fallback -->
+        </div>
+      </div>
+
     </section>
+
+    <!-- ========================================================
+         SECTION 2.5: CERTIFICATIONS & OFFENSIVE CREDENTIALS
+         ======================================================== -->
+    <section id="credentials" class="glass-section-card">
+      <div class="circuit-section-header">
+        <div class="circuit-line left"></div>
+        <div>
+          <h2 class="section-title">CERTIFICATIONS & CREDENTIALS</h2>
+          <div class="section-subtitle">Verified EC-Council & Cisco Credentials • Active CTF Competitor & Offensive Labs</div>
+        </div>
+        <div class="circuit-line"></div>
+      </div>
+
+      <!-- ========================================================
+           FLAGSHIP CTF CERTIFICATE & OFFENSIVE RANGE SPOTLIGHT
+           ======================================================== -->
+      <div class="offensive-practice-banner">
+        <!-- Left Column: Official CTF Certificate Image Preview with Inspect Button -->
+        <div>
+          <div class="ctf-cert-preview-box" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png', 'EC-Council Hackerverse CTF — Digital Forensics & Incident Response (DFIR)', 'EC-Council (Building A Culture Of Security)', '04 Oct 2026', 'Certificate #2126 • Level: GRANDMASTER (1 CPE Credit)', 'Digital Forensics & Incident Response (DFIR) competition; memory triage; network packet analysis (PCAP); file carving; malicious persistence detection; rapid flag solving under timed competition constraints, achieving official GRANDMASTER ranking.')">
+            <img src="assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png" alt="EC-Council Hackerverse CTF Competition Certificate - Grandmaster Level" class="ctf-showcase-img" />
+            <div class="cred-inspect-overlay">
+              <i class="fa-solid fa-expand"></i> CLICK TO ENLARGE CERTIFICATE
+            </div>
+            <div class="ctf-live-pill"><i class="fa-solid fa-crown"></i> LEVEL: GRANDMASTER</div>
+          </div>
+          <button class="btn-cred-inspect" style="width:100%; margin-top:10px;" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png', 'EC-Council Hackerverse CTF — Digital Forensics & Incident Response (DFIR)', 'EC-Council (Building A Culture Of Security)', '04 Oct 2026', 'Certificate #2126 • Level: GRANDMASTER (1 CPE Credit)', 'Digital Forensics & Incident Response (DFIR) competition; memory triage; network packet analysis (PCAP); file carving; malicious persistence detection; rapid flag solving under timed competition constraints, achieving official GRANDMASTER ranking.')">
+            <i class="fa-solid fa-file-certificate"></i> INSPECT CTF CERTIFICATE (CERT #2126)
+          </button>
+        </div>
+
+        <!-- Right Column: Official Credential Telemetry & Active Practice -->
+        <div>
+          <div class="practice-radar-badge" style="background:rgba(255,183,0,0.12); border-color:rgba(255,183,0,0.4); color:var(--amber);">
+            <i class="fa-solid fa-flag-checkered"></i> OFFICIAL COMPETITION CERTIFICATION
+          </div>
+          <h3 class="practice-title" style="margin-top:4px;">HACKERVERSE CTF // DFIR</h3>
+          
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--amber); background:rgba(255,183,0,0.12); border:1px solid rgba(255,183,0,0.35); padding:3px 8px; border-radius:4px; font-weight:700;">
+              <i class="fa-solid fa-crown"></i> LEVEL: GRANDMASTER
+            </span>
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--cyan); background:rgba(0,240,255,0.12); border:1px solid var(--border-cyan); padding:3px 8px; border-radius:4px;">
+              <i class="fa-solid fa-id-badge"></i> CERT #2126
+            </span>
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--emerald); background:rgba(0,255,170,0.12); border:1px solid var(--border-emerald); padding:3px 8px; border-radius:4px;">
+              <i class="fa-solid fa-calendar-check"></i> ISSUED: 04 OCT 2026
+            </span>
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:#fff; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); padding:3px 8px; border-radius:4px;">
+              1 CPE CREDIT
+            </span>
+          </div>
+
+          <p class="practice-desc" style="margin-bottom:14px;">
+            Official certificate awarded by <strong>EC-Council</strong> for successfully competing in the <strong>Hackerverse CTF Competition</strong> in the <strong>Digital Forensics & Incident Response (DFIR)</strong> track. Demonstrated practical expertise in memory dump triage, malicious PCAP network stream reconstruction, file carving, and rapid flag captures under timed constraints to achieve the top-tier <strong>GRANDMASTER</strong> qualification.
+          </p>
+
+          <div style="background:rgba(0,0,0,0.35); border:1px solid rgba(0,240,255,0.16); border-radius:10px; padding:10px 14px;">
+            <div style="font-family:var(--font-mono); font-size:0.68rem; color:var(--cyan); font-weight:700; margin-bottom:8px;">
+              <i class="fa-solid fa-crosshairs"></i> CONTINUOUS OFFENSIVE WAR-GAMES SYNC:
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <a href="https://tryhackme.com" target="_blank" rel="noopener" style="text-decoration:none; display:flex; align-items:center; gap:8px; background:rgba(255,51,85,0.1); border:1px solid rgba(255,51,85,0.3); border-radius:6px; padding:8px 10px; color:#ff5f56; font-family:var(--font-mono); font-size:0.72rem; transition:all 0.2s;">
+                <i class="fa-solid fa-fire"></i>
+                <div>
+                  <div style="color:#fff; font-weight:700;">TryHackMe</div>
+                  <div style="color:#ff8a98; font-size:0.62rem;">Offensive Labs & PrivEsc ↗</div>
+                </div>
+              </a>
+              <a href="https://www.hackthissite.org" target="_blank" rel="noopener" style="text-decoration:none; display:flex; align-items:center; gap:8px; background:rgba(0,255,170,0.1); border:1px solid var(--border-emerald); border-radius:6px; padding:8px 10px; color:var(--emerald); font-family:var(--font-mono); font-size:0.72rem; transition:all 0.2s;">
+                <i class="fa-solid fa-terminal"></i>
+                <div>
+                  <div style="color:#fff; font-weight:700;">Hack This Site</div>
+                  <div style="color:#7efadc; font-size:0.62rem;">Web Missions & SQLi ↗</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real Verified Credentials Grid -->
+      <div class="credentials-cards-grid">
+
+        <!-- Credential 1: Cisco Networking Academy - Ethical Hacker -->
+        <div class="cred-card">
+          <div>
+            <div class="cred-img-viewport" onclick="openCertModal('assets/cyber_assets/certs/cert_cisco_ethical_hacker.png', 'Cisco Networking Academy — Ethical Hacker', 'Cisco Networking Academy', '26 Jan 2026', 'Verified Credential (Student Level)', 'Explaining the importance of methodological ethical hacking and penetration testing; creating scoping & ROE preliminary documents; performing information gathering & vulnerability scanning; exploiting wired & wireless network vulnerabilities; exploiting web application flaws; assessing cloud, mobile, and IoT security; performing post-exploitation & pivoting; authoring penetration testing reports; classifying pentesting tools by use case.')">
+              <img src="assets/cyber_assets/certs/cert_cisco_ethical_hacker.png" alt="Cisco Networking Academy Ethical Hacker Certificate" loading="lazy" />
+              <div class="cred-inspect-overlay">
+                <i class="fa-solid fa-expand"></i> CLICK TO ENLARGE CREDENTIAL
+              </div>
+            </div>
+            <div class="cred-badge-row">
+              <span class="cred-badge-pill cisco">CISCO NETWORKING ACADEMY</span>
+              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--emerald);"><i class="fa-solid fa-circle-check"></i> VERIFIED</span>
+            </div>
+            <h3 class="cred-title">Ethical Hacker</h3>
+            <div class="cred-meta-row">
+              <div>ISSUER: <span>Cisco Networking Academy</span></div>
+              <div>DATE: <span>26 Jan 2026</span></div>
+              <div>DIRECTOR: <span>Lynn Bloomer</span></div>
+            </div>
+            <div class="cred-learn-box">
+              <div class="cred-learn-title"><i class="fa-solid fa-microchip"></i> WHAT I LEARNED & DEMONSTRATED:</div>
+              <ul class="cred-learn-list">
+                <li><i class="fa-solid fa-check"></i> Methodological ethical hacking & penetration testing lifecycle.</li>
+                <li><i class="fa-solid fa-check"></i> Preliminary scoping documents, NDAs, and Rules of Engagement (ROE).</li>
+                <li><i class="fa-solid fa-check"></i> Information gathering, OSINT reconnaissance, and vulnerability scanning.</li>
+                <li><i class="fa-solid fa-check"></i> Exploiting wired/wireless network vulnerabilities (WPA/WPA2, deauth).</li>
+                <li><i class="fa-solid fa-check"></i> Application-based vulnerabilities (OWASP Top 10, SQLi, XSS, CSRF).</li>
+                <li><i class="fa-solid fa-check"></i> Post-exploitation activities: privilege escalation, persistence, and pivoting.</li>
+                <li><i class="fa-solid fa-check"></i> Authoring professional, remediation-oriented penetration test reports.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="btn-cred-inspect" onclick="openCertModal('assets/cyber_assets/certs/cert_cisco_ethical_hacker.png', 'Cisco Networking Academy — Ethical Hacker', 'Cisco Networking Academy', '26 Jan 2026', 'Verified Credential (Student Level)', 'Explaining the importance of methodological ethical hacking and penetration testing; creating scoping & ROE preliminary documents; performing information gathering & vulnerability scanning; exploiting wired & wireless network vulnerabilities; exploiting web application flaws; assessing cloud, mobile, and IoT security; performing post-exploitation & pivoting; authoring penetration testing reports; classifying pentesting tools by use case.')">
+            <i class="fa-solid fa-file-certificate"></i> VIEW FULL CERTIFICATE
+          </button>
+        </div>
+
+        <!-- Credential 2: EC-Council - Deep Web and Cybersecurity -->
+        <div class="cred-card">
+          <div>
+            <div class="cred-img-viewport" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_deepweb_cybersecurity.png', 'EC-Council — Deep Web and Cybersecurity', 'EC-Council (President: Jay Bavisi)', '04 Feb 2024', 'Certificate #292706', 'Architecture of anonymous networks (.onion routing, Tor, I2P); gathering Cyber Threat Intelligence (CTI) from darknet leak sites; monitoring underground forums & corporate credential dumps; maintaining OPSEC and digital burner identities; enterprise threat mitigation against dark web exposures.')">
+              <img src="assets/cyber_assets/certs/cert_eccouncil_deepweb_cybersecurity.png" alt="EC-Council Deep Web and Cybersecurity Certificate" loading="lazy" />
+              <div class="cred-inspect-overlay">
+                <i class="fa-solid fa-expand"></i> CLICK TO ENLARGE CREDENTIAL
+              </div>
+            </div>
+            <div class="cred-badge-row">
+              <span class="cred-badge-pill eccouncil">EC-COUNCIL CERTIFIED</span>
+              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--cyan);"><i class="fa-solid fa-id-badge"></i> #292706</span>
+            </div>
+            <h3 class="cred-title">Deep Web and Cybersecurity</h3>
+            <div class="cred-meta-row">
+              <div>ISSUER: <span>EC-Council</span></div>
+              <div>DATE: <span>04 Feb 2024</span></div>
+              <div>PRESIDENT: <span>Jay Bavisi</span></div>
+            </div>
+            <div class="cred-learn-box">
+              <div class="cred-learn-title"><i class="fa-solid fa-microchip"></i> WHAT I LEARNED & DEMONSTRATED:</div>
+              <ul class="cred-learn-list">
+                <li><i class="fa-solid fa-check"></i> Topology of the Deep Web, Dark Web, and anonymous networks (Tor, I2P).</li>
+                <li><i class="fa-solid fa-check"></i> Cyber Threat Intelligence (CTI) reconnaissance on underground forums.</li>
+                <li><i class="fa-solid fa-check"></i> Tracking corporate data breaches, leaked credentials, and threat actors.</li>
+                <li><i class="fa-solid fa-check"></i> Rigorous OPSEC: proxy chaining, burner VMs, and anti-fingerprinting.</li>
+                <li><i class="fa-solid fa-check"></i> Defensive incident response strategies against illicit dark web compromises.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="btn-cred-inspect" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_deepweb_cybersecurity.png', 'EC-Council — Deep Web and Cybersecurity', 'EC-Council (President: Jay Bavisi)', '04 Feb 2024', 'Certificate #292706', 'Architecture of anonymous networks (.onion routing, Tor, I2P); gathering Cyber Threat Intelligence (CTI) from darknet leak sites; monitoring underground forums & corporate credential dumps; maintaining OPSEC and digital burner identities; enterprise threat mitigation against dark web exposures.')">
+            <i class="fa-solid fa-file-certificate"></i> VIEW FULL CERTIFICATE
+          </button>
+        </div>
+
+        <!-- Credential 3: EC-Council CodeRed - Android Bug Bounty Hunting -->
+        <div class="cred-card">
+          <div>
+            <div class="cred-img-viewport" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_android_bugbounty.png', 'EC-Council CodeRed — Android Bug Bounty Hunting: Hunt Like a Rat', 'CodeRed by EC-Council', '04 Jun 2026', 'Certificate #503849', 'Mobile application penetration testing; decompiling APK binaries using jadx-gui, apktool, dex2jar; auditing AndroidManifest.xml for exposed activities, intent filters, content providers; detecting Insecure Data Storage in SQLite and SharedPreferences; bypassing SSL Pinning using Frida and Objection; intercepting API traffic via Burp Suite; formulating high-impact bug bounty reports with reproducible PoCs.')">
+              <img src="assets/cyber_assets/certs/cert_eccouncil_android_bugbounty.png" alt="EC-Council CodeRed Android Bug Bounty Hunting Certificate" loading="lazy" />
+              <div class="cred-inspect-overlay">
+                <i class="fa-solid fa-expand"></i> CLICK TO ENLARGE CREDENTIAL
+              </div>
+            </div>
+            <div class="cred-badge-row">
+              <span class="cred-badge-pill eccouncil">EC-COUNCIL CODERED</span>
+              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--cyan);"><i class="fa-solid fa-id-badge"></i> #503849</span>
+            </div>
+            <h3 class="cred-title">Android Bug Bounty Hunting</h3>
+            <div class="cred-meta-row">
+              <div>ISSUER: <span>CodeRed (EC-Council)</span></div>
+              <div>DATE: <span>04 Jun 2026</span></div>
+              <div>COURSE: <span>Hunt Like a Rat</span></div>
+            </div>
+            <div class="cred-learn-box">
+              <div class="cred-learn-title"><i class="fa-solid fa-microchip"></i> WHAT I LEARNED & DEMONSTRATED:</div>
+              <ul class="cred-learn-list">
+                <li><i class="fa-solid fa-check"></i> Reverse engineering APK binaries using <code style="color:var(--cyan)">jadx</code>, <code style="color:var(--cyan)">apktool</code>, and <code style="color:var(--cyan)">dex2jar</code>.</li>
+                <li><i class="fa-solid fa-check"></i> OWASP MASVS compliance auditing across mobile components.</li>
+                <li><i class="fa-solid fa-check"></i> Identifying Insecure Data Storage (SQLite, SharedPreferences, SD card).</li>
+                <li><i class="fa-solid fa-check"></i> Dynamic instrumentation with <code style="color:var(--emerald)">Frida</code> & <code style="color:var(--emerald)">Objection</code> to bypass SSL Pinning.</li>
+                <li><i class="fa-solid fa-check"></i> Manipulating mobile API endpoints through Burp Suite proxy.</li>
+                <li><i class="fa-solid fa-check"></i> Responsible vulnerability reporting and proof-of-concept creation.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="btn-cred-inspect" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_android_bugbounty.png', 'EC-Council CodeRed — Android Bug Bounty Hunting: Hunt Like a Rat', 'CodeRed by EC-Council', '04 Jun 2026', 'Certificate #503849', 'Mobile application penetration testing; decompiling APK binaries using jadx-gui, apktool, dex2jar; auditing AndroidManifest.xml for exposed activities, intent filters, content providers; detecting Insecure Data Storage in SQLite and SharedPreferences; bypassing SSL Pinning using Frida and Objection; intercepting API traffic via Burp Suite; formulating high-impact bug bounty reports with reproducible PoCs.')">
+            <i class="fa-solid fa-file-certificate"></i> VIEW FULL CERTIFICATE
+          </button>
+        </div>
+
+        <!-- Credential 4: EC-Council - Hackerverse CTF Competition (DFIR) -->
+        <div class="cred-card">
+          <div>
+            <div class="cred-img-viewport" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png', 'EC-Council Hackerverse CTF — Digital Forensics & Incident Response (DFIR)', 'EC-Council (Building A Culture Of Security)', '04 Oct 2026', 'Certificate #2126 • Level: GRANDMASTER (1 CPE Credit)', 'Digital Forensics & Incident Response (DFIR) competition; memory triage; network packet analysis (PCAP); file carving; malicious persistence detection; rapid flag solving under timed competition constraints, achieving official GRANDMASTER ranking.')">
+              <img src="assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png" alt="EC-Council Hackerverse CTF Competition Certificate - Grandmaster" loading="lazy" />
+              <div class="cred-inspect-overlay">
+                <i class="fa-solid fa-expand"></i> CLICK TO ENLARGE CREDENTIAL
+              </div>
+            </div>
+            <div class="cred-badge-row">
+              <span class="cred-badge-pill ctf" style="background:rgba(255,51,85,0.18); color:#ff5f56; border:1px solid rgba(255,51,85,0.4);"><i class="fa-solid fa-trophy"></i> EC-COUNCIL CTF</span>
+              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--amber); font-weight:700;"><i class="fa-solid fa-crown"></i> GRANDMASTER</span>
+            </div>
+            <h3 class="cred-title">Hackerverse CTF — DFIR</h3>
+            <div class="cred-meta-row">
+              <div>ORGANIZER: <span>EC-Council</span></div>
+              <div>DATE: <span>04 Oct 2026</span></div>
+              <div>LEVEL: <span style="color:var(--amber); font-weight:700;">GRANDMASTER</span></div>
+              <div>CREDENTIAL: <span>Cert #2126 (1 CPE)</span></div>
+            </div>
+            <div class="cred-learn-box">
+              <div class="cred-learn-title"><i class="fa-solid fa-microchip"></i> WHAT I LEARNED & DEMONSTRATED:</div>
+              <ul class="cred-learn-list">
+                <li><i class="fa-solid fa-check"></i> Competed in official <strong>Hackerverse CTF</strong> (Digital Forensics & Incident Response).</li>
+                <li><i class="fa-solid fa-check"></i> Achieved the elite <strong>GRANDMASTER</strong> qualification level.</li>
+                <li><i class="fa-solid fa-check"></i> Memory analysis, endpoint artifact triage, and network packet dissection.</li>
+                <li><i class="fa-solid fa-check"></i> Tracing cyber attack timelines, lateral movement, and persistent backdoors.</li>
+                <li><i class="fa-solid fa-check"></i> High-intensity flag hunting and cryptographic problem solving under timed pressure.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="btn-cred-inspect" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png', 'EC-Council Hackerverse CTF — Digital Forensics & Incident Response (DFIR)', 'EC-Council (Building A Culture Of Security)', '04 Oct 2026', 'Certificate #2126 • Level: GRANDMASTER (1 CPE Credit)', 'Digital Forensics & Incident Response (DFIR) competition; memory triage; network packet analysis (PCAP); file carving; malicious persistence detection; rapid flag solving under timed competition constraints, achieving official GRANDMASTER ranking.')">
+            <i class="fa-solid fa-file-certificate"></i> VIEW FULL CERTIFICATE
+          </button>
+        </div>
+
+        <!-- Credential 5: EC-Council CodeRed - Jira Agile Project Management -->
+        <div class="cred-card">
+          <div>
+            <div class="cred-img-viewport" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_jira_agile.png', 'EC-Council CodeRed — Jira Agile Project Management & Administration', 'CodeRed by EC-Council', '21 Aug 2026', 'Certificate #521624', 'Agile DevSecOps workflows, Jira administration, configuring Scrum and Kanban boards for security and engineering teams, vulnerability remediation issue lifecycles, and SLA compliance orchestration.')">
+              <img src="assets/cyber_assets/certs/cert_eccouncil_jira_agile.png" alt="EC-Council CodeRed Jira Agile Project Management Certificate" loading="lazy" />
+              <div class="cred-inspect-overlay">
+                <i class="fa-solid fa-expand"></i> CLICK TO ENLARGE CREDENTIAL
+              </div>
+            </div>
+            <div class="cred-badge-row">
+              <span class="cred-badge-pill eccouncil">EC-COUNCIL CODERED</span>
+              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--cyan);"><i class="fa-solid fa-id-badge"></i> #521624</span>
+            </div>
+            <h3 class="cred-title">Jira Agile Project Management</h3>
+            <div class="cred-meta-row">
+              <div>ISSUER: <span>CodeRed (EC-Council)</span></div>
+              <div>DATE: <span>21 Aug 2026</span></div>
+              <div>SCOPE: <span>Jira Administration + Agile</span></div>
+            </div>
+            <div class="cred-learn-box">
+              <div class="cred-learn-title"><i class="fa-solid fa-microchip"></i> WHAT I LEARNED & DEMONSTRATED:</div>
+              <ul class="cred-learn-list">
+                <li><i class="fa-solid fa-check"></i> DevSecOps issue pipelines and security engineering sprint workflows.</li>
+                <li><i class="fa-solid fa-check"></i> Jira administration: setting up custom workflows, permissions, and boards.</li>
+                <li><i class="fa-solid fa-check"></i> Vulnerability remediation tracking, SLA monitoring, and backlog grooming.</li>
+                <li><i class="fa-solid fa-check"></i> Coordinating cross-functional incident mitigation between Dev and Sec teams.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="btn-cred-inspect" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_jira_agile.png', 'EC-Council CodeRed — Jira Agile Project Management & Administration', 'CodeRed by EC-Council', '21 Aug 2026', 'Certificate #521624', 'Agile DevSecOps workflows, Jira administration, configuring Scrum and Kanban boards for security and engineering teams, vulnerability remediation issue lifecycles, and SLA compliance orchestration.')">
+            <i class="fa-solid fa-file-certificate"></i> VIEW FULL CERTIFICATE
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CERTIFICATE PREVIEW MODAL (LIGHTBOX) -->
+    <div id="certLightboxModal" class="cert-lightbox-modal" onclick="closeCertModal(event)">
+      <div class="cert-modal-box" onclick="event.stopPropagation()">
+        <div class="cert-modal-header">
+          <div>
+            <div id="certModalBadge" style="font-family:var(--font-mono); font-size:0.68rem; color:var(--cyan); letter-spacing:1px; margin-bottom:2px;">VERIFIED CREDENTIAL</div>
+            <div id="certModalTitle" style="font-family:var(--font-display); font-size:1.35rem; font-weight:700; color:#fff;">Certificate Title</div>
+          </div>
+          <button class="cert-modal-close-btn" onclick="closeCertModalDirect()"><i class="fa-solid fa-xmark"></i> CLOSE</button>
+        </div>
+        <div class="cert-modal-body">
+          <img id="certModalImg" src="" alt="Verified Certificate" class="cert-modal-img" />
+          <div style="width:100%; background:rgba(0,0,0,0.4); border:1px solid rgba(0,240,255,0.2); border-radius:10px; padding:12px 16px; font-family:var(--font-mono); font-size:0.75rem;">
+            <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:6px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:6px;">
+              <div>ISSUER: <span id="certModalIssuer" style="color:#fff; font-weight:700;">—</span></div>
+              <div>DATE: <span id="certModalDate" style="color:var(--emerald);">—</span></div>
+              <div>CREDENTIAL ID: <span id="certModalId" style="color:var(--cyan);">—</span></div>
+            </div>
+            <div style="color:var(--text-muted); line-height:1.5;">
+              <strong style="color:var(--cyan);">CURRICULUM & VERIFIED SKILLS:</strong>
+              <p id="certModalSkills" style="margin-top:4px; color:#d2e4f3;"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- ========================================================
          SECTION 3: LIVE VULN LAB // WORKING TOOLBOX
@@ -1101,14 +791,14 @@
       <section id="matrix" class="glass-section-card" style="padding:28px 24px; display:flex; flex-direction:column;">
         <div style="text-align:center; margin-bottom:16px;">
           <h2 style="font-family:var(--font-display); font-size:1.8rem; font-weight:700; color:var(--cyan); letter-spacing:2px; margin:0;">SKILLS MATRIX</h2>
-          <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Radar chart driven coding graphics tools and advanced "Threat Hunter"</div>
+          <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Verified competency across core offensive security, threat analysis, and ML defense domains.</div>
         </div>
         <div style="flex:1; min-height:260px; position:relative;">
           <canvas id="skillsRadarCanvas"></canvas>
         </div>
       </section>
 
-      <!-- EXACT TIMELINE (PIXEL-FOR-PIXEL CORRESPONDENCE WITH MOCKUP) -->
+      <!-- SECTION 6: EDUCATION & EXPERIENCE TIMELINE (WITH 3D GLOBE) -->
       <section id="timeline" class="glass-section-card timeline-exact-card">
         
         <!-- Connected Circuit SVG Overlay -->
@@ -1132,39 +822,39 @@
         </div>
 
         <div class="timeline-body-split">
-          <!-- 3D Earth Globe (Exact Mockup Asset + Live Holographic Atmosphere & 3D Interactive WebGL) -->
-          <div class="globe-holder-box" id="timelineGlobeWrapper">
+          <!-- 3D Earth Globe: ONLY Interactive 3D WebGL (Image Removed as requested) -->
+          <div class="globe-holder-box" id="timelineGlobeWrapper" title="Drag to rotate 3D Earth Globe • Primary Node: Dublin, Ireland">
             <div class="globe-orbit-ring"></div>
-            <img src="assets/cyber_assets/timeline_globe_exact.png" id="exactGlobeImg" alt="Cyber 3D Earth Globe with Golden Beacon Ray" class="exact-globe-overlay" title="Cyber 3D Earth Globe // Primary Node: Dublin, Ireland" />
             <canvas id="timelineGlobeCanvas" class="globe-interactive-canvas"></canvas>
-            <div class="globe-toggle-pill" id="globeToggleBtn" onclick="toggleGlobeMode()" title="Switch between Accurate Mockup Globe and Interactive 3D WebGL Globe">
-              <span id="globeModeLabel">3D INTERACTIVE</span>
+            <div class="globe-interactive-badge">
+              <span class="globe-live-dot"></span>
+              <span>3D WEBGL // DUBLIN NODE</span>
             </div>
           </div>
 
           <!-- Vertical Timeline with Exact Year on Left & Badges on Right -->
           <ul class="timeline-exact-chain" id="timelineChain">
             
-            <!-- Milestone 1: 2025 -->
+            <!-- Milestone 1: 2026 -->
             <li class="timeline-exact-row">
-              <span class="tl-year">2025</span>
+              <span class="tl-year">2026</span>
               <div class="tl-dot"></div>
               <div class="tl-content">
-                <span class="tl-heading">BSc (Hons) Computing & IT - CCT College Dublin</span>
-                <span class="tl-sub">College Dublin</span>
+                <span class="tl-heading">BSc (Hons) Graduate • Cisco Ethical Hacker • CTF Grandmaster</span>
+                <span class="tl-sub">CCT College Dublin (Graduated) • Cisco Ethical Hacker (26 Jan 2026) • EC-Council Hackerverse CTF DFIR Grandmaster (Cert #2126, 04 Oct 2026) • EC-Council CodeRed</span>
               </div>
-              <img src="assets/cyber_assets/badge_cct_college.png" alt="CCT College Dublin Shield Badge" class="tl-badge-img" title="CCT College Dublin" />
+              <img src="assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png" alt="EC-Council Hackerverse CTF Grandmaster" class="tl-badge-img" title="EC-Council Hackerverse CTF Grandmaster #2126 (2026) • Cisco Ethical Hacker • CCT Graduate" />
             </li>
 
-            <!-- Milestone 2: 2022 -->
+            <!-- Milestone 2: 2024 -->
             <li class="timeline-exact-row">
-              <span class="tl-year">2022</span>
+              <span class="tl-year">2024</span>
               <div class="tl-dot"></div>
               <div class="tl-content">
-                <span class="tl-heading">EC-Council Android Bug Bounty Hunter</span>
-                <span class="tl-sub">Badges</span>
+                <span class="tl-heading">EC-Council Deep Web & Cybersecurity</span>
+                <span class="tl-sub">EC-Council Cert #292706 (04 Feb 2024) • Anonymous Networks (.onion), Darknet Threat Intel, OPSEC</span>
               </div>
-              <img src="assets/cyber_assets/badge_ec_council.png" alt="EC-Council Badge" class="tl-badge-img" title="EC-Council Certified" />
+              <img src="assets/cyber_assets/badge_ec_council.png" alt="EC-Council Badge" class="tl-badge-img" title="EC-Council Certified (2024)" />
             </li>
 
             <!-- Milestone 3: 2023 -->
@@ -1172,21 +862,32 @@
               <span class="tl-year">2023</span>
               <div class="tl-dot"></div>
               <div class="tl-content">
-                <span class="tl-heading">CCT (In Progress)</span>
-                <span class="tl-sub">Milestone</span>
+                <span class="tl-heading">Offensive War-Games & Vulnerability Labs</span>
+                <span class="tl-sub">Continuous practice on TryHackMe offensive rooms & Hack This Site realistic challenges</span>
               </div>
-              <img src="assets/cyber_assets/badge_cct_inprogress.png" alt="CCT Milestone Badge" class="tl-badge-img" title="CCT In Progress" />
+              <img src="assets/cyber_assets/badge_cct_inprogress.png" alt="Offensive Labs Badge" class="tl-badge-img" title="TryHackMe & HackThisSite Labs" />
             </li>
 
-            <!-- Milestone 4: 2021 (CEH Next Target) -->
+            <!-- Milestone 4: 2022 -->
             <li class="timeline-exact-row">
-              <span class="tl-year">2021</span>
+              <span class="tl-year">2022</span>
               <div class="tl-dot"></div>
               <div class="tl-content">
-                <span class="tl-heading">CEH (Next Target)</span>
-                <span class="tl-sub">Milestone</span>
+                <span class="tl-heading">Commenced BSc (Hons) Computing & IT</span>
+                <span class="tl-sub">CCT College Dublin • Enrolled in Cybersecurity, Networking & Systems Engineering</span>
               </div>
-              <img src="assets/cyber_assets/badge_ceh.png" alt="CEH Target Shield Badge" class="tl-badge-img" title="CEH Milestone" />
+              <img src="assets/cyber_assets/badge_cct_college.png" alt="CCT College Dublin Crest Badge" class="tl-badge-img" title="CCT College Dublin" />
+            </li>
+
+            <!-- Milestone 5: 2020 -->
+            <li class="timeline-exact-row">
+              <span class="tl-year">2020</span>
+              <div class="tl-dot"></div>
+              <div class="tl-content">
+                <span class="tl-heading">Diploma in Information Technology</span>
+                <span class="tl-sub">Hewett Polytechnic, India • Core Networking & Systems</span>
+              </div>
+              <img src="assets/cyber_assets/badge_cct_college.png" alt="Diploma IT Badge" class="tl-badge-img" title="Hewett Polytechnic" />
             </li>
 
           </ul>
@@ -1203,44 +904,44 @@
         <div class="circuit-line left"></div>
         <div>
           <h2 class="section-title">COMMUNICATIONS</h2>
-          <div class="section-subtitle">Cyber Intel Feed & Recruiter Terminal</div>
+          <div class="section-subtitle">Direct Uplink & Recruiter Terminal</div>
         </div>
         <div class="circuit-line"></div>
       </div>
 
       <div class="intel-contact-grid">
-        <!-- Cyber Intel Feed -->
+        <!-- Verified Operator Telemetry -->
         <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(0,240,255,0.16); border-radius:18px; padding:22px;">
-          <h3 style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:#fff; letter-spacing:1px; margin-bottom:12px;">CYBER INTEL FEED</h3>
+          <h3 style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:#fff; letter-spacing:1px; margin-bottom:12px;">DIRECT COMMUNICATIONS</h3>
           
-          <div style="display:flex; flex-direction:column; gap:10px; font-size:0.8rem; color:var(--text-muted);">
+          <div style="display:flex; flex-direction:column; gap:10px; font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono);">
             <div style="padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06);">
-              <strong style="color:var(--red);">● Recent Threats</strong> (5m ago)<br>
-              Zero-day telemetry anomaly detected on port 8080.
+              <strong style="color:var(--emerald);">● LOCATION TELEMETRY:</strong> Dublin, Ireland (UTC+1)<br>
+              Actively seeking Junior Penetration Tester & SOC Analyst opportunities in Ireland.
             </div>
             <div style="padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06);">
-              <strong style="color:var(--red);">● Recent Threat</strong> (1h ago)<br>
-              Suricata NIDS rule triggered: Brute-force ingress pattern.
+              <strong style="color:var(--cyan);"><i class="fa-brands fa-linkedin"></i> LINKEDIN PROFILE:</strong><br>
+              <a href="https://www.linkedin.com/in/1daycrew" target="_blank" rel="noopener" style="color:#fff; text-decoration:underline; word-break:break-all;">linkedin.com/in/1daycrew ↗</a>
             </div>
             <div>
-              <strong style="color:var(--amber);">● Detected Threat</strong> (1h ago)<br>
-              Threat actor connected with advanced reconnaissance traffic patterns.
+              <strong style="color:var(--amber);">● VERIFIED GITHUB:</strong><br>
+              <a href="https://github.com/kuldeepshukla01" target="_blank" rel="noopener" style="color:var(--cyan); text-decoration:none;">github.com/kuldeepshukla01 ↗</a>
             </div>
           </div>
         </div>
 
         <!-- Contact Terminal -->
         <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(0,240,255,0.16); border-radius:18px; padding:22px; display:flex; flex-direction:column;">
-          <h3 style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:#fff; letter-spacing:1px; margin-bottom:2px;">CONTACT</h3>
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Secure message terminal, send your direct message.</div>
+          <h3 style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:#fff; letter-spacing:1px; margin-bottom:2px;">CONTACT DISPATCH</h3>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Encrypted transmission portal. Messages route to operator inbox.</div>
 
           <div id="contactTerminalLog" style="flex:1; background:rgba(0,0,0,0.45); border:1px solid rgba(0,240,255,0.18); border-radius:8px; padding:12px; font-family:var(--font-mono); font-size:0.75rem; min-height:80px; margin-bottom:12px; overflow-y:auto;">
             <div><span style="color:var(--emerald);">[OPERATOR]:</span> Available for SOC Analyst / Junior Pentester roles in Ireland.</div>
-            <div><span style="color:var(--cyan);">[COMMS]:</span> kuldeepshukla01@gmail.com</div>
+            <div><span style="color:var(--cyan);">[NETWORK]:</span> <a href="https://www.linkedin.com/in/1daycrew" target="_blank" rel="noopener" style="color:var(--cyan); text-decoration:underline;">linkedin.com/in/1daycrew ↗</a></div>
           </div>
 
           <div style="display:flex; gap:8px;">
-            <input type="text" id="contactTerminalInput" class="form-input" placeholder="Type a message..." style="flex:1;" />
+            <input type="text" id="contactTerminalInput" class="form-input" placeholder="Type a recruiter message or inquiry..." style="flex:1;" />
             <button class="btn-tool" onclick="sendTerminalTransmission()">➤ SEND</button>
           </div>
         </div>
@@ -1253,517 +954,14 @@
   <footer>
     <div>CORE DEFENSE™ // KULDEEP SHUKLA • DUBLIN, IRELAND • BSc (Hons) Computing & IT</div>
     <div>
-      <a href="mailto:kuldeepshukla01@gmail.com"><i class="fa-solid fa-envelope"></i> kuldeepshukla01@gmail.com</a>
+      <a href="https://www.linkedin.com/in/1daycrew" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
       <a href="https://github.com/kuldeepshukla01" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
       <a href="./Kuldeep_Shukla_CV.pdf" download="Kuldeep_Shukla_CV.pdf"><i class="fa-solid fa-file-pdf"></i> Resume (PDF)</a>
     </div>
   </footer>
+  </footer>
 
-  <!-- SCRIPT ENGINE -->
-  <script>
-    /* ==========================================================
-       1. ACTIVE NAV SCROLLSPY
-       ========================================================== */
-    const navLinks = document.querySelectorAll('.nav-btn');
-    const sections = document.querySelectorAll('section');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(sec => {
-        const top = sec.offsetTop - 150;
-        if (window.scrollY >= top) {
-          current = sec.getAttribute('id');
-        }
-      });
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
-      });
-    }, { passive: true });
-
-    /* ==========================================================
-       2. SKILLS MATRIX RADAR CHART (EXACT 5 AXES IN MOCKUP)
-       ========================================================== */
-    (function initRadarChart() {
-      const el = document.getElementById('skillsRadarCanvas');
-      if (!el) return;
-      new Chart(el.getContext('2d'), {
-        type: 'radar',
-        data: {
-          labels: ['Radar', 'Chart', 'Target', 'Stok', 'Block'],
-          datasets: [{
-            data: [95, 92, 88, 96, 90],
-            backgroundColor: 'rgba(0, 255, 170, 0.22)',
-            borderColor: '#00ffaa',
-            borderWidth: 2,
-            pointBackgroundColor: '#00f0ff',
-            pointBorderColor: '#fff',
-            pointRadius: 4
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            r: {
-              angleLines: { color: 'rgba(0, 240, 255, 0.25)' },
-              grid: { color: 'rgba(0, 240, 255, 0.12)' },
-              pointLabels: {
-                color: '#6b869e',
-                font: { family: "'JetBrains Mono', monospace", size: 10 }
-              },
-              ticks: { display: false, max: 100, min: 0 }
-            }
-          },
-          plugins: {
-            legend: { display: false }
-          }
-        }
-      });
-    })();
-
-    /* ==========================================================
-       3. ARSENAL CRYPTO TOOLKIT HASHER
-       ========================================================== */
-    (function initArsenalHasher() {
-      const inp = document.getElementById('arsenalCryptoInput');
-      const out = document.getElementById('arsenalCryptoOutput');
-      if (!inp || !out) return;
-
-      async function hash(val) {
-        if (!val) { out.textContent = 'Empty input'; return; }
-        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
-        out.textContent = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-      }
-      inp.addEventListener('input', () => hash(inp.value));
-      hash(inp.value);
-    })();
-
-    /* ==========================================================
-       4. RESTORED FULL CYBERSECURITY LIVE LAB (ALL 5 TOOLS!)
-       ========================================================== */
-    // Tab switching
-    document.querySelectorAll('.toolbox-tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.toolbox-tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        const target = document.getElementById(btn.getAttribute('data-tab'));
-        if (target) target.classList.add('active');
-      });
-    });
-
-    // Tool 1: Live WebCrypto Hasher
-    const labHashInput = document.getElementById('labHashInput');
-    const labSha1 = document.getElementById('labSha1Val');
-    const labSha256 = document.getElementById('labSha256Val');
-    if (labHashInput && labSha1 && labSha256) {
-      async function runLabHash() {
-        const v = labHashInput.value;
-        if (!v) { labSha1.textContent = '—'; labSha256.textContent = '—'; return; }
-        const b1 = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(v));
-        const b2 = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
-        labSha1.textContent = Array.from(new Uint8Array(b1)).map(b => b.toString(16).padStart(2, '0')).join('');
-        labSha256.textContent = Array.from(new Uint8Array(b2)).map(b => b.toString(16).padStart(2, '0')).join('');
-      }
-      labHashInput.addEventListener('input', runLabHash);
-    }
-
-    // Tool 2: Encoder / Cipher
-    let cipherMode = 'encode';
-    function setCipherMode(m) {
-      cipherMode = m;
-      runCipher();
-    }
-    function runCipher() {
-      const inp = document.getElementById('labCipherInput');
-      const out = document.getElementById('labCipherOutput');
-      if (!inp || !out) return;
-      const v = inp.value;
-      if (!v) { out.textContent = '—'; return; }
-      try {
-        if (cipherMode === 'encode') {
-          out.textContent = btoa(unescape(encodeURIComponent(v)));
-        } else if (cipherMode === 'decode') {
-          out.textContent = decodeURIComponent(escape(atob(v.trim())));
-        } else {
-          // ROT13
-          out.textContent = v.replace(/[a-zA-Z]/g, c =>
-            String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26)
-          );
-        }
-      } catch {
-        out.textContent = '[ERROR: INVALID PAYLOAD]';
-      }
-    }
-    document.getElementById('labCipherInput')?.addEventListener('input', runCipher);
-
-    // Tool 3: Password Strength & HIBP API
-    const pwInp = document.getElementById('labPwInput');
-    const pwEntropy = document.getElementById('labPwEntropy');
-    const pwCrack = document.getElementById('labPwCrack');
-    if (pwInp) {
-      pwInp.addEventListener('input', () => {
-        const pw = pwInp.value;
-        if (!pw) {
-          pwEntropy.textContent = '0 BITS';
-          pwCrack.textContent = '—';
-          return;
-        }
-        let pool = 0;
-        if (/[a-z]/.test(pw)) pool += 26;
-        if (/[A-Z]/.test(pw)) pool += 26;
-        if (/[0-9]/.test(pw)) pool += 10;
-        if (/[^a-zA-Z0-9]/.test(pw)) pool += 33;
-        const bits = Math.round(pw.length * (pool ? Math.log2(pool) : 0));
-        pwEntropy.textContent = `${bits} BITS`;
-
-        const secs = pool && pw.length ? Math.pow(pool, pw.length) / 1e10 : 0;
-        let time = 'Instantly';
-        if (secs >= 1 && secs < 60) time = Math.round(secs) + ' sec';
-        else if (secs >= 60 && secs < 3600) time = Math.round(secs / 60) + ' min';
-        else if (secs >= 3600 && secs < 86400) time = Math.round(secs / 3600) + ' hours';
-        else if (secs >= 86400 && secs < 31536000) time = Math.round(secs / 86400) + ' days';
-        else if (secs >= 31536000) time = (secs / 31536000 > 1000 ? '> 1,000' : Math.round(secs / 31536000)) + ' years';
-        pwCrack.textContent = time;
-      });
-    }
-
-    async function checkHIBP() {
-      const resEl = document.getElementById('labHibpResult');
-      if (!pwInp || !pwInp.value) {
-        resEl.textContent = 'Input password first';
-        resEl.style.color = '#ff3355';
-        return;
-      }
-      resEl.textContent = 'Scanning HIBP database...';
-      resEl.style.color = 'var(--cyan)';
-      try {
-        const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(pwInp.value));
-        const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
-        const prefix = hash.slice(0, 5);
-        const suffix = hash.slice(5);
-        const r = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
-        const text = await r.text();
-        let matches = 0;
-        for (const line of text.split('\n')) {
-          const [h, count] = line.split(':');
-          if (h.trim() === suffix) {
-            matches = parseInt(count, 10);
-            break;
-          }
-        }
-        if (matches > 0) {
-          resEl.innerHTML = `<span style="color:#ff3355">⚠ Found in ${matches.toLocaleString()} leaks!</span>`;
-        } else {
-          resEl.innerHTML = `<span style="color:var(--emerald)">✓ Clean: Zero occurrences</span>`;
-        }
-      } catch {
-        resEl.textContent = 'Database offline or query blocked';
-      }
-    }
-
-    // Tool 4: Email Breach Scanner (XposedOrNot API)
-    async function scanBreachEmail() {
-      const emailInput = document.getElementById('labBreachEmail');
-      const status = document.getElementById('labBreachStatus');
-      const list = document.getElementById('labBreachList');
-      if (!emailInput || !status || !list) return;
-      const email = emailInput.value.trim();
-      if (!email || !email.includes('@')) {
-        status.textContent = 'Valid email required';
-        status.style.color = '#ff3355';
-        return;
-      }
-      status.textContent = 'Scanning threat feeds...';
-      status.style.color = 'var(--cyan)';
-      list.innerHTML = '';
-      try {
-        const res = await fetch(`https://api.xposedornot.com/v1/breach-analytics?email=${encodeURIComponent(email)}`);
-        const data = await res.json();
-        if (!data.ExposedBreaches?.breaches_details) {
-          status.innerHTML = '<span style="color:var(--emerald)">✓ No breaches found</span>';
-          return;
-        }
-        const b = data.ExposedBreaches.breaches_details;
-        status.innerHTML = `<span style="color:#ff3355">⚠ Found in ${b.length} breaches:</span>`;
-        b.slice(0, 4).forEach(item => {
-          const div = document.createElement('div');
-          div.style.cssText = 'padding:3px 6px; margin-top:3px; background:rgba(255,0,85,0.1); border-left:2px solid #ff3355;';
-          div.textContent = `${item.breach} (${item.domain || 'N/A'})`;
-          list.appendChild(div);
-        });
-      } catch {
-        status.textContent = 'Query completed or rate-limited.';
-      }
-    }
-
-    // Tool 5: Device Intel Telemetry
-    (function initDeviceIntel() {
-      const ua = navigator.userAgent;
-      let os = 'Unknown OS';
-      if (ua.includes('Mac')) os = 'macOS';
-      else if (ua.includes('Win')) os = 'Windows';
-      else if (ua.includes('Linux')) os = 'Linux';
-      else if (ua.includes('Android')) os = 'Android';
-      else if (ua.includes('iPhone')) os = 'iOS';
-
-      let browser = 'Chromium';
-      if (ua.includes('Firefox')) browser = 'Firefox';
-      else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari';
-      else if (ua.includes('Edg')) browser = 'Edge';
-
-      const el = id => document.getElementById(id);
-      if (el('intelOs')) el('intelOs').textContent = os;
-      if (el('intelBrowser')) el('intelBrowser').textContent = browser;
-      if (el('intelThreads')) el('intelThreads').textContent = `${navigator.hardwareConcurrency || 8} Cores`;
-      if (el('intelRam')) el('intelRam').textContent = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Protected';
-      if (el('intelScreen')) el('intelScreen').textContent = `${window.screen.width}x${window.screen.height}`;
-
-      const start = Date.now();
-      setInterval(() => {
-        if (el('intelTimer')) el('intelTimer').textContent = `${Math.floor((Date.now() - start) / 1000)}s`;
-      }, 1000);
-    })();
-
-    // Contact Terminal Transmission
-    function sendTerminalTransmission() {
-      const inp = document.getElementById('contactTerminalInput');
-      const log = document.getElementById('contactTerminalLog');
-      if (!inp || !log) return;
-      const v = inp.value.trim();
-      if (!v) return;
-      log.innerHTML += `<div><span style="color:var(--cyan)">[YOU]:</span> ${v}</div>`;
-      log.innerHTML += `<div><span style="color:var(--emerald)">[DISPATCH]:</span> Encrypted & logged. Opening mail uplink...</div>`;
-      log.scrollTop = log.scrollHeight;
-      inp.value = '';
-      setTimeout(() => {
-        window.location.href = `mailto:kuldeepshukla01@gmail.com?subject=Cybersecurity%20Opportunity&body=${encodeURIComponent(v)}`;
-      }, 600);
-    }
-    document.getElementById('contactTerminalInput')?.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') sendTerminalTransmission();
-    });
-
-    // Ambient Cyber Particles
-    (function initParticles() {
-      const cvs = document.getElementById('ambientCanvas');
-      if (!cvs) return;
-      const ctx = cvs.getContext('2d');
-      let w, h;
-      function sz() { w = cvs.width = window.innerWidth; h = cvs.height = window.innerHeight; }
-      sz(); window.addEventListener('resize', sz);
-      const pts = Array.from({ length: 45 }, () => ({
-        x: Math.random() * w, y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
-        r: Math.random() * 1.6 + 0.5, a: Math.random() * 0.5 + 0.2
-      }));
-      function anim() {
-        requestAnimationFrame(anim);
-        ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = '#00f0ff';
-        pts.forEach(p => {
-          p.x += p.vx; p.y += p.vy;
-          if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
-          if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
-          ctx.globalAlpha = p.a;
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
-        });
-      }
-      anim();
-    })();
-  
-    /* ==========================================================
-       6. EXACT TIMELINE CIRCUIT TRACE & 3D INTERACTIVE GLOBE
-       ========================================================== */
-    // A. Dynamic mathematically-aligned circuit line connecting TIMELINE header to dots
-    function updateTimelineCircuit() {
-      const card = document.getElementById('timeline');
-      const title = document.getElementById('timelineTitle');
-      const dots = document.querySelectorAll('.tl-dot');
-      const path = document.getElementById('timelineConnectedPath');
-      if (!card || !title || !dots.length || !path) return;
-
-      const cardRect = card.getBoundingClientRect();
-      const titleRect = title.getBoundingClientRect();
-      const firstDotRect = dots[0].getBoundingClientRect();
-      const lastDotRect = dots[dots.length - 1].getBoundingClientRect();
-
-      // Start right underneath the letters of TIMELINE
-      const startX = Math.round(titleRect.left - cardRect.left);
-      const startY = Math.round(titleRect.bottom - cardRect.top + 7);
-
-      // Target X is the exact center of the green dots
-      const targetX = Math.round((firstDotRect.left + firstDotRect.right) / 2 - cardRect.left);
-      const cornerRadius = 14;
-
-      // Bottom Y reaches past the last dot
-      const endY = Math.round((lastDotRect.top + lastDotRect.bottom) / 2 - cardRect.top + 10);
-
-      // SVG path: Horizontal line from title -> Rounded 90-degree corner -> Vertical trunk through dots
-      const d = `M ${startX},${startY} L ${targetX - cornerRadius},${startY} Q ${targetX},${startY} ${targetX},${startY + cornerRadius} L ${targetX},${endY}`;
-      path.setAttribute('d', d);
-    }
-
-    // Call update on mount, load, and window resize
-    window.addEventListener('resize', updateTimelineCircuit);
-    window.addEventListener('load', updateTimelineCircuit);
-    setTimeout(updateTimelineCircuit, 100);
-    setTimeout(updateTimelineCircuit, 500);
-
-    // B. Globe Mode Switcher (Accurate Mockup Image <-> 3D WebGL Interactive Globe)
-    let globeCurrentMode = 'mockup'; // 'mockup' (default) or '3d'
-    let threeGlobeInitialized = false;
-
-    function toggleGlobeMode() {
-      const img = document.getElementById('exactGlobeImg');
-      const canvas = document.getElementById('timelineGlobeCanvas');
-      const label = document.getElementById('globeModeLabel');
-
-      if (globeCurrentMode === 'mockup') {
-        globeCurrentMode = '3d';
-        img.style.display = 'none';
-        canvas.style.display = 'block';
-        label.textContent = 'EXACT MOCKUP';
-        if (!threeGlobeInitialized) {
-          initThreeGlobe();
-          threeGlobeInitialized = true;
-        }
-      } else {
-        globeCurrentMode = 'mockup';
-        img.style.display = 'block';
-        canvas.style.display = 'none';
-        label.textContent = '3D INTERACTIVE';
-      }
-    }
-
-    // C. Live Three.js WebGL Interactive 3D Earth Globe
-    function initThreeGlobe() {
-      const canvas = document.getElementById('timelineGlobeCanvas');
-      if (!canvas) return;
-
-      const width = 140;
-      const height = 140;
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-      camera.position.z = 21;
-
-      const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        alpha: true,
-        antialias: true
-      });
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      const globeGroup = new THREE.Group();
-      scene.add(globeGroup);
-
-      // Inner Dark Specular Core Sphere
-      const sphereGeo = new THREE.SphereGeometry(6.8, 32, 32);
-      const sphereMat = new THREE.MeshBasicMaterial({
-        color: 0x020d18,
-        transparent: true,
-        opacity: 0.85
-      });
-      globeGroup.add(new THREE.Mesh(sphereGeo, sphereMat));
-
-      // Wireframe Outer Mesh (Cyan Icosahedron)
-      const wireGeo = new THREE.IcosahedronGeometry(7.0, 2);
-      const wireMat = new THREE.MeshBasicMaterial({
-        color: 0x00f0ff,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.35
-      });
-      globeGroup.add(new THREE.Mesh(wireGeo, wireMat));
-
-      // Continents Point Cloud (Emerald & Cyan)
-      const ptCount = 380;
-      const ptGeo = new THREE.BufferGeometry();
-      const coords = new Float32Array(ptCount * 3);
-      for (let i = 0; i < ptCount * 3; i += 3) {
-        const u = Math.random();
-        const v = Math.random();
-        const theta = u * 2.0 * Math.PI;
-        const phi = Math.acos(2.0 * v - 1.0);
-        const r = 7.15 + (Math.random() - 0.5) * 0.35;
-        coords[i] = r * Math.sin(phi) * Math.cos(theta);
-        coords[i + 1] = r * Math.sin(phi) * Math.sin(theta);
-        coords[i + 2] = r * Math.cos(phi);
-      }
-      ptGeo.setAttribute('position', new THREE.BufferAttribute(coords, 3));
-      const ptMat = new THREE.PointsMaterial({
-        color: 0x00ffaa,
-        size: 0.42,
-        transparent: true,
-        opacity: 0.85
-      });
-      globeGroup.add(new THREE.Points(ptGeo, ptMat));
-
-      // Golden Sunburst Beacon (Shooting Ray from Dublin / Europe)
-      const rayGeo = new THREE.BufferGeometry();
-      rayGeo.setAttribute('position', new THREE.Float32BufferAttribute([
-        4.0, 3.8, 4.2,
-        10.2, 9.6, 9.8
-      ], 3));
-      const rayMat = new THREE.LineBasicMaterial({
-        color: 0xffd700,
-        transparent: true,
-        opacity: 0.95
-      });
-      globeGroup.add(new THREE.Line(rayGeo, rayMat));
-
-      // Golden Atmosphere Burst Particles
-      const burstCount = 80;
-      const burstGeo = new THREE.BufferGeometry();
-      const bCoords = new Float32Array(burstCount * 3);
-      for (let i = 0; i < burstCount * 3; i += 3) {
-        bCoords[i] = 4.0 + (Math.random() - 0.5) * 3.0;
-        bCoords[i + 1] = 3.8 + (Math.random() - 0.5) * 3.0;
-        bCoords[i + 2] = 4.2 + (Math.random() - 0.5) * 3.0;
-      }
-      burstGeo.setAttribute('position', new THREE.BufferAttribute(bCoords, 3));
-      const burstMat = new THREE.PointsMaterial({
-        color: 0xffb700,
-        size: 0.50,
-        transparent: true,
-        opacity: 0.92
-      });
-      globeGroup.add(new THREE.Points(burstGeo, burstMat));
-
-      // Interactive Mouse Drag
-      let isDragging = false;
-      let prevX = 0, prevY = 0;
-      canvas.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        prevX = e.clientX;
-        prevY = e.clientY;
-      });
-      window.addEventListener('mouseup', () => isDragging = false);
-      window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const dx = e.clientX - prevX;
-        const dy = e.clientY - prevY;
-        globeGroup.rotation.y += dx * 0.012;
-        globeGroup.rotation.x += dy * 0.012;
-        prevX = e.clientX;
-        prevY = e.clientY;
-      });
-
-      function animate() {
-        requestAnimationFrame(animate);
-        if (!isDragging) {
-          globeGroup.rotation.y += 0.006;
-          globeGroup.rotation.x += 0.002;
-        }
-        renderer.render(scene, camera);
-      }
-      animate();
-    }
-  
-</script>
+  <!-- Main JavaScript File -->
+  <script src=script.js></script>
 </body>
 </html>
