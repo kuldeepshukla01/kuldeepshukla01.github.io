@@ -1862,6 +1862,7 @@ footer a {
   margin: 0 0 8px 0;
   background: linear-gradient(135deg, #ffffff 30%, #7ee7ff 75%, #00ffaa 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 35px rgba(0, 240, 255, 0.45);
 }
