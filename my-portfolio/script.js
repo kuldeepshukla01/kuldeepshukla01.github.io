@@ -1070,7 +1070,7 @@
 • <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/1daycrew" target="_blank" style="color:var(--emerald)">linkedin.com/in/1daycrew ↗</a>
 • <strong>GitHub:</strong> <a href="https://github.com/kuldeepshukla01" target="_blank" style="color:var(--cyan)">github.com/kuldeepshukla01 ↗</a>
 • <strong>Location:</strong> Ireland (Open to Relocate / Remote)
-• <em>Tip: Click the SHARE button below to connect directly!</em>`;
+• <em>Tip: Click the CONTACT button below to connect directly!</em>`;
         log.appendChild(out);
       } else if (cmd === "whoami") {
         const out = document.createElement("div");
@@ -1286,7 +1286,7 @@
       stage.classList.toggle("open", s === "open");
       stage.classList.toggle("busy", s === "busy");
       if (coreTxt) {
-        coreTxt.textContent = s === "open" ? "CLOSE" : "SHARE";
+        coreTxt.textContent = s === "open" ? "CLOSE" : "CONTACT";
       }
     }
 

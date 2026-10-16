@@ -5,17 +5,18 @@
 [![Degree](https://img.shields.io/badge/BSc%20(Hons)-Computing%20%26%20IT-3b82f6?style=flat)](https://www.cct.ie)
 [![Status](https://img.shields.io/badge/Status-Graduated%20%7C%20Open%20to%20Work-10b981?style=flat)]()
 
-A high-performance, responsive cybersecurity engineering and operations portfolio designed with an offline-first architecture. Featuring an animated physics-driven top dock, an authentic calligraphy handwriting preloader, an interactive AI-assisted Unix terminal, live automated GitHub repository synchronization, and verified industry credentials.
+A high-performance, responsive cybersecurity engineering and operations portfolio designed with an offline-first architecture. Featuring a cinematic 3D WebGL particle point cloud portrait preloader, an animated physics-driven top dock, an authentic calligraphy handwriting preloader, an interactive AI-assisted Unix terminal, live automated GitHub repository synchronization, and verified industry credentials.
 
 ---
 
 ## 1. Project Overview & Architectural Highlights
 
-The portfolio is built with modern vanilla web technologies (HTML5, Vanilla CSS3, Modern ES6+ JavaScript, WebGL, and Web Crypto API) to ensure maximum speed, portability, and zero bloated framework overhead.
+The portfolio is built with modern vanilla web technologies (HTML5, Vanilla CSS3, Modern ES6+ JavaScript, WebGL2 / Three.js, and Web Crypto API) to ensure maximum speed, portability, and zero bloated framework overhead.
 
 ```
 kuldeepshukla01.github.io/
 ├── index.html              # Production landing page with semantic HTML5 structure
+├── loading.html            # Cinematic 3D WebGL particle intro page & interactive portrait
 ├── style.css               # Core design tokens, ThreeUI Sable theme, and responsive CSS
 ├── script.js               # Application controllers, WebGL canvas, and API integrations
 ├── three.min.js            # Bundled local Three.js engine for offline 3D WebGL rendering
@@ -27,6 +28,7 @@ kuldeepshukla01.github.io/
 │   ├── three.min.js        # Offline 3D library
 │   └── assets/             # Local certificates, badges, and media assets
 ├── assets/
+│   ├── kuldeep_portrait.png# High-resolution alpha portrait for WebGL particle cloud
 │   └── cyber_assets/       # Verified certificate scans, institution badges, and graphics
 │       ├── certs/          # High-resolution credentials (EC-Council, Cisco, CCT College)
 │       └── ...
@@ -37,25 +39,34 @@ kuldeepshukla01.github.io/
 
 ## 2. Key Interactive Features
 
-### 1. ThreeUI Animated Top Dock (Sable Physics)
+### 1. Cinematic 3D WebGL Particle Intro Experience (`loading.html`)
+- **Bouncing Particle Light & Kinetic Typing**: A high-energy particle of light bounces dynamically, instantly typing the name **KULDEEP SHUKLA** with fluid acceleration.
+- **Glitch Morph & Split Typography**: The typography undergoes a cyber-glitch transition into **PORTFOLIO**, splitting seamlessly into `PORT` and `FOLIO` to reveal the main stage.
+- **WebGL2 3D Particle Cloud Portrait**: Thousands of individual interactive particles render Kuldeep Shukla's portrait in true 3D space, featuring cursor repulsion physics, depth parallax, and ambient wave harmonics.
+- **Side Credentials Card**: An elegant, non-overlapping glass badge card highlighting verified credentials:
+  - *Aspiring Cybersecurity Analyst | Ethical Hacker (Cisco) | Android Bug Bounty | NIDS Builder | BSc Computing & IT, CCT Dublin*
+  - Replay and instant portfolio entry actions.
+- **Integrated Contact & Connect Dock**: Radial expandable dock providing direct access to LinkedIn, GitHub, Email, CV Download, and URL Copying with responsive geometry on any screen size.
+
+### 2. ThreeUI Animated Top Dock (Sable Physics)
 - **Fluid Spring Physics**: Centered glass capsule inspired by modern dock physics with dynamic pointer distance magnification and elastic settling.
-- **Keyboard Shortcuts**: Instant navigation mapped to keys `0x00` through `0x07` (`0` for Dossier, `1` for Terminal, `2` for Projects, `3` for Repositories, `4` for Certs, `5` for Timeline, `6` for Lab, `7` for Share).
+- **Keyboard Shortcuts**: Instant navigation mapped to keys `0x00` through `0x07` (`0` for Dossier, `1` for Terminal, `2` for Projects, `3` for Repositories, `4` for Certs, `5` for Timeline, `6` for Lab, `7` for Contact).
 - **Glassmorphism Styling**: Backdrop blur with subtle border glow and active section indicators.
 
-### 2. Calligraphy Signature Preloader
+### 3. Calligraphy Signature Preloader
 - **Authentic Handwriting Ink Flow**: Built with an SVG luminance pen-stroke mask (`<mask id="penMask">`) unmasking solid white cursive text (*Great Vibes* typography) progressively from left to right.
 - **Zero Premature Borders**: Pitch-black canvas initialization prevents any ghost outlines or character borders from showing before the pen arrives.
 - **Pure White Flourish Underline**: A smooth, curved pen stroke swoops underneath to complete the signature before transitioning into the portfolio view.
 - **Quick-Skip Support**: Users can tap or press any key to enter immediately.
 
-### 3. Dossier Card & Interactive AI Terminal
+### 4. Dossier Card & Interactive AI Terminal
 - **Verified Background**: Documents graduate status (BSc Hons in Computing & IT from CCT College Dublin), verified skills, and primary roles (Entry-Level IT, Junior Pentester, SOC Analyst).
 - **Interactive Command-Line Terminal**:
   - Full CLI emulator supporting classic commands: `help`, `skills`, `projects`, `certs`, `about`, `repos`, `clear`, `contact`.
   - **Puter.js AI Integration**: Type `ai <question>` to chat with an AI assistant trained on Kuldeep's background.
   - **Offline Fallback Parser**: Built-in keyword matching ensures the terminal remains responsive even without an internet connection.
 
-### 4. College Capstone & Personal Projects (Authentic Consoles)
+### 5. College Capstone & Personal Projects (Authentic Consoles)
 Zero generic or AI-generated stock artwork. Each project is showcased with an authentic developer terminal and architecture console:
 1. **1DayCrew AI — Network Intrusion Detection System (College Capstone)**:
    - End-to-end ML NIDS classifying 14 cyber attack types with **>97.4% precision** on the benchmark CICIDS2017 dataset.
@@ -66,13 +77,13 @@ Zero generic or AI-generated stock artwork. Each project is showcased with an au
 3. **EditNote — Android Notes App**:
    - Native Android mobile application (Java) integrating Firebase Authentication and Google Cloud Storage with 256-bit AES encrypted sessions and offline SQLite caching.
 
-### 5. Automated GitHub Repositories Live Feed
+### 6. Automated GitHub Repositories Live Feed
 - **Dynamic Synchronization**: Automatically fetches public repositories directly from the GitHub REST API (`https://api.github.com/users/kuldeepshukla01/repos`).
 - **Always Up to Date**: Any repository created or deleted on GitHub is instantly reflected in the portfolio without manual code edits.
 - **Interactive Filters**: Instant filtering by language tag (`All`, `Python`, `Jupyter Notebook`, `Java`, `JavaScript`).
 - **Live Metadata**: Real-time display of star counts, forks, descriptions, and update timestamps.
 
-### 6. Verified Industry Certifications Gallery
+### 7. Verified Industry Certifications Gallery
 High-resolution credentials gallery with an interactive modal lightbox:
 - **EC-Council Hackerverse CTF Competition**: Grandmaster Level, Certificate #2126 (Oct 2026).
 - **Cisco Networking Academy — Ethical Hacker**: Comprehensive penetration testing certification (Jan 2026).
@@ -81,20 +92,21 @@ High-resolution credentials gallery with an interactive modal lightbox:
 - **EC-Council CodeRed — Android Bug Bounty Hunting**: Mobile application security testing (Jun 2026).
 - **EC-Council CodeRed — Jira Agile Project Management**: DevSecOps and vulnerability tracking (Aug 2026).
 
-### 7. Connected Circuit Timeline & 3D WebGL Earth Globe
+### 8. Connected Circuit Timeline & 3D WebGL Earth Globe
 - **Education & Experience Milestones**: An interconnected circuit track detailing milestones from Hewett Polytechnic to CCT College Dublin.
 - **Interactive 3D WebGL Globe**: Built with Three.js. Supports drag-to-rotate interaction, atmospheric aura, and a coordinate pin centered on Dublin, Ireland.
 
-### 8. Client-Side Cyber Lab Suite
+### 9. Client-Side Cyber Lab Suite
 Browser-based security utilities utilizing the native W3C Web Crypto API (`window.crypto.subtle`):
 - **Cryptographic Hash Calculator**: SHA-256 and SHA-512 with sub-millisecond calculation times.
 - **Data Encoders**: Real-time Base64, Hexadecimal, and URL encoding/decoding.
 - **Password Entropy & Strength Scorer**: Shannon entropy calculation in bits with brute-force resistance analysis.
 - **Client Telemetry Scanner**: Safe inspection of local browser properties, screen metrics, and core availability.
 
-### 9. Corner Radial Share & Connect Dock
-- Positioned in the bottom corner alongside the verified CV download button.
-- One-click splayed radial actions for **LinkedIn**, **GitHub**, **Email**, and **URL Copying** (with clipboard notification).
+### 10. Corner Radial Contact & Connect Dock
+- Fixed bottom-right corner component matching the spinning border beam design of the CV download button.
+- Labeled **CONTACT** (toggles to **CLOSE** when expanded).
+- One-click splayed radial actions for **LinkedIn**, **GitHub**, **Email**, and **URL Copying** (with instant clipboard tick confirmation).
 
 ---
 
@@ -105,7 +117,7 @@ Browser-based security utilities utilizing the native W3C Web Crypto API (`windo
 | **Structure** | Semantic HTML5 | Document outline, accessibility attributes (`aria-*`), and layout landmarks |
 | **Styling** | Vanilla CSS3 | Custom properties, ThreeUI Sable theme, flexbox/grid systems, and animations |
 | **Logic** | Modern ES6+ JavaScript | DOM manipulation, spring physics calculations, event dispatchers, and state management |
-| **3D Graphics** | Three.js (r128) | WebGL 3D Earth globe with point lights and user rotation |
+| **3D Graphics** | WebGL2 / Three.js (r128) | Interactive 3D particle point cloud portrait and 3D Earth globe |
 | **Cryptography** | Web Crypto API | Hardware-accelerated client-side hashing (`crypto.subtle`) |
 | **AI Terminal** | Puter.js (v2) | Public conversational AI integration with local fallback parsing |
 | **Typography** | Inter, JetBrains Mono, Great Vibes | Clean modern UI hierarchy and authentic calligraphy handwriting |
@@ -130,7 +142,8 @@ python3 -m http.server 8088
 open http://localhost:8088
 ```
 
-You can also navigate to `http://localhost:8088/my-portfolio/` to test the dedicated modular folder build directly.
+- Navigate to `http://localhost:8088/loading.html` to experience the 3D particle preloader intro.
+- Navigate to `http://localhost:8088/my-portfolio/` to test the modular workspace build.
 
 ---
 
