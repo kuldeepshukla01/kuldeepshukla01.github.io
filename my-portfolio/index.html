@@ -9,41 +9,120 @@
   <!-- Self-Contained Local Favicon SVG -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2307080c'/%3E%3Cpath d='M6 6h8.6L18 9.35v8.15H9.15L6 14.35V6Z' fill='%2306b6d4'/%3E%3C/svg%3E">
 
-  <!-- Calligraphy Font for Signature (Great Vibes) -->
+  <!-- Google Fonts for 3D Particle Intro & Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <!-- GSAP Animation Library for 3D Particle Intro Sequence -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <!-- Local Stylesheet (Zero Remote CDN) -->
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="particle-preloader.css">
 </head>
 <body>
 
   <!-- ========================================================================
-       CALLIGRAPHY SIGNATURE PRELOADER (Great Vibes Cursive)
+       CINEMATIC 3D WEBGL PARTICLE IMAGE PRELOADER
        ======================================================================== -->
-  <div id="preloader" aria-label="Loading Kuldeep Shukla Portfolio">
-    <svg class="signature-svg" viewBox="0 0 860 180" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <!-- Pen Mask: Starts 100% black (completely invisible, zero advance borders).
-             The white stroke sweeps across horizontally like a writing pen, revealing solid ink -->
-        <mask id="penMask" maskUnits="userSpaceOnUse" x="0" y="0" width="860" height="180">
-          <rect x="0" y="0" width="860" height="180" fill="black" />
-          <line class="mask-stroke-first" x1="25" y1="95" x2="375" y2="95" stroke="white" stroke-width="150" stroke-linecap="round" />
-          <line class="mask-stroke-last"  x1="395" y1="95" x2="745" y2="95" stroke="white" stroke-width="150" stroke-linecap="round" />
-        </mask>
-      </defs>
+  <div id="particlePreloader" class="particle-preloader-overlay" aria-label="Loading Kuldeep Shukla Portfolio">
+    <div class="bg-vignette"></div>
+    <div class="bg-noise"></div>
 
-      <!-- Solid Calligraphy Ink (Great Vibes Cursive) revealed progressively by pen -->
-      <g mask="url(#penMask)">
-        <text class="sig-word sig-first" x="40" y="102">Kuldeep</text>
-        <text class="sig-word sig-last"  x="405" y="102">Shukla</text>
-      </g>
+    <!-- Top Navigation Bar: Brand & Dublin Location on Left, Actions on Right -->
+    <header class="top-nav" id="topNav">
+      <div class="nav-brand-group">
+        <div class="nav-brand">
+          <div class="brand-dot"></div>
+          <span>KULDEEP SHUKLA</span>
+        </div>
+        <span class="nav-divider">/</span>
+        <span class="nav-location">DUBLIN, IRELAND</span>
+      </div>
 
-      <!-- Pure White Underline Swirl -->
-      <path id="underline" d="M 40 145 C 120 155, 280 160, 450 152 C 580 146, 720 138, 800 132" />
-    </svg>
-    <div class="preloader-skip-hint">TAP ANYWHERE TO ENTER</div>
+      <!-- Top Action Buttons (Replay & Enter Portfolio) -->
+      <div class="top-actions-dock" id="topActionsDock">
+        <button class="btn-action-glass" id="replayBtn" title="Replay Animation" type="button">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          <span>Replay</span>
+        </button>
+        <button class="btn-action-glass btn-enter-portfolio" id="enterPortfolioBtn" title="Enter Portfolio" type="button">
+          <span>Enter Portfolio</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- WebGL2 Particle Rendering Canvas -->
+    <canvas id="gl-canvas"></canvas>
+
+    <!-- Reference Image for Canvas Anchor Position -->
+    <div class="portrait-anchor-wrap">
+      <img id="portrait-anchor" src="assets/kuldeep_portrait.png" alt="Portrait Reference" />
+    </div>
+
+    <!-- Main Big Hero Title & Split PORTFOLIO Stage -->
+    <div class="hero-title-container" id="heroTitleContainer">
+      <div class="title-motion-wrapper" id="titleWrapper">
+        <h1 class="hero-text" id="mainHeroText" style="opacity: 0;">
+          <span class="part-left" id="partLeft">PORT</span>
+          <span class="part-right" id="partRight">FOLIO</span>
+        </h1>
+      </div>
+    </div>
+
+    <!-- Bouncing Light & Name Animation Overlay Stage -->
+    <div class="initial-letters-box" id="initialLettersBox">
+      <div class="bouncing-ball" id="bouncingBall"></div>
+      <div class="ball-impact-wave" id="ballWave"></div>
+      <div class="name-display-box" id="nameDisplayBox"></div>
+    </div>
+
+    <!-- SIDE CREDENTIALS PANEL -->
+    <div class="side-credentials-panel" id="sidePanel">
+      <div class="side-pill-header">
+        <div class="side-pill-tag">
+          <div class="side-pill-dot"></div>
+          <span>PORTFOLIO VERIFIED</span>
+        </div>
+      </div>
+      <div class="side-main-role">
+        Aspiring Cybersecurity Analyst
+      </div>
+      <div class="side-badges-flow">
+        <div class="side-badge-item">
+          <span class="badge-accent">🛡️</span>
+          <span>Ethical Hacker (Cisco)</span>
+        </div>
+        <div class="side-badge-item">
+          <span class="badge-accent">🐛</span>
+          <span>Android Bug Bounty</span>
+        </div>
+        <div class="side-badge-item">
+          <span class="badge-accent">⚡</span>
+          <span>NIDS Builder</span>
+        </div>
+        <div class="side-badge-item">
+          <span class="badge-accent">🎓</span>
+          <span>BSc Computing & IT, CCT Dublin</span>
+        </div>
+      </div>
+      <button class="side-enter-btn" id="sideEnterBtn" type="button">
+        <span>Explore Full Portfolio</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <!-- Preloader Skip / Tap to Enter Hint -->
+    <div class="preloader-skip-hint-bottom" id="preloaderSkipHint">
+      TAP ANYWHERE TO ENTER PORTFOLIO ↓
+    </div>
   </div>
 
   <!-- Ambient Procedural WebGL Canvas & Aurora Glow -->
@@ -1068,7 +1147,8 @@
     </button>
   </div>
 
-  <!-- Local Three.js (Offline) & Script -->
+  <!-- 3D Particle Preloader & Local Scripts -->
+  <script src="particle-preloader.js"></script>
   <script src="three.min.js"></script>
   <script src="script.js"></script>
 </body>

@@ -15,8 +15,10 @@ The portfolio is built with modern vanilla web technologies (HTML5, Vanilla CSS3
 
 ```
 kuldeepshukla01.github.io/
-├── index.html              # Production landing page with semantic HTML5 structure
-├── loading.html            # Cinematic 3D WebGL particle intro page & interactive portrait
+├── index.html              # Production landing page with integrated 3D particle preloader
+├── loading.html            # Standalone 3D WebGL particle intro page & interactive portrait
+├── particle-preloader.css  # WebGL particle preloader layout, typography & animation styles
+├── particle-preloader.js   # WebGL2 shader pipeline, mouse repulsion physics & GSAP sequencer
 ├── style.css               # Core design tokens, ThreeUI Sable theme, and responsive CSS
 ├── script.js               # Application controllers, WebGL canvas, and API integrations
 ├── three.min.js            # Bundled local Three.js engine for offline 3D WebGL rendering
