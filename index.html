@@ -41,7 +41,7 @@
         <span class="nav-location">DUBLIN, IRELAND</span>
       </div>
 
-      <!-- Top Action Buttons (Replay & Enter Portfolio) -->
+      <!-- Top Action Buttons (Replay) -->
       <div class="top-actions-dock" id="topActionsDock">
         <button class="btn-action-glass" id="replayBtn" title="Replay Animation" type="button">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -49,12 +49,6 @@
             <path d="M3 3v5h5"/>
           </svg>
           <span>Replay</span>
-        </button>
-        <button class="btn-action-glass btn-enter-portfolio" id="enterPortfolioBtn" title="Enter Portfolio" type="button">
-          <span>Enter Portfolio</span>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
         </button>
       </div>
     </header>
@@ -123,6 +117,36 @@
     <div class="preloader-skip-hint-bottom" id="preloaderSkipHint">
       TAP ANYWHERE TO ENTER PORTFOLIO ↓
     </div>
+  </div>
+
+  <!-- ========================================================================
+       STAGE 2: CALLIGRAPHY SIGNATURE PRELOADER ("MY NAME ANIMATION")
+       Triggers upon clicking "Enter Portfolio" from the 3D particle preloader
+       ======================================================================== -->
+  <div id="preloader" class="waiting" aria-label="Loading Kuldeep Shukla Portfolio">
+    <svg class="signature-svg" viewBox="0 0 860 180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Progressive Pen Clipping Stencils (100% Cross-Browser Support for Safari/iOS/Chrome/Firefox) -->
+        <clipPath id="clipFirst">
+          <rect id="clipRectFirst" x="0" y="0" width="0" height="180" />
+        </clipPath>
+        <clipPath id="clipLast">
+          <rect id="clipRectLast" x="390" y="0" width="0" height="180" />
+        </clipPath>
+      </defs>
+
+      <!-- Solid Calligraphy Ink (Great Vibes Cursive) revealed progressively by pen -->
+      <g clip-path="url(#clipFirst)">
+        <text class="sig-word sig-first" x="40" y="102">Kuldeep</text>
+      </g>
+      <g clip-path="url(#clipLast)">
+        <text class="sig-word sig-last"  x="405" y="102">Shukla</text>
+      </g>
+
+      <!-- Pure White Underline Swirl -->
+      <path id="underline" d="M 40 145 C 120 155, 280 160, 450 152 C 580 146, 720 138, 800 132" />
+    </svg>
+    <div class="preloader-skip-hint">TAP ANYWHERE TO ENTER</div>
   </div>
 
   <!-- Ambient Procedural WebGL Canvas & Aurora Glow -->

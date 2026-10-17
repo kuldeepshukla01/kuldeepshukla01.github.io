@@ -216,9 +216,27 @@
       for (let x = 0; x < cols; x++) {
         const l = lumArray[y * cols + x];
         if (l < 0.035 || (l < 0.08 && Math.random() < 0.45)) continue;
+
+        const u = (x + 0.5) / cols;
+        const v = (y + 0.5) / rows;
+
+        // Soft edge feathering so particles dissolve into starry space instead of forming a hard A4 rectangle
+        let edgeFade = 1.0;
+        if (u < 0.18) {
+          edgeFade *= smoothstep(0.01, 0.18, u);
+        } else if (u > 0.82) {
+          edgeFade *= smoothstep(0.01, 0.18, 1.0 - u);
+        }
+        if (v > 0.75) {
+          edgeFade *= smoothstep(0.02, 0.25, 1.0 - v);
+        }
+
+        // Randomly thin out particles near boundaries to create soft organic constellation edges
+        if (Math.random() > edgeFade) continue;
+
         const norm = Math.min(1, Math.max(0, (l - low) / (high - low)));
-        const bright = 0.2 * norm + 0.8 * smoothstep(0.1, 0.55, norm);
-        addParticle((x + 0.5) / cols, (y + 0.5) / rows, bright, false);
+        const bright = (0.2 * norm + 0.8 * smoothstep(0.1, 0.55, norm)) * Math.max(0.35, edgeFade);
+        addParticle(u, v, bright, false);
       }
     }
 
@@ -576,15 +594,15 @@
   // Grand Split & Immediate Particle Gathering
   function playSplitAndReveal() {
     const isMobile = window.innerWidth < 768;
-    const liftY = isMobile ? -window.innerHeight * 0.15 : -window.innerHeight * 0.22;
-    const gapX = isMobile ? window.innerWidth * 0.22 : window.innerWidth * 0.17;
+    const liftY = isMobile ? -window.innerHeight * 0.16 : -window.innerHeight * 0.22;
+    const gapX = isMobile ? window.innerWidth * 0.45 : window.innerWidth * 0.38;
 
     // Immediately trigger WebGL particle assembly
     revealTime = performance.now() / 1000;
 
     const tl = gsap.timeline();
 
-    // 1. Lift and Split "PORT" and "FOLIO"
+    // 1. Lift and Split "PORT" and "FOLIO" wide to outer flanks
     tl.to(titleWrapper, {
       y: liftY,
       duration: 1.35,
@@ -603,23 +621,30 @@
       ease: "power3.out"
     }, "<");
 
+    // As portrait particles assemble, smoothly fade out split word so NO broken letters remain stuck on Firefox
+    tl.to(mainHeroText, {
+      opacity: 0,
+      duration: 0.9,
+      ease: "power2.out"
+    }, "-=0.35");
+
     // 2. Side Panel fades in
     if (sidePanel) {
       tl.to(sidePanel, {
         y: 0,
         opacity: 1,
-        duration: 0.95,
+        duration: 0.85,
         ease: "power3.out"
-      }, "-=0.75");
+      }, "-=0.6");
     }
 
     // 3. Top Navigation fades in
     if (topNav) {
       tl.to(topNav, {
         opacity: 1,
-        duration: 0.8,
+        duration: 0.75,
         ease: "power2.out"
-      }, "-=0.65");
+      }, "-=0.5");
     }
   }
 
@@ -644,43 +669,92 @@
     });
   }
 
-  // Dismiss Preloader and Enter Full Portfolio
-  function dismissParticlePreloader() {
+  // Dismiss Preloader and Enter Full Portfolio (via Stage 2 Signature Preloader)
+  function dismissParticlePreloader(showSignature = true) {
     if (isDismissed) return;
     isDismissed = true;
 
     preloader.classList.add("dismissed");
-    document.body.classList.remove("preloader-active");
 
-    setTimeout(() => {
-      preloader.style.display = "none";
-      isLoopRunning = false;
-    }, 850);
+    const sigPreloader = document.getElementById("preloader");
+
+    if (showSignature && sigPreloader) {
+      // Hide 3D particle preloader overlay
+      setTimeout(() => {
+        preloader.style.display = "none";
+        isLoopRunning = false;
+      }, 500);
+
+      // Trigger Stage 2 Calligraphy Signature Name Animation
+      sigPreloader.classList.remove("waiting");
+      sigPreloader.classList.add("active");
+
+      // Robust cross-browser animation for Safari/WebKit/Firefox
+      const cr1 = document.getElementById("clipRectFirst");
+      const cr2 = document.getElementById("clipRectLast");
+      const ul = document.getElementById("underline");
+      if (cr1 && cr2) {
+        gsap.fromTo(cr1, { attr: { width: 0 } }, { attr: { width: 385 }, duration: 0.90, delay: 0.15, ease: "power2.out" });
+        gsap.fromTo(cr2, { attr: { width: 0 } }, { attr: { width: 440 }, duration: 0.85, delay: 1.10, ease: "power2.out" });
+      }
+      if (ul) {
+        gsap.fromTo(ul, { strokeDashoffset: 780, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 0.48, delay: 2.05, ease: "power2.out" });
+      }
+
+      let sigDismissed = false;
+      const dismissSignature = () => {
+        if (sigDismissed) return;
+        sigDismissed = true;
+        sigPreloader.classList.add("fade-out");
+        document.body.classList.remove("preloader-active");
+        setTimeout(() => {
+          sigPreloader.style.display = "none";
+        }, 700);
+      };
+
+      // Auto dismiss after signature animation finishes (~2.75s)
+      setTimeout(dismissSignature, 2750);
+
+      // Tap anywhere or press any key to skip signature immediately
+      sigPreloader.addEventListener("click", dismissSignature);
+      window.addEventListener("keydown", (e) => {
+        if (sigPreloader.style.display !== "none") dismissSignature();
+      }, { once: true });
+
+    } else {
+      // Direct dismiss to portfolio (e.g. from bottom skip hint)
+      document.body.classList.remove("preloader-active");
+      setTimeout(() => {
+        preloader.style.display = "none";
+        isLoopRunning = false;
+      }, 850);
+    }
   }
 
-  // Event Listeners
-  if (enterPortfolioBtn) {
-    enterPortfolioBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      dismissParticlePreloader();
+
+  // Event Listeners: Tap ANYWHERE on the screen / overlay to enter portfolio
+  if (preloader) {
+    preloader.addEventListener("click", (e) => {
+      // Do not dismiss if user specifically clicked the Replay button
+      if (replayBtn && (e.target === replayBtn || replayBtn.contains(e.target))) {
+        return;
+      }
+      dismissParticlePreloader(true);
     });
   }
 
   if (sideEnterBtn) {
     sideEnterBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      dismissParticlePreloader();
-    });
-  }
-
-  if (preloaderSkipHint) {
-    preloaderSkipHint.addEventListener("click", () => {
-      dismissParticlePreloader();
+      e.stopPropagation();
+      dismissParticlePreloader(true);
     });
   }
 
   if (replayBtn) {
-    replayBtn.addEventListener("click", () => {
+    replayBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       startSequence();
     });
   }
@@ -688,7 +762,7 @@
   // Dismiss on key press (Escape, Space, Enter)
   window.addEventListener("keydown", (e) => {
     if (!isDismissed && (e.key === "Escape" || e.key === " " || e.key === "Enter")) {
-      dismissParticlePreloader();
+      dismissParticlePreloader(true);
     }
   });
 

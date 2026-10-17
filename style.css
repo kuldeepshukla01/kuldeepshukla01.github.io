@@ -2293,11 +2293,23 @@ footer {
   transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), transform 0.65s cubic-bezier(0.4, 0, 0.2, 1), filter 0.65s ease;
 }
 
+#preloader.waiting {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+#preloader.active {
+  display: flex !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
 #preloader.fade-out {
-  opacity: 0;
+  opacity: 0 !important;
   transform: scale(1.05);
   filter: blur(8px);
-  pointer-events: none;
+  pointer-events: none !important;
 }
 
 .signature-svg {
@@ -2316,28 +2328,36 @@ footer {
   letter-spacing: 0.5px;
 }
 
-/* Pen-stroke unmasking lines inside SVG mask */
-.mask-stroke-first {
-  stroke-dasharray: 380;
-  stroke-dashoffset: 380;
+/* Handwriting signature unmasking via SVG clipPath (100% Safari/iOS/Chrome/Firefox compatible) */
+#preloader.waiting #clipRectFirst,
+#preloader.waiting #clipRectLast,
+#preloader.waiting #underline,
+#preloader.waiting .preloader-skip-hint {
+  animation: none !important;
+}
+
+#preloader.active #clipRectFirst,
+#preloader:not(.waiting) #clipRectFirst {
   animation: writeFirstWord 0.90s cubic-bezier(0.25, 0.1, 0.25, 1) 0.15s forwards;
 }
 
-.mask-stroke-last {
-  stroke-dasharray: 380;
-  stroke-dashoffset: 380;
-  animation: writeLastWord 0.85s cubic-bezier(0.25, 0.1, 0.25, 1) 1.15s forwards;
+#preloader.active #clipRectLast,
+#preloader:not(.waiting) #clipRectLast {
+  animation: writeLastWord 0.85s cubic-bezier(0.25, 0.1, 0.25, 1) 1.10s forwards;
 }
 
 @keyframes writeFirstWord {
-  to { stroke-dashoffset: 0; }
+  from { width: 0; }
+  to { width: 385px; }
 }
 
 @keyframes writeLastWord {
-  to { stroke-dashoffset: 0; }
+  from { width: 0; }
+  to { width: 440px; }
 }
 
-#underline {
+#preloader.active #underline,
+#preloader:not(.waiting) #underline {
   fill: none;
   stroke: #ffffff;
   stroke-width: 1.6;
@@ -2345,7 +2365,7 @@ footer {
   stroke-dasharray: 780;
   stroke-dashoffset: 780;
   opacity: 0;
-  animation: drawUnderline 0.48s cubic-bezier(0.3, 0, 0.2, 1) 2.10s forwards;
+  animation: drawUnderline 0.48s cubic-bezier(0.3, 0, 0.2, 1) 2.05s forwards;
   filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
 }
 
@@ -2360,7 +2380,8 @@ footer {
   }
 }
 
-.preloader-skip-hint {
+#preloader.active .preloader-skip-hint,
+#preloader:not(.waiting) .preloader-skip-hint {
   margin-top: 26px;
   font-family: var(--font-mono, monospace);
   font-size: 0.72rem;

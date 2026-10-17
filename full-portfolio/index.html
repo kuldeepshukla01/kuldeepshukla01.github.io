@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuldeep Shukla — BSc Computing & IT Graduate | Entry-Level IT & Cybersecurity</title>
+  <meta name="description" content="Recent BSc (Hons) Computing and IT graduate from CCT College Dublin. Entry-level IT and cybersecurity enthusiast, still growing and learning. ThreeUI Sable Dock, offline cyber labs, 3D globe, verified certs, and live GitHub repositories.">
+
+  <!-- Self-Contained Local Favicon SVG -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2307080c'/%3E%3Cpath d='M6 6h8.6L18 9.35v8.15H9.15L6 14.35V6Z' fill='%2306b6d4'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts for 3D Particle Intro & Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <!-- GSAP Animation Library for 3D Particle Intro Sequence -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Local Stylesheet (Zero Remote CDN) -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="particle-preloader.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       CINEMATIC 3D WEBGL PARTICLE IMAGE PRELOADER
+       ======================================================================== -->
+  <div id="particlePreloader" class="particle-preloader-overlay" aria-label="Loading Kuldeep Shukla Portfolio">
+    <div class="bg-vignette"></div>
+    <div class="bg-noise"></div>
+
+    <!-- Top Navigation Bar: Brand & Dublin Location on Left, Actions on Right -->
+    <header class="top-nav" id="topNav">
+      <div class="nav-brand-group">
+        <div class="nav-brand">
+          <div class="brand-dot"></div>
+          <span>KULDEEP SHUKLA</span>
+        </div>
+        <span class="nav-divider">/</span>
+        <span class="nav-location">DUBLIN, IRELAND</span>
+      </div>
+
+      <!-- Top Action Buttons (Replay) -->
+      <div class="top-actions-dock" id="topActionsDock">
+        <button class="btn-action-glass" id="replayBtn" title="Replay Animation" type="button">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          <span>Replay</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- WebGL2 Particle Rendering Canvas -->
+    <canvas id="gl-canvas"></canvas>
+
+    <!-- Reference Image for Canvas Anchor Position -->
+    <div class="portrait-anchor-wrap">
+      <img id="portrait-anchor" src="assets/kuldeep_portrait.png" alt="Portrait Reference" />
+    </div>
+
+    <!-- Main Big Hero Title & Split PORTFOLIO Stage -->
+    <div class="hero-title-container" id="heroTitleContainer">
+      <div class="title-motion-wrapper" id="titleWrapper">
+        <h1 class="hero-text" id="mainHeroText" style="opacity: 0;">
+          <span class="part-left" id="partLeft">PORT</span>
+          <span class="part-right" id="partRight">FOLIO</span>
+        </h1>
+      </div>
+    </div>
+
+    <!-- Bouncing Light & Name Animation Overlay Stage -->
+    <div class="initial-letters-box" id="initialLettersBox">
+      <div class="bouncing-ball" id="bouncingBall"></div>
+      <div class="ball-impact-wave" id="ballWave"></div>
+      <div class="name-display-box" id="nameDisplayBox"></div>
+    </div>
+
+    <!-- SIDE CREDENTIALS PANEL -->
+    <div class="side-credentials-panel" id="sidePanel">
+      <div class="side-pill-header">
+        <div class="side-pill-tag">
+          <div class="side-pill-dot"></div>
+          <span>PORTFOLIO VERIFIED</span>
+        </div>
+      </div>
+      <div class="side-main-role">
+        Aspiring Cybersecurity Analyst
+      </div>
+      <div class="side-badges-flow">
+        <div class="side-badge-item">
+          <span class="badge-accent">🛡️</span>
+          <span>Ethical Hacker (Cisco)</span>
+        </div>
+        <div class="side-badge-item">
+          <span class="badge-accent">🐛</span>
+          <span>Android Bug Bounty</span>
+        </div>
+        <div class="side-badge-item">
+          <span class="badge-accent">⚡</span>
+          <span>NIDS Builder</span>
+        </div>
+        <div class="side-badge-item">
+          <span class="badge-accent">🎓</span>
+          <span>BSc Computing & IT, CCT Dublin</span>
+        </div>
+      </div>
+      <button class="side-enter-btn" id="sideEnterBtn" type="button">
+        <span>Explore Full Portfolio</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <!-- Preloader Skip / Tap to Enter Hint -->
+    <div class="preloader-skip-hint-bottom" id="preloaderSkipHint">
+      TAP ANYWHERE TO ENTER PORTFOLIO ↓
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       STAGE 2: CALLIGRAPHY SIGNATURE PRELOADER ("MY NAME ANIMATION")
+       Triggers upon clicking "Enter Portfolio" from the 3D particle preloader
+       ======================================================================== -->
+  <div id="preloader" class="waiting" aria-label="Loading Kuldeep Shukla Portfolio">
+    <svg class="signature-svg" viewBox="0 0 860 180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Progressive Pen Clipping Stencils (100% Cross-Browser Support for Safari/iOS/Chrome/Firefox) -->
+        <clipPath id="clipFirst">
+          <rect id="clipRectFirst" x="0" y="0" width="0" height="180" />
+        </clipPath>
+        <clipPath id="clipLast">
+          <rect id="clipRectLast" x="390" y="0" width="0" height="180" />
+        </clipPath>
+      </defs>
+
+      <!-- Solid Calligraphy Ink (Great Vibes Cursive) revealed progressively by pen -->
+      <g clip-path="url(#clipFirst)">
+        <text class="sig-word sig-first" x="40" y="102">Kuldeep</text>
+      </g>
+      <g clip-path="url(#clipLast)">
+        <text class="sig-word sig-last"  x="405" y="102">Shukla</text>
+      </g>
+
+      <!-- Pure White Underline Swirl -->
+      <path id="underline" d="M 40 145 C 120 155, 280 160, 450 152 C 580 146, 720 138, 800 132" />
+    </svg>
+    <div class="preloader-skip-hint">TAP ANYWHERE TO ENTER</div>
+  </div>
+
+  <!-- Ambient Procedural WebGL Canvas & Aurora Glow -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="aurora-backdrop" aria-hidden="true"></div>
+  <div class="scanline-grid" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       TASK 1: THREEUI ANIMATED TOP DOCK (SABLE DOCK)
+       From: https://threeui.com/css/animated-top-dock/sable
+       Centered Glass Capsule with Spring Physics
+       ======================================================================== -->
+  <div class="animated-top-dock-component">
+    <nav class="animated-top-dock__nav" id="sableDock" aria-label="Primary Sable Dock" data-dock-state="idle" data-dock-max="0.00">
+      
+      <!-- Brand Logo Mark (ThreeUI Geometry) -->
+      <button class="animated-top-dock__item animated-top-dock__logo" data-dock-item type="button" aria-label="Return to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect width="24" height="24" rx="4.5" fill="#E8E8E3"></rect>
+          <path d="M6 6h8.6L18 9.35v8.15H9.15L6 14.35V6Z" fill="#111"></path>
+          <path d="M9 9h5.15L15 9.85V15H9.85L9 14.15V9Z" fill="#E8E8E3"></path>
+          <path d="M12 9v6M9 12h6" stroke="#111" stroke-width="0.7"></path>
+        </svg>
+      </button>
+
+      <!-- 1. SYSTEM (Hero) -->
+      <a class="animated-top-dock__item animated-top-dock__link" data-dock-item href="#system" aria-pressed="true">
+        <span class="animated-top-dock__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16">
+            <rect x="2.25" y="2.25" width="4.5" height="4.5" rx=".8"></rect>
+            <rect x="9.25" y="2.25" width="4.5" height="4.5" rx=".8"></rect>
+            <rect x="2.25" y="9.25" width="4.5" height="4.5" rx=".8"></rect>
+            <rect x="9.25" y="9.25" width="4.5" height="4.5" rx=".8"></rect>
+          </svg>
+        </span>
+        <span>SYSTEM</span>
+      </a>
+
+      <!-- 2. ABOUT (Profile & Skills) -->
+      <a class="animated-top-dock__item animated-top-dock__link" data-dock-item href="#about">
+        <span class="animated-top-dock__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16">
+            <circle cx="8" cy="5" r="3"></circle>
+            <path d="M2.5 14a5.5 5.5 0 0 1 11 0"></path>
+          </svg>
+        </span>
+        <span>ABOUT</span>
+      </a>
+
+      <!-- 3. PROJECTS (Real Projects & Live GitHub Feed) -->
+      <a class="animated-top-dock__item animated-top-dock__link" data-dock-item href="#projects">
+        <span class="animated-top-dock__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16">
+            <rect x="2" y="3" width="12" height="10" rx="1.5"></rect>
+            <path d="M2 6h12M5 4.5h.01M7 4.5h.01"></path>
+          </svg>
+        </span>
+        <span>PROJECTS</span>
+      </a>
+
+      <!-- 4. LABS (Interactive Tools) -->
+      <a class="animated-top-dock__item animated-top-dock__link" data-dock-item href="#labs">
+        <span class="animated-top-dock__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16">
+            <path d="M6 2v4L2.8 12.3A1.3 1.3 0 0 0 4 14.2h8a1.3 1.3 0 0 0 1.2-1.9L10 6V2"></path>
+            <path d="M5 2h6M4.5 10h7"></path>
+          </svg>
+        </span>
+        <span>LABS</span>
+      </a>
+
+      <!-- 5. CERTS (Verified Credentials block) -->
+      <a class="animated-top-dock__item animated-top-dock__link" data-dock-item href="#certs">
+        <span class="animated-top-dock__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16">
+            <path d="M8 1.5l5.5 2.5v4.5c0 3.5-2.5 6-5.5 7-3-1-5.5-3.5-5.5-7V4L8 1.5z"></path>
+            <path d="M6 7.5l1.5 1.5 3-3"></path>
+          </svg>
+        </span>
+        <span>CERTS</span>
+      </a>
+
+      <!-- 6. TIMELINE (Education & 3D WebGL Globe) -->
+      <a class="animated-top-dock__item animated-top-dock__link" data-dock-item href="#timeline">
+        <span class="animated-top-dock__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16">
+            <circle cx="8" cy="8" r="6"></circle>
+            <path d="M2.5 8h11M8 2.5a10 10 0 0 1 0 11M8 2.5a10 10 0 0 0 0 11"></path>
+          </svg>
+        </span>
+        <span>TIMELINE</span>
+      </a>
+
+      <!-- 7. TERMINAL (In place of Notes: Full AI Terminal) -->
+      <a class="animated-top-dock__item animated-top-dock__link" data-dock-item href="#terminal">
+        <span class="animated-top-dock__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16">
+            <path d="M3.5 5.5l3 2.5-3 2.5M8.5 11h4"></path>
+          </svg>
+        </span>
+        <span>TERMINAL</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- ========================================================================
+       LANDING PAGE CONTENT
+       ======================================================================== -->
+  <main class="landing-shell">
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 1: SYSTEM (HERO & TELEMETRY)
+         ---------------------------------------------------------------------- -->
+    <section id="system" class="hero-section">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        <span>KULDEEP SHUKLA // ENTRY-LEVEL IT & CYBERSECURITY // RECENT GRADUATE</span>
+      </div>
+
+      <h1 class="hero-headline">
+        <span class="headline-dim">Learning, Building &</span><br>
+        <span class="headline-glow">Securing Systems.</span>
+      </h1>
+
+      <p class="hero-subhead">
+        Recent BSc (Hons) Computing and IT graduate from CCT College Dublin (2026), looking for an entry-level IT or cybersecurity role. Still learning and growing every day, with hands-on practice in Linux, networking, Python ML, and TryHackMe labs.
+      </p>
+
+      <!-- Primary Action Buttons -->
+      <div class="hero-cta-group">
+        
+        <!-- THREEUI TACTILE LIQUID FLUIDICS WEBGL BUTTON -->
+        <div class="threeui-tactile-wrapper">
+          <button class="threeui-tactile-btn" id="heroTactileBtn" type="button" aria-label="Explore Projects & Repositories">
+            <canvas class="threeui-tactile-gl" id="heroTactileCanvas" aria-hidden="true"></canvas>
+            <span class="threeui-tactile-label">
+              <span>EXPLORE PROJECTS</span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                <path d="M3.2 8h9.1M8.6 4.3 12.4 8l-3.8 3.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        <!-- THREEUI SPINNING BORDER BEAM BUTTON (Download CV) -->
+        <a class="threeui-spinning-btn" href="assets/Kuldeep_Shukla_CV.pdf" download="Kuldeep_Shukla_CV.pdf" target="_blank" rel="noopener noreferrer">
+          <span class="threeui-spinning-beam" aria-hidden="true"></span>
+          <span class="threeui-spinning-content">
+            <span>DOWNLOAD CV</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M8 2.5v8M4.5 7.5L8 11l3.5-3.5M2.5 13.5h11" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+
+        <!-- THREEUI GLASS CAPSULE BUTTON -->
+        <a class="threeui-glass-btn" href="#labs">
+          <span>PRACTICAL LABS</span>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 3.5L10.5 8 6 12.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Live Telemetry Readout -->
+      <div class="hero-telemetry-row">
+        <div class="telemetry-item">
+          <span>STATUS:</span>
+          <strong id="statusTelemetry" class="status-active">AVAILABLE FOR WORK</strong>
+        </div>
+        <div class="telemetry-item">
+          <span>ROLE:</span>
+          <strong>ENTRY-LEVEL IT / CYBERSECURITY</strong>
+        </div>
+        <div class="telemetry-item">
+          <span>LOCATION:</span>
+          <strong>DUBLIN / IRELAND</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 2: ABOUT (GRADUATE PROFILE & SKILLS)
+         ---------------------------------------------------------------------- -->
+    <section id="about">
+      <div class="section-header-block">
+        <div class="section-tag">ABOUT ME // GRADUATE PROFILE</div>
+        <h2 class="section-title">Background & Technical Skills</h2>
+        <p class="section-subtitle">
+          Recent BSc (Hons) graduate from CCT College Dublin. Not specialized in any single domain yet — eager to learn, adapt, and contribute to a collaborative team.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <!-- Verified Candidate Dossier Card -->
+        <div class="dossier-card">
+          <div class="dossier-hud-header">
+            <div class="dossier-id">CANDIDATE // KULDEEP SHUKLA</div>
+            <div class="dossier-status">
+              <span class="dossier-status-dot"></span>
+              <span>RECENT GRADUATE</span>
+            </div>
+          </div>
+
+          <h3 class="dossier-name">Kuldeep Shukla</h3>
+          <div class="dossier-role">BSc (Hons) Computing & IT Graduate • Entry-Level IT & Cybersecurity</div>
+          <p class="dossier-bio">
+            Recent BSc (Hons) Computing and IT graduate from CCT College Dublin (2026), looking for an entry-level IT or cybersecurity role. My interest in cybersecurity is self-driven: I have completed short courses and practiced on TryHackMe and HackThisSite alongside my degree. I am a daily user of Mac and Linux and have used tools such as Nmap, Wireshark, Burp Suite, Metasploit, and Wazuh in labs and coursework. For my capstone, I built a machine-learning network intrusion detection system in Python that classifies 14 attack types on the CICIDS2017 dataset with over 97% accuracy.
+          </p>
+
+          <div class="dossier-meta-list">
+            <div class="meta-box">
+              <span class="meta-box-label">DEGREE</span>
+              <span class="meta-box-value">BSc (Hons) Computing & IT</span>
+            </div>
+            <div class="meta-box">
+              <span class="meta-box-label">COLLEGE</span>
+              <span class="meta-box-value">CCT College Dublin (2022–2026)</span>
+            </div>
+            <div class="meta-box">
+              <span class="meta-box-label">DIPLOMA</span>
+              <span class="meta-box-value">IT Diploma, Hewett Polytechnic (2020)</span>
+            </div>
+            <div class="meta-box">
+              <span class="meta-box-label">LOCATION</span>
+              <span class="meta-box-value">Ireland (Open to Relocate)</span>
+            </div>
+          </div>
+
+          <!-- Handwritten Signature Seal -->
+          <div class="dossier-sign-seal">
+            <svg viewBox="0 0 860 180" aria-label="Kuldeep Shukla signature">
+              <text class="sig-word sig-first" x="40" y="102">Kuldeep</text>
+              <text class="sig-word sig-last"  x="405" y="102">Shukla</text>
+              <path id="underline" d="M 40 145 C 120 155, 280 160, 450 152 C 580 146, 720 138, 800 132" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Metrics & Profile Column -->
+        <div class="metrics-column">
+          <div class="metric-card">
+            <div class="metric-num">BSc</div>
+            <div class="metric-label">Honours Degree in Computing & IT (CCT College Dublin, 2026)</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num">97%+</div>
+            <div class="metric-label">Classification Accuracy on CICIDS2017 in ML Capstone</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num">Daily</div>
+            <div class="metric-label">Hands-on Mac, Kali Linux, Debian, & Ubuntu Environment</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num">Growing</div>
+            <div class="metric-label">Self-Directed Study, Practical Labs & Continuous Learning</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Detail Strip strictly derived from CV -->
+      <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+        <div class="metric-card" style="text-align: left; padding: 20px;">
+          <h4 style="color: var(--cyan); font-size: 0.92rem; margin-bottom: 8px; font-family: var(--font-mono);">OPERATING SYSTEMS</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            Daily use of Mac and Linux (Kali, Debian, Ubuntu); Windows 10/11; Microsoft 365 (daily end-user).
+          </p>
+        </div>
+        <div class="metric-card" style="text-align: left; padding: 20px;">
+          <h4 style="color: var(--emerald); font-size: 0.92rem; margin-bottom: 8px; font-family: var(--font-mono);">SECURITY TOOLS & LABS</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            Nmap, Wireshark, Burp Suite, Metasploit, Gobuster, Nikto, Hydra, Ettercap, SET, Wazuh; OWASP Top 10; basic understanding of phishing and malware.
+          </p>
+        </div>
+        <div class="metric-card" style="text-align: left; padding: 20px;">
+          <h4 style="color: var(--accent); font-size: 0.92rem; margin-bottom: 8px; font-family: var(--font-mono);">PROGRAMMING & NETWORKING</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            Python (scikit-learn, XGBoost, SHAP, Flask), R, Java, JavaScript, Bash, Git; Docker; TCP/IP, DNS, HTTP/S, firewalls, IDS/NIDS, packet analysis (Wireshark, NFStream).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 3: PROJECTS (REAL WORK & AUTOMATED GITHUB REPOSITORIES)
+         ---------------------------------------------------------------------- -->
+    <section id="projects">
+      <div class="section-header-block">
+        <div class="section-tag">PROJECTS // REAL WORK</div>
+        <h2 class="section-title">College Capstone & Personal Projects</h2>
+        <p class="section-subtitle">
+          Real projects built during my degree and personal learning. Genuine code, real repositories, and practical problem-solving.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        
+        <!-- Project 1: 1DayCrew AI (College Capstone) -->
+        <article class="project-card">
+          <div class="project-media">
+            <div class="project-console">
+              <div class="project-console-header">
+                <div class="console-controls">
+                  <span class="control-dot dot-red"></span>
+                  <span class="control-dot dot-yellow"></span>
+                  <span class="control-dot dot-green"></span>
+                </div>
+                <span class="console-tab-title">1daycrew-nids · python3 main.py</span>
+                <span class="console-status-pill"><span class="pulse-indicator"></span>COLLEGE CAPSTONE</span>
+              </div>
+              <div class="project-console-body">
+                <div class="console-line"><span class="cmd-prompt">$</span> <span class="cmd-text">python nids_engine.py --dataset CICIDS2017 --model xgboost</span></div>
+                <div class="console-line text-muted">[+] NFStream live flow capture active &bull; 14,820 flows</div>
+                <div class="console-line text-success">[✓] XGBoost multiclass model: <strong class="text-white">97.42% accuracy</strong></div>
+                <div class="console-line text-warning">[!] Alert: DDoS-LOIC vector detected &bull; SHAP conf: 0.99</div>
+                <div class="console-metrics-row">
+                  <div class="console-metric">
+                    <span class="metric-val">97.4%</span>
+                    <span class="metric-lbl">Accuracy</span>
+                  </div>
+                  <div class="console-metric">
+                    <span class="metric-val">14 Classes</span>
+                    <span class="metric-lbl">CICIDS2017</span>
+                  </div>
+                  <div class="console-metric">
+                    <span class="metric-val">SHAP</span>
+                    <span class="metric-lbl">Explainability</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">1DayCrew AI — Network Intrusion Detection System</h3>
+            <p class="project-desc">
+              Built an end-to-end ML NIDS classifying 14 attack types (DDoS, PortScan, brute force, web attacks) with over 97 percent accuracy on the CICIDS2017 dataset. Added real-time flow capture and live classification, plus an offline PCAP/CSV analysis mode, in a Flask dashboard. Used SHAP to explain each prediction and SMOTE with stratified cross-validation to handle rare attack classes. Worked in a pair under supervision and defended the project in a viva.
+            </p>
+            <div class="project-tags">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">XGBoost</span>
+              <span class="tech-tag">SHAP</span>
+              <span class="tech-tag">NFStream</span>
+              <span class="tech-tag">Flask</span>
+              <span class="tech-tag">CICIDS2017</span>
+            </div>
+            <div class="project-footer">
+              <a class="project-link-btn" href="https://github.com/kuldeepshukla01/1datcrew-NIDS" target="_blank" rel="noopener noreferrer">
+                <span>VIEW REPOSITORY</span>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4.5 11.5L11.5 4.5M11.5 4.5H6.5M11.5 4.5V9.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-faint);">0x01</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2: 1DayCrew OS -->
+        <article class="project-card">
+          <div class="project-media">
+            <div class="project-console">
+              <div class="project-console-header">
+                <div class="console-controls">
+                  <span class="control-dot dot-red"></span>
+                  <span class="control-dot dot-yellow"></span>
+                  <span class="control-dot dot-green"></span>
+                </div>
+                <span class="console-tab-title">kuldeep@1daycrew-os · neofetch</span>
+                <span class="console-status-pill"><span class="pulse-indicator"></span>CUSTOM LINUX OS</span>
+              </div>
+              <div class="project-console-body">
+                <div class="console-line"><span class="cmd-prompt">$</span> <span class="cmd-text">neofetch --stdout</span></div>
+                <div class="console-line"><span class="text-info">OS:</span> Debian GNU/Linux 12 (bookworm) x86_64</div>
+                <div class="console-line"><span class="text-info">Host:</span> Apple MacBookPro9,2 (13-inch, Mid 2012)</div>
+                <div class="console-line"><span class="text-info">Hardware:</span> Broadcom BCM4331 WiFi (wl-dkms patched)</div>
+                <div class="console-metrics-row">
+                  <div class="console-metric">
+                    <span class="metric-val">Debian 12</span>
+                    <span class="metric-lbl">Bookworm Base</span>
+                  </div>
+                  <div class="console-metric">
+                    <span class="metric-val">Ollama</span>
+                    <span class="metric-lbl">Offline LLM</span>
+                  </div>
+                  <div class="console-metric">
+                    <span class="metric-val">KDE</span>
+                    <span class="metric-lbl">Plasma Desktop</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">1DayCrew OS — Custom Debian-Based System</h3>
+            <p class="project-desc">
+              Built a custom Debian setup on a 2012 MacBook Pro: resolved Broadcom BCM4331 proprietary WiFi driver issues, configured KDE Plasma desktop, built a custom boot animation with Plymouth, and configured local LLM tools using Ollama for offline productivity.
+            </p>
+            <div class="project-tags">
+              <span class="tech-tag">Debian</span>
+              <span class="tech-tag">KDE Plasma</span>
+              <span class="tech-tag">Ollama</span>
+              <span class="tech-tag">Plymouth</span>
+              <span class="tech-tag">Bash</span>
+            </div>
+            <div class="project-footer">
+              <a class="project-link-btn" href="https://github.com/kuldeepshukla01" target="_blank" rel="noopener noreferrer">
+                <span>VIEW ON GITHUB</span>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4.5 11.5L11.5 4.5M11.5 4.5H6.5M11.5 4.5V9.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-faint);">0x02</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3: EditNote - Android App -->
+        <article class="project-card">
+          <div class="project-media">
+            <div class="project-console">
+              <div class="project-console-header">
+                <div class="console-controls">
+                  <span class="control-dot dot-red"></span>
+                  <span class="control-dot dot-yellow"></span>
+                  <span class="control-dot dot-green"></span>
+                </div>
+                <span class="console-tab-title">EditNote · NoteSyncService.java</span>
+                <span class="console-status-pill"><span class="pulse-indicator"></span>MOBILE APP</span>
+              </div>
+              <div class="project-console-body">
+                <div class="console-line"><span class="code-kw">import</span> com.google.firebase.auth.FirebaseAuth;</div>
+                <div class="console-line"><span class="code-kw">import</span> com.google.firebase.storage.FirebaseStorage;</div>
+                <div class="console-line text-muted">// Secure document persistence & realtime cloud backup</div>
+                <div class="console-line text-success">[✓] Cloud Storage: 256-bit AES authenticated session</div>
+                <div class="console-metrics-row">
+                  <div class="console-metric">
+                    <span class="metric-val">Java</span>
+                    <span class="metric-lbl">Android SDK</span>
+                  </div>
+                  <div class="console-metric">
+                    <span class="metric-val">Firebase</span>
+                    <span class="metric-lbl">Auth & Storage</span>
+                  </div>
+                  <div class="console-metric">
+                    <span class="metric-val">SQLite</span>
+                    <span class="metric-lbl">Offline Cache</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">EditNote — Android Notes App</h3>
+            <p class="project-desc">
+              Built an Android notes application using Firebase authentication and Google Cloud Storage so users can securely access and store their documents and notes from anywhere.
+            </p>
+            <div class="project-tags">
+              <span class="tech-tag">Android</span>
+              <span class="tech-tag">Java</span>
+              <span class="tech-tag">Firebase Auth</span>
+              <span class="tech-tag">Google Cloud Storage</span>
+            </div>
+            <div class="project-footer">
+              <a class="project-link-btn" href="https://github.com/kuldeepshukla01/editNOTE" target="_blank" rel="noopener noreferrer">
+                <span>VIEW REPOSITORY</span>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4.5 11.5L11.5 4.5M11.5 4.5H6.5M11.5 4.5V9.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-faint);">0x03</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- AUTOMATED GITHUB REPOSITORIES (Dynamically fetched from GitHub API, updates on create / delete) -->
+      <div class="github-repos-section" style="margin-top: 45px;">
+        <div class="github-repos-header">
+          <div>
+            <div class="section-tag" style="margin-bottom: 4px;">AUTOMATED GITHUB SYNC // LIVE FEED</div>
+            <h3 style="font-size: 1.35rem; font-weight: 600; color: #fff; margin: 0;">
+              All Public Repositories (github.com/kuldeepshukla01)
+            </h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">
+              Directly fetched from the GitHub API. Automatically updates whenever a repository is created or deleted on my GitHub.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <span class="github-repos-count" id="githubRepoCount">11 Repositories</span>
+            <a href="https://github.com/kuldeepshukla01" target="_blank" rel="noopener noreferrer" class="btn-tool" style="text-decoration: none; padding: 6px 12px; font-size: 0.75rem;">
+              GitHub Profile ↗
+            </a>
+          </div>
+        </div>
+        <div class="github-repos-grid" id="githubReposContainer">
+          <!-- Populated live by initGitHubRepos() via fetch with offline fallback cache -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 4: LABS (PRACTICAL CYBERSECURITY TOOLBOX)
+         Interactive tools: Hash, Encoder, Password Strength, Breach Check, Device Intel
+         ---------------------------------------------------------------------- -->
+    <section id="labs">
+      <div class="section-header-block">
+        <div class="section-tag">INTERACTIVE LABS // SECURITY TOOLS</div>
+        <h2 class="section-title">Practical Tools & Cryptography Workbench</h2>
+        <p class="section-subtitle">
+          Real-time cryptographic hash computation, payload transformers, password entropy auditing, email breach intelligence, and client footprint telemetry.
+        </p>
+      </div>
+
+      <!-- Interactive Cyber Toolboxes (Hash, Cipher, Entropy, Breach, Intel) -->
+      <div class="lab-card-wrapper">
+        <div class="section-tag">PRACTICAL TOOLBOX</div>
+        <h3 style="font-size: 1.4rem; font-weight: 600; margin-bottom: 6px;">Live Cryptographic & Analysis Workbench</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem;">
+          Native browser WebCrypto operations, payload transformations, password auditing, and device footprint analysis.
+        </p>
+
+        <!-- Toolbox Tabs -->
+        <div class="toolbox-tabs-bar">
+          <button class="toolbox-tab-btn active" data-tab="tool-hash">01 // HASH</button>
+          <button class="toolbox-tab-btn" data-tab="tool-cipher">02 // ENCODER</button>
+          <button class="toolbox-tab-btn" data-tab="tool-pw">03 // PW STRENGTH</button>
+          <button class="toolbox-tab-btn" data-tab="tool-breach">04 // BREACH CHECK</button>
+          <button class="toolbox-tab-btn" data-tab="tool-intel">05 // DEVICE INTEL</button>
+        </div>
+
+        <!-- Tool 1: Live WebCrypto Hasher -->
+        <div id="tool-hash" class="tool-panel active">
+          <p class="tool-desc">Real-time SHA-1 & SHA-256 cryptographic digest computation via native browser Web Crypto API.</p>
+          <input type="text" id="labHashInput" class="form-input" placeholder="Type text to compute live cryptographic hash..." style="margin-bottom:14px;" />
+          <div class="tool-output-box" style="display:flex; flex-direction:column; gap:8px;">
+            <div><strong style="color:var(--cyan)">SHA-1:</strong> <span id="labSha1Val" style="color:#fff">—</span></div>
+            <div><strong style="color:var(--emerald)">SHA-256:</strong> <span id="labSha256Val" style="color:#fff">—</span></div>
+          </div>
+        </div>
+
+        <!-- Tool 2: Encoder / Cipher -->
+        <div id="tool-cipher" class="tool-panel">
+          <p class="tool-desc">Payload transformations for analysis, Base64 encoding/decoding, and ROT13 inspection.</p>
+          <textarea id="labCipherInput" class="form-input" placeholder="Enter text to transform..." style="height:70px; resize:none; margin-bottom:12px;"></textarea>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+            <button class="btn-tool" onclick="setCipherMode('encode')">BASE64 ENCODE</button>
+            <button class="btn-tool" onclick="setCipherMode('decode')">BASE64 DECODE</button>
+            <button class="btn-tool" onclick="setCipherMode('rot13')">ROT13 CAESAR</button>
+          </div>
+          <div id="labCipherOutput" class="tool-output-box" style="color:var(--emerald); min-height:42px;">—</div>
+        </div>
+
+        <!-- Tool 3: Password Strength & Entropy -->
+        <div id="tool-pw" class="tool-panel">
+          <p class="tool-desc">Shannon entropy evaluation, crack time estimation, and offline hash verification.</p>
+          <input type="password" id="labPwInput" class="form-input" placeholder="Enter password to audit..." style="margin-bottom:12px;" />
+          <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-family:var(--font-mono); margin-bottom:8px;">
+            <span>ENTROPY: <strong id="labPwEntropy" style="color:var(--cyan)">0 BITS</strong></span>
+            <span>ESTIMATED CRACK TIME: <strong id="labPwCrack" style="color:var(--emerald)">—</strong></span>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center; margin-top:12px; flex-wrap:wrap;">
+            <button class="btn-tool" onclick="checkHIBP()">QUERY HASH DATABASE</button>
+            <span id="labHibpResult" style="font-size:0.82rem; color:var(--text-muted);">Database not queried yet.</span>
+          </div>
+        </div>
+
+        <!-- Tool 4: Email Breach Reconnaissance -->
+        <div id="tool-breach" class="tool-panel">
+          <p class="tool-desc">Threat intelligence lookup scanning public breach repositories.</p>
+          <div style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+            <input type="email" id="labBreachEmail" class="form-input" placeholder="user@domain.com" style="flex:1; min-width:200px;" />
+            <button class="btn-tool" onclick="scanBreachEmail()">SCAN INTELLIGENCE</button>
+          </div>
+          <div id="labBreachStatus" style="font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">Enter email to search intelligence feeds.</div>
+          <div id="labBreachList" class="tool-output-box" style="display:flex; flex-direction:column; gap:4px; font-size:0.8rem;"></div>
+        </div>
+
+        <!-- Tool 5: Device Intel Telemetry -->
+        <div id="tool-intel" class="tool-panel">
+          <p class="tool-desc">Client browser footprint analysis — computed locally without recording or transmitting any telemetry.</p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; font-family:var(--font-mono); font-size:0.8rem; background:rgba(6,8,14,0.8); padding:16px; border-radius:10px; border:1px solid var(--border-subtle);">
+            <div><span style="color:var(--text-muted)">Target OS:</span> <span id="intelOs">…</span></div>
+            <div><span style="color:var(--text-muted)">Browser:</span> <span id="intelBrowser">…</span></div>
+            <div><span style="color:var(--text-muted)">CPU Cores:</span> <span id="intelThreads">…</span></div>
+            <div><span style="color:var(--text-muted)">Device RAM:</span> <span id="intelRam">…</span></div>
+            <div><span style="color:var(--text-muted)">Resolution:</span> <span id="intelScreen">…</span></div>
+            <div><span style="color:var(--text-muted)">Session Clock:</span> <span id="intelTimer">0s</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 5: CERTS (VERIFIED CERTIFICATIONS)
+         ---------------------------------------------------------------------- -->
+    <section id="certs">
+      <div class="section-header-block">
+        <div class="section-tag">CREDENTIALS // CERTIFICATIONS</div>
+        <h2 class="section-title">Certifications & Training</h2>
+        <p class="section-subtitle">
+          Verified credentials from Cisco Networking Academy, EC-Council, and CodeRed. Click any certificate to inspect full credentials in the high-resolution lightbox.
+        </p>
+      </div>
+
+      <!-- Flagship CTF Certificate Banner -->
+      <div class="offensive-practice-banner">
+        <div>
+          <div class="ctf-cert-preview-box" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png', 'EC-Council Hackerverse CTF — Digital Forensics & Incident Response (DFIR)', 'EC-Council', '04 Oct 2026', 'Certificate #2126 • Level: GRANDMASTER (1 CPE Credit)', 'Digital Forensics & Incident Response (DFIR) competition; memory triage; network packet analysis (PCAP); file carving; malicious persistence detection; rapid flag solving under timed competition constraints, achieving official GRANDMASTER ranking.')">
+            <img src="assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png" alt="EC-Council Hackerverse CTF Competition Certificate - Grandmaster Level" class="ctf-showcase-img" />
+            <div class="cred-inspect-overlay">CLICK TO ENLARGE CERTIFICATE</div>
+            <div class="ctf-live-pill">LEVEL: GRANDMASTER</div>
+          </div>
+          <button class="btn-tool" style="width:100%; margin-top:10px;" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_ctf_hackerverse.png', 'EC-Council Hackerverse CTF — Digital Forensics & Incident Response (DFIR)', 'EC-Council', '04 Oct 2026', 'Certificate #2126 • Level: GRANDMASTER (1 CPE Credit)', 'Digital Forensics & Incident Response (DFIR) competition; memory triage; network packet analysis (PCAP); file carving; malicious persistence detection; rapid flag solving under timed competition constraints, achieving official GRANDMASTER ranking.')">
+            INSPECT CTF CERTIFICATE (CERT #2126)
+          </button>
+        </div>
+
+        <div>
+          <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--amber); letter-spacing:0.12em; font-weight:700;">
+            OFFICIAL COMPETITION CERTIFICATION
+          </span>
+          <h3 style="font-size:1.5rem; font-weight:700; color:#fff; margin:6px 0 10px;">HACKERVERSE CTF // DFIR GRANDMASTER</h3>
+          
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;">
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--amber); background:rgba(255,183,0,0.12); border:1px solid rgba(255,183,0,0.35); padding:3px 8px; border-radius:4px; font-weight:700;">
+              LEVEL: GRANDMASTER
+            </span>
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--cyan); background:rgba(0,240,255,0.12); border:1px solid var(--border-cyan); padding:3px 8px; border-radius:4px;">
+              CERT #2126
+            </span>
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--emerald); background:rgba(0,255,170,0.12); border:1px solid var(--border-emerald); padding:3px 8px; border-radius:4px;">
+              ISSUED: 04 OCT 2026
+            </span>
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:#fff; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); padding:3px 8px; border-radius:4px;">
+              1 CPE CREDIT
+            </span>
+          </div>
+
+          <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6; margin-bottom:16px;">
+            Awarded by <strong>EC-Council</strong> for successfully competing in the <strong>Hackerverse CTF Competition</strong> in the <strong>Digital Forensics & Incident Response (DFIR)</strong> track. Demonstrated practical skills in memory dump triage, PCAP network stream reconstruction, and file carving to achieve <strong>GRANDMASTER</strong> qualification.
+          </p>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="https://tryhackme.com" target="_blank" rel="noopener noreferrer" class="btn-tool" style="text-decoration:none;">
+              TryHackMe Practice ↗
+            </a>
+            <a href="https://www.hackthissite.org" target="_blank" rel="noopener noreferrer" class="btn-tool" style="text-decoration:none;">
+              Hack This Site Missions ↗
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real Verified Credentials Grid -->
+      <div class="credentials-cards-grid">
+
+        <!-- Credential 1: Cisco Ethical Hacker -->
+        <div class="cred-card">
+          <div class="cred-img-viewport" onclick="openCertModal('assets/cyber_assets/certs/cert_cisco_ethical_hacker.png', 'Cisco Networking Academy — Ethical Hacker', 'Cisco Networking Academy', '26 Jan 2026', 'Verified Course Completion', 'Methodological ethical hacking lifecycle; information gathering & vulnerability scanning; exploiting wired & wireless network vulnerabilities; exploiting web application flaws; post-exploitation & privilege escalation.')">
+            <img src="assets/cyber_assets/certs/cert_cisco_ethical_hacker.png" alt="Cisco Networking Academy Ethical Hacker Certificate" loading="lazy" />
+            <div class="cred-inspect-overlay">CLICK TO ENLARGE CREDENTIAL</div>
+          </div>
+          <div class="cred-badge-row">
+            <span class="cred-badge-pill">CISCO NETWORKING ACADEMY</span>
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--emerald);">COURSE COMPLETION</span>
+          </div>
+          <h3 class="cred-title">Ethical Hacker</h3>
+          <div class="cred-meta-row">
+            <div>ISSUER: <span>Cisco Networking Academy</span></div>
+            <div>DATE: <span>26 Jan 2026</span></div>
+          </div>
+          <ul class="cred-learn-list">
+            <li>Methodological ethical hacking lifecycle</li>
+            <li>Information gathering & vulnerability scanning</li>
+            <li>Exploiting web flaws (OWASP Top 10)</li>
+            <li>Post-exploitation fundamentals</li>
+          </ul>
+        </div>
+
+        <!-- Credential 2: EC-Council Deep Web & Cyber Security -->
+        <div class="cred-card">
+          <div class="cred-img-viewport" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_deepweb_cybersecurity.png', 'EC-Council — Deep Web and Cyber Security', 'EC-Council', '04 Feb 2024', 'Certificate #292706', 'Tor routing; onion services; threat intelligence in underground darknet forums; OPSEC principles; anonymous communication; digital fingerprint avoidance.')">
+            <img src="assets/cyber_assets/certs/cert_eccouncil_deepweb_cybersecurity.png" alt="EC-Council Deep Web and Cyber Security Certificate" loading="lazy" />
+            <div class="cred-inspect-overlay">CLICK TO ENLARGE CREDENTIAL</div>
+          </div>
+          <div class="cred-badge-row">
+            <span class="cred-badge-pill">EC-COUNCIL</span>
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--emerald);">VERIFIED</span>
+          </div>
+          <h3 class="cred-title">Deep Web & Cyber Security</h3>
+          <div class="cred-meta-row">
+            <div>ISSUER: <span>EC-Council</span></div>
+            <div>DATE: <span>04 Feb 2024</span></div>
+          </div>
+          <ul class="cred-learn-list">
+            <li>Onion routing & Tor architecture</li>
+            <li>Darknet intelligence & threat actor monitoring</li>
+            <li>Operational security (OPSEC)</li>
+            <li>Encrypted communications</li>
+          </ul>
+        </div>
+
+        <!-- Credential 3: EC-Council Android Bug Bounty -->
+        <div class="cred-card">
+          <div class="cred-img-viewport" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_android_bugbounty.png', 'EC-Council CodeRed — Android Bug Bounty Hunting: Hunt Like a Rat', 'EC-Council CodeRed', '04 Jun 2026', 'Certificate #503849', 'Android application attack surface; OWASP MASVS; reverse engineering APK bytecode with jadx and apktool; identifying intent injection and insecure IPC endpoints; bypassing SSL pinning with Frida.')">
+            <img src="assets/cyber_assets/certs/cert_eccouncil_android_bugbounty.png" alt="EC-Council Android Bug Bounty Certificate" loading="lazy" />
+            <div class="cred-inspect-overlay">CLICK TO ENLARGE CREDENTIAL</div>
+          </div>
+          <div class="cred-badge-row">
+            <span class="cred-badge-pill">EC-COUNCIL CODERED</span>
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--emerald);">VERIFIED</span>
+          </div>
+          <h3 class="cred-title">Android Bug Bounty Hunting</h3>
+          <div class="cred-meta-row">
+            <div>ISSUER: <span>EC-Council CodeRed</span></div>
+            <div>DATE: <span>04 Jun 2026</span></div>
+          </div>
+          <ul class="cred-learn-list">
+            <li>Static analysis with jadx & apktool</li>
+            <li>Insecure intent & exported components</li>
+            <li>Dynamic runtime analysis with Frida</li>
+            <li>OWASP Mobile Security fundamentals</li>
+          </ul>
+        </div>
+
+        <!-- Credential 4: EC-Council Jira Agile -->
+        <div class="cred-card">
+          <div class="cred-img-viewport" onclick="openCertModal('assets/cyber_assets/certs/cert_eccouncil_jira_agile.png', 'EC-Council CodeRed — Jira Agile Project Management', 'EC-Council CodeRed', '21 Aug 2026', 'Certificate #521624', 'Configuring Jira Software for Agile workflows; sprint planning; task tracking; Kanban board administration; role-based permissions.')">
+            <img src="assets/cyber_assets/certs/cert_eccouncil_jira_agile.png" alt="EC-Council Jira Agile Certificate" loading="lazy" />
+            <div class="cred-inspect-overlay">CLICK TO ENLARGE CREDENTIAL</div>
+          </div>
+          <div class="cred-badge-row">
+            <span class="cred-badge-pill">EC-COUNCIL CODERED</span>
+            <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--emerald);">VERIFIED</span>
+          </div>
+          <h3 class="cred-title">Jira Agile Project Management</h3>
+          <div class="cred-meta-row">
+            <div>ISSUER: <span>EC-Council CodeRed</span></div>
+            <div>DATE: <span>21 Aug 2026</span></div>
+          </div>
+          <ul class="cred-learn-list">
+            <li>Agile project tracking & workflows</li>
+            <li>Sprint planning & issue management</li>
+            <li>Kanban board administration</li>
+            <li>Jira/Agile methodology applied to tech</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- In Progress / Additional Notice from CV -->
+      <div style="margin-top: 20px; background: rgba(0, 240, 255, 0.04); border: 1px dashed rgba(0, 240, 255, 0.25); border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <strong style="color: var(--cyan); font-family: var(--font-mono); font-size: 0.85rem;">IN PROGRESS:</strong>
+          <span style="color: var(--text-main); font-size: 0.88rem; margin-left: 8px;">EC-Council Certified Cybersecurity Technician (C|CT) — Actively preparing for examination.</span>
+        </div>
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--emerald); background: rgba(0, 255, 170, 0.1); padding: 4px 10px; border-radius: 4px;">ACTIVE STUDY</span>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 6: TIMELINE & 3D WEBGL GLOBE
+         ---------------------------------------------------------------------- -->
+    <section id="timeline">
+      <div class="section-header-block">
+        <div class="section-tag">EDUCATION & MILESTONES // TIMELINE</div>
+        <h2 class="section-title">Academic Timeline & Location</h2>
+        <p class="section-subtitle">
+          Interactive Three.js 3D Earth Globe highlighting Dublin, Ireland alongside genuine academic and training milestones.
+        </p>
+      </div>
+
+      <div class="timeline-body-split">
+        <!-- 3D Earth Globe Canvas (Interactive Three.js WebGL) -->
+        <div class="globe-holder-box">
+          <canvas id="timelineGlobeCanvas" class="globe-interactive-canvas"></canvas>
+          <div class="globe-interactive-badge">
+            <span class="globe-live-dot"></span>
+            <span>3D WEBGL // DUBLIN NODE</span>
+          </div>
+          <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">
+            Drag to rotate orbital earth globe.
+          </p>
+        </div>
+
+        <!-- Vertical Milestone Chain strictly matching CV -->
+        <ul class="timeline-exact-chain">
+          
+          <!-- Milestone 1: 2026 -->
+          <li class="timeline-exact-row">
+            <span class="tl-year">2026</span>
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-heading">BSc (Hons) Computing & IT Graduate • CCT College Dublin</span>
+              <span class="tl-sub">Graduated from CCT College Dublin. Completed Capstone on ML-based network intrusion detection system (1DayCrew AI). Completed Cisco Networking Academy Ethical Hacker and EC-Council Hackerverse CTF competition.</span>
+            </div>
+            <img src="assets/cyber_assets/certs/cert_cisco_ethical_hacker.png" alt="Cisco Badge" class="tl-badge-img">
+          </li>
+
+          <!-- Milestone 2: 2024 -->
+          <li class="timeline-exact-row">
+            <span class="tl-year">2024</span>
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-heading">EC-Council Deep Web & Cybersecurity</span>
+              <span class="tl-sub">Completed EC-Council course on Deep Web and Cybersecurity (Certificate #292706). Covered Tor architecture, onion routing, and online operational security.</span>
+            </div>
+            <img src="assets/cyber_assets/certs/cert_eccouncil_deepweb_cybersecurity.png" alt="EC-Council Badge" class="tl-badge-img">
+          </li>
+
+          <!-- Milestone 3: 2023 -->
+          <li class="timeline-exact-row">
+            <span class="tl-year">2023</span>
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-heading">Hands-on Practice on TryHackMe & HackThisSite</span>
+              <span class="tl-sub">Self-directed cybersecurity study alongside degree coursework: completed rooms on Linux fundamentals, networking, web vulnerabilities, and CTF challenges.</span>
+            </div>
+            <img src="assets/cyber_assets/badge_cct_inprogress.png" alt="Offensive Labs Badge" class="tl-badge-img">
+          </li>
+
+          <!-- Milestone 4: 2022 -->
+          <li class="timeline-exact-row">
+            <span class="tl-year">2022</span>
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-heading">Commenced BSc (Hons) Computing & IT</span>
+              <span class="tl-sub">Enrolled at CCT College Dublin. Coursework in machine learning, data analytics (Python, R), computer networking, Agile/Jira, and cryptography.</span>
+            </div>
+            <img src="assets/cyber_assets/badge_cct_college.png" alt="CCT College Dublin Badge" class="tl-badge-img">
+          </li>
+
+          <!-- Milestone 5: 2020 -->
+          <li class="timeline-exact-row">
+            <span class="tl-year">2020</span>
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-heading">Diploma in Information Technology</span>
+              <span class="tl-sub">Completed at Hewett Polytechnic, India (June 2020). Built foundation in computing principles, programming, and operating systems.</span>
+            </div>
+            <img src="assets/cyber_assets/badge_cct_college.png" alt="Diploma Badge" class="tl-badge-img">
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 7: TERMINAL (IN PLACE OF NOTES: FULL INTERACTIVE AI TERMINAL)
+         ---------------------------------------------------------------------- -->
+    <section id="terminal">
+      <div class="section-header-block">
+        <div class="section-tag">DIRECT INTERACTION // AI TERMINAL</div>
+        <h2 class="section-title">Interactive Terminal & Ask AI</h2>
+        <p class="section-subtitle">
+          Query the authenticated portfolio console. Type commands or ask any question directly to the offline-ready assistant.
+        </p>
+      </div>
+
+      <!-- The Interactive AI Terminal Card -->
+      <div class="interactive-terminal-card" id="operatorTerminalCard">
+        <div class="terminal-top-hud">
+          <div class="terminal-traffic-lights">
+            <span class="term-light red"></span>
+            <span class="term-light yellow"></span>
+            <span class="term-light green"></span>
+          </div>
+          <div class="terminal-title">kuldeep@portfolio:~$ [TACTICAL AI TERMINAL v2.6]</div>
+          <div class="terminal-meta-tag">AI ACTIVE // OFFLINE READY</div>
+        </div>
+
+        <!-- Terminal Output Log -->
+        <div class="terminal-screen" id="terminalOutputLog">
+          <div class="t-row">
+            <div style="color:var(--emerald); font-weight:700;">[PORTFOLIO CONSOLE]: KULDEEP SHUKLA</div>
+            <div style="color:var(--cyan);">BSc (Hons) Computing & IT Graduate • Dublin / Ireland</div>
+            <div style="color:var(--text-muted); margin-top:4px;">
+              Genuine portfolio assistant. Type commands (<span class="t-hl">help</span>, <span class="t-hl">skills</span>, <span class="t-hl">projects</span>, <span class="t-hl">certs</span>, <span class="t-hl">contact</span>, <span class="t-hl">cv</span>) or ask <span class="t-hl">ai &lt;question&gt;</span>.
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal Input Line -->
+        <div class="terminal-input-bar">
+          <span class="terminal-prompt-sym">guest@kuldeep:~$</span>
+          <input type="text" id="terminalCliInput" class="terminal-cli-input" placeholder="Type a command or ask AI anything... (e.g. 'skills', 'projects', 'ai tell me about your capstone')" autocomplete="off" spellcheck="false" />
+          <button class="terminal-exec-btn" id="terminalExecBtn" type="button">EXEC ↵</button>
+        </div>
+
+        <!-- Suggestion Chips Bar -->
+        <div class="terminal-chips-bar">
+          <button class="term-chip" type="button" onclick="terminalRunCommand('ai Tell me about your 1DayCrew AI capstone')">🤖 Ask AI: 1DayCrew AI</button>
+          <button class="term-chip" type="button" onclick="terminalRunCommand('ai What are your career goals?')">Ask AI: Career Goals</button>
+          <button class="term-chip" type="button" onclick="terminalRunCommand('skills')">⚡ Type: 'skills'</button>
+          <button class="term-chip" type="button" onclick="terminalRunCommand('projects')">🚀 Type: 'projects'</button>
+          <button class="term-chip" type="button" onclick="terminalRunCommand('certs')">📜 Type: 'certs'</button>
+          <button class="term-chip" type="button" onclick="terminalRunCommand('contact')">📬 Type: 'contact'</button>
+          <button class="term-chip" type="button" onclick="terminalRunCommand('cv')">📄 Download CV</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <span class="footer-brand">KULDEEP SHUKLA</span> &copy; 2026. BSc (Hons) Computing & IT Graduate.
+        </div>
+        <div>
+          <span>THREEUI SABLE DOCK · 3D WEBGL GLOBE · LIVE GITHUB SYNC</span>
+        </div>
+        <div>
+          <span style="color: var(--cyan);">● READY FOR WORK</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ========================================================================
+       CERTIFICATE LIGHTBOX MODAL
+       ======================================================================== -->
+  <div id="certModal" class="cert-lightbox-modal" aria-hidden="true">
+    <div class="cert-modal-backdrop" onclick="closeCertModal()"></div>
+    <div class="cert-modal-dialog">
+      <button class="cert-modal-close" onclick="closeCertModal()" aria-label="Close modal">&times;</button>
+      <div class="cert-modal-media">
+        <img id="certModalImg" src="" alt="Enlarged Certificate">
+      </div>
+      <div class="cert-modal-details">
+        <h3 id="certModalTitle" class="cert-modal-title">Certificate Title</h3>
+        <div id="certModalIssuer" class="cert-modal-meta">Issuer</div>
+        <div id="certModalDate" class="cert-modal-meta">Date</div>
+        <div id="certModalId" class="cert-modal-badge">Cert ID</div>
+        <p id="certModalDesc" class="cert-modal-desc">Description</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FIXED CORNER RADIAL SHARE COMPONENT (EXACT AS DOWNLOAD CV BUTTON)
+       ======================================================================== -->
+  <div class="corner-share-dock" id="stage">
+    <div class="splay" id="splay">
+      <!-- Chip 0: GitHub -->
+      <button class="chip" style="--i:0;--c:#24292e" data-ch="github" aria-label="Visit GitHub Profile">
+        <span class="body">
+          <span class="face">
+            <svg class="i" viewBox="0 0 24 24">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </span>
+          <span class="flood">
+            <span class="lit">
+              <svg class="i" viewBox="0 0 24 24">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+            </span>
+          </span>
+        </span>
+      </button>
+
+      <!-- Chip 1: LinkedIn -->
+      <button class="chip" style="--i:1;--c:#0a66c2" data-ch="linkedin" aria-label="Connect on LinkedIn">
+        <span class="body">
+          <span class="face">
+            <svg class="i" viewBox="0 0 24 24"><path d="M3.5 9h3.7v11.5H3.5z"/><circle cx="5.35" cy="4.9" r="2.1"/><path d="M9.5 9h3.5v1.6c.6-1.1 1.9-1.9 3.6-1.9 3.3 0 3.9 2.1 3.9 4.9v6.9h-3.7v-6c0-1.5-.1-2.7-1.7-2.7s-1.9 1.2-1.9 2.6v6.1H9.5z"/></svg>
+          </span>
+          <span class="flood">
+            <span class="lit">
+              <svg class="i" viewBox="0 0 24 24"><path d="M3.5 9h3.7v11.5H3.5z"/><circle cx="5.35" cy="4.9" r="2.1"/><path d="M9.5 9h3.5v1.6c.6-1.1 1.9-1.9 3.6-1.9 3.3 0 3.9 2.1 3.9 4.9v6.9h-3.7v-6c0-1.5-.1-2.7-1.7-2.7s-1.9 1.2-1.9 2.6v6.1H9.5z"/></svg>
+            </span>
+          </span>
+        </span>
+      </button>
+
+      <!-- Chip 2: Email -->
+      <button class="chip" style="--i:2;--c:#c8283c" data-ch="mail" aria-label="Send an Email">
+        <span class="body">
+          <span class="face">
+            <svg class="i" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path class="k" d="M4.5 8l7.5 5.5L19.5 8"/></svg>
+          </span>
+          <span class="flood">
+            <span class="lit">
+              <svg class="i" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path class="k" d="M4.5 8l7.5 5.5L19.5 8"/></svg>
+            </span>
+          </span>
+        </span>
+      </button>
+
+      <!-- Chip 3: Copy Link -->
+      <button class="chip" style="--i:3;--c:#06b6d4" data-ch="copy" aria-label="Copy Portfolio Link">
+        <span class="body">
+          <span class="face">
+            <svg class="i" viewBox="0 0 24 24"><path class="o" stroke="currentColor" d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>
+          </span>
+          <span class="flood">
+            <span class="lit">
+              <svg class="i" viewBox="0 0 24 24"><path class="o" stroke="currentColor" d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1M14 10a4 4 0 0 0 6 6l1-1"/></svg>
+            </span>
+          </span>
+          <svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        </span>
+        <span class="ring"></span>
+      </button>
+    </div>
+
+    <!-- The Core Button (Exact as Download CV Button) -->
+    <button class="threeui-spinning-btn core" id="core" type="button" aria-label="Contact Kuldeep">
+      <span class="threeui-spinning-beam" aria-hidden="true"></span>
+      <span class="threeui-spinning-content">
+        <span class="core-txt">CONTACT</span>
+        <svg class="core-share-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 10.5v-8M4.5 5.5L8 2l3.5 3.5M2.5 13.5h11" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="core-close-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M4 4l8 8M12 4L4 12" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </button>
+  </div>
+
+  <!-- 3D Particle Preloader & Local Scripts -->
+  <script src="particle-preloader.js"></script>
+  <script src="three.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

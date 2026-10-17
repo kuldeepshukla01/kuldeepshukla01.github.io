@@ -1,0 +1,553 @@
+/* ==========================================================================
+   CINEMATIC 3D WEBGL PARTICLE IMAGE PRELOADER STYLES
+   ========================================================================== */
+
+@property --t { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --m { syntax: "<number>"; inherits: false; initial-value: 1; }
+
+body.preloader-active {
+  overflow: hidden !important;
+}
+
+.particle-preloader-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
+  z-index: 999999;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 45%, #18191d 0%, #0d0e12 45%, #000000 85%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.85s ease;
+  will-change: transform, opacity;
+}
+
+.particle-preloader-overlay.dismissed {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Atmospheric ambient lighting & vignette */
+.particle-preloader-overlay .bg-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.82) 100%);
+  z-index: 5;
+}
+
+.particle-preloader-overlay .bg-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  background-image: radial-gradient(#ffffff 1px, transparent 1px);
+  background-size: 24px 24px;
+  z-index: 4;
+}
+
+/* Top Navigation Bar: Brand & Dublin Location on Left, Actions on Right */
+.particle-preloader-overlay header.top-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.8rem 2.8rem;
+  padding-top: max(1.4rem, env(safe-area-inset-top, 1.4rem));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 40;
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .particle-preloader-overlay header.top-nav {
+    padding: max(1rem, env(safe-area-inset-top, 1rem)) 1.2rem 0.6rem;
+  }
+}
+
+.particle-preloader-overlay .nav-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.particle-preloader-overlay .nav-brand {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.particle-preloader-overlay .brand-dot {
+  width: 8px;
+  height: 8px;
+  background: #38bdf8;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #38bdf8, 0 0 20px rgba(56, 189, 248, 0.5);
+  animation: pulsePreloaderDot 2s infinite ease-in-out;
+}
+
+@keyframes pulsePreloaderDot {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+}
+
+.particle-preloader-overlay .nav-divider {
+  color: rgba(255, 255, 255, 0.2);
+  font-weight: 300;
+  font-size: 0.9rem;
+}
+
+.particle-preloader-overlay .nav-location {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #38bdf8;
+  text-transform: uppercase;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+}
+
+@media (max-width: 600px) {
+  .particle-preloader-overlay .nav-divider,
+  .particle-preloader-overlay .nav-location {
+    display: none;
+  }
+}
+
+/* Top Actions Dock (Replay & Enter Portfolio) */
+.particle-preloader-overlay .top-actions-dock {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.particle-preloader-overlay .btn-action-glass {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #cbd5e1;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.95rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.particle-preloader-overlay .btn-action-glass:hover {
+  color: #ffffff;
+  border-color: rgba(56, 189, 248, 0.55);
+  background: rgba(30, 41, 59, 0.9);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+}
+
+.particle-preloader-overlay .btn-enter-portfolio {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.24), rgba(129, 140, 248, 0.24));
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  color: #38bdf8;
+}
+
+.particle-preloader-overlay .btn-enter-portfolio:hover {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.42), rgba(129, 140, 248, 0.42));
+  color: #ffffff;
+  box-shadow: 0 0 22px rgba(56, 189, 248, 0.45);
+}
+
+/* WebGL Particle Canvas */
+.particle-preloader-overlay #gl-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  pointer-events: auto;
+}
+
+/* Hidden portrait image reference for bounding rect */
+.particle-preloader-overlay .portrait-anchor-wrap {
+  position: absolute;
+  inset-inline: 0;
+  top: 6vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .particle-preloader-overlay .portrait-anchor-wrap {
+    top: clamp(40px, 7vh, 65px);
+  }
+}
+
+.particle-preloader-overlay #portrait-anchor {
+  visibility: hidden;
+  width: auto;
+  max-width: none;
+  height: 120vh;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .particle-preloader-overlay #portrait-anchor {
+    height: clamp(330px, 56vh, 460px);
+    max-width: 90vw;
+  }
+}
+
+/* Main Big Hero Typography Container */
+.particle-preloader-overlay .hero-title-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 12;
+  pointer-events: none;
+  width: max-content;
+  text-align: center;
+}
+
+.particle-preloader-overlay .title-motion-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+}
+
+.particle-preloader-overlay .hero-text {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: clamp(3.2rem, 13vw, 12rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  text-transform: uppercase;
+  user-select: none;
+  white-space: nowrap;
+  color: #ffffff;
+}
+
+.particle-preloader-overlay .part-left,
+.particle-preloader-overlay .part-right {
+  display: inline-block;
+  will-change: transform, opacity;
+  color: #ffffff;
+  background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 40%, #94a3b8 72%, #475569 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85));
+}
+
+/* Initial Bouncing Ball & Name Reveal Stage */
+.particle-preloader-overlay .initial-letters-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 28;
+}
+
+.particle-preloader-overlay .bouncing-ball {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.95), 0 0 45px rgba(56, 189, 248, 0.85);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 35;
+  will-change: transform, opacity;
+}
+
+.particle-preloader-overlay .ball-impact-wave {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(56, 189, 248, 0.85);
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.2);
+}
+
+.particle-preloader-overlay .name-display-box {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: clamp(2.4rem, 9.5vw, 8.8rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #ffffff;
+}
+
+.particle-preloader-overlay .name-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(18px) scale(0.88);
+  will-change: transform, opacity;
+  color: #ffffff;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 38%, #cbd5e1 70%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.9));
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+@supports not (-webkit-background-clip: text) {
+  .particle-preloader-overlay .name-char,
+  .particle-preloader-overlay .part-left,
+  .particle-preloader-overlay .part-right {
+    -webkit-text-fill-color: #ffffff;
+    color: #ffffff;
+  }
+}
+
+/* SIDE INFORMATION CARD */
+.particle-preloader-overlay .side-credentials-panel {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 2.8rem;
+  max-width: 460px;
+  z-index: 35;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: auto;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 900px) {
+  .particle-preloader-overlay .side-credentials-panel {
+    bottom: max(3.4rem, env(safe-area-inset-bottom, 1rem) + 2.4rem);
+    left: 1rem;
+    right: 1rem;
+    max-width: none;
+    width: calc(100% - 2rem);
+    background: rgba(10, 15, 26, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    padding: 0.85rem 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  }
+}
+
+.particle-preloader-overlay .side-pill-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.particle-preloader-overlay .side-pill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 0.26rem 0.65rem;
+  border-radius: 9999px;
+}
+
+.particle-preloader-overlay .side-pill-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 6px #38bdf8;
+}
+
+.particle-preloader-overlay .side-main-role {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: clamp(1.15rem, 2vw, 1.75rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 0.55rem;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
+}
+
+@media (max-width: 900px) {
+  .particle-preloader-overlay .side-main-role {
+    font-size: 1.1rem;
+    margin-bottom: 0.45rem;
+  }
+}
+
+.particle-preloader-overlay .side-badges-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.8rem;
+}
+
+@media (max-width: 600px) {
+  .particle-preloader-overlay .side-badges-flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    margin-bottom: 0.65rem;
+  }
+}
+
+.particle-preloader-overlay .side-badge-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  background: rgba(18, 22, 32, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.32rem 0.72rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .particle-preloader-overlay .side-badge-item {
+    font-size: 0.68rem;
+    padding: 0.26rem 0.45rem;
+    justify-content: flex-start;
+  }
+}
+
+.particle-preloader-overlay .side-badge-item:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+  color: #ffffff;
+  background: rgba(30, 41, 59, 0.8);
+}
+
+.particle-preloader-overlay .side-badge-item .badge-accent {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.particle-preloader-overlay .side-enter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(129, 140, 248, 0.22));
+  color: #ffffff;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 900px) {
+  .particle-preloader-overlay .side-enter-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.58rem 1rem;
+    font-size: 0.74rem;
+  }
+}
+
+.particle-preloader-overlay .side-enter-btn:hover {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.45), rgba(129, 140, 248, 0.45));
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Preloader Skip / Tap to Enter Hint */
+.particle-preloader-overlay .preloader-skip-hint-bottom {
+  position: absolute;
+  bottom: 1.4rem;
+  bottom: max(0.9rem, env(safe-area-inset-bottom, 0.6rem) + 0.3rem);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.38);
+  z-index: 40;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: color 0.25s ease, opacity 0.3s ease;
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@media (max-width: 600px) {
+  .particle-preloader-overlay .preloader-skip-hint-bottom {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    padding: 0.24rem 0.65rem;
+  }
+}
+
+.particle-preloader-overlay .preloader-skip-hint-bottom:hover {
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}

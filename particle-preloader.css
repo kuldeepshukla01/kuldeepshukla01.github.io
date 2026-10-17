@@ -14,6 +14,8 @@ body.preloader-active {
   inset: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
   z-index: 999999;
   overflow: hidden;
   background: radial-gradient(circle at 50% 45%, #18191d 0%, #0d0e12 45%, #000000 85%);
@@ -22,6 +24,7 @@ body.preloader-active {
   justify-content: center;
   align-items: center;
   user-select: none;
+  cursor: pointer;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.85s ease;
   will-change: transform, opacity;
@@ -59,6 +62,7 @@ body.preloader-active {
   left: 0;
   width: 100%;
   padding: 1.8rem 2.8rem;
+  padding-top: max(1.4rem, env(safe-area-inset-top, 1.4rem));
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -70,7 +74,7 @@ body.preloader-active {
 
 @media (max-width: 768px) {
   .particle-preloader-overlay header.top-nav {
-    padding: 1.2rem 1.4rem;
+    padding: max(1rem, env(safe-area-inset-top, 1rem)) 1.2rem 0.6rem;
   }
 }
 
@@ -203,7 +207,7 @@ body.preloader-active {
 
 @media (max-width: 768px) {
   .particle-preloader-overlay .portrait-anchor-wrap {
-    top: 16vh;
+    top: clamp(40px, 7vh, 65px);
   }
 }
 
@@ -217,7 +221,8 @@ body.preloader-active {
 
 @media (max-width: 768px) {
   .particle-preloader-overlay #portrait-anchor {
-    height: 85vh;
+    height: clamp(330px, 56vh, 460px);
+    max-width: 90vw;
   }
 }
 
@@ -227,7 +232,7 @@ body.preloader-active {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 25;
+  z-index: 12;
   pointer-events: none;
   width: max-content;
   text-align: center;
@@ -252,18 +257,21 @@ body.preloader-active {
   letter-spacing: -0.04em;
   line-height: 0.9;
   text-transform: uppercase;
-  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85));
-  background: linear-gradient(180deg, #ffffff 0%, #d8e2ec 40%, #8899ac 72%, #2d3748 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   user-select: none;
   white-space: nowrap;
+  color: #ffffff;
 }
 
 .particle-preloader-overlay .part-left,
 .particle-preloader-overlay .part-right {
   display: inline-block;
-  will-change: transform;
+  will-change: transform, opacity;
+  color: #ffffff;
+  background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 40%, #94a3b8 72%, #475569 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85));
 }
 
 /* Initial Bouncing Ball & Name Reveal Stage */
@@ -315,11 +323,8 @@ body.preloader-active {
   letter-spacing: -0.035em;
   line-height: 0.92;
   text-transform: uppercase;
-  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85));
-  background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 42%, #94a3b8 74%, #334155 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   white-space: nowrap;
+  color: #ffffff;
 }
 
 .particle-preloader-overlay .name-char {
@@ -327,6 +332,22 @@ body.preloader-active {
   opacity: 0;
   transform: translateY(18px) scale(0.88);
   will-change: transform, opacity;
+  color: #ffffff;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 38%, #cbd5e1 70%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.9));
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+@supports not (-webkit-background-clip: text) {
+  .particle-preloader-overlay .name-char,
+  .particle-preloader-overlay .part-left,
+  .particle-preloader-overlay .part-right {
+    -webkit-text-fill-color: #ffffff;
+    color: #ffffff;
+  }
 }
 
 /* SIDE INFORMATION CARD */
@@ -344,9 +365,18 @@ body.preloader-active {
 
 @media (max-width: 900px) {
   .particle-preloader-overlay .side-credentials-panel {
-    bottom: 4.8rem;
-    left: 1.4rem;
-    max-width: calc(100vw - 2.8rem);
+    bottom: max(3.4rem, env(safe-area-inset-bottom, 1rem) + 2.4rem);
+    left: 1rem;
+    right: 1rem;
+    max-width: none;
+    width: calc(100% - 2rem);
+    background: rgba(10, 15, 26, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    padding: 0.85rem 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
   }
 }
 
@@ -392,12 +422,28 @@ body.preloader-active {
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
 }
 
+@media (max-width: 900px) {
+  .particle-preloader-overlay .side-main-role {
+    font-size: 1.1rem;
+    margin-bottom: 0.45rem;
+  }
+}
+
 .particle-preloader-overlay .side-badges-flow {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.45rem;
   margin-bottom: 0.8rem;
+}
+
+@media (max-width: 600px) {
+  .particle-preloader-overlay .side-badges-flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    margin-bottom: 0.65rem;
+  }
 }
 
 .particle-preloader-overlay .side-badge-item {
@@ -416,6 +462,14 @@ body.preloader-active {
   align-items: center;
   gap: 0.35rem;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .particle-preloader-overlay .side-badge-item {
+    font-size: 0.68rem;
+    padding: 0.26rem 0.45rem;
+    justify-content: flex-start;
+  }
 }
 
 .particle-preloader-overlay .side-badge-item:hover {
@@ -448,6 +502,15 @@ body.preloader-active {
   transition: all 0.3s ease;
 }
 
+@media (max-width: 900px) {
+  .particle-preloader-overlay .side-enter-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.58rem 1rem;
+    font-size: 0.74rem;
+  }
+}
+
 .particle-preloader-overlay .side-enter-btn:hover {
   background: linear-gradient(135deg, rgba(56, 189, 248, 0.45), rgba(129, 140, 248, 0.45));
   box-shadow: 0 0 20px rgba(56, 189, 248, 0.45);
@@ -458,6 +521,7 @@ body.preloader-active {
 .particle-preloader-overlay .preloader-skip-hint-bottom {
   position: absolute;
   bottom: 1.4rem;
+  bottom: max(0.9rem, env(safe-area-inset-bottom, 0.6rem) + 0.3rem);
   left: 50%;
   transform: translateX(-50%);
   font-family: 'JetBrains Mono', monospace;
@@ -473,6 +537,14 @@ body.preloader-active {
   background: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+}
+
+@media (max-width: 600px) {
+  .particle-preloader-overlay .preloader-skip-hint-bottom {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    padding: 0.24rem 0.65rem;
+  }
 }
 
 .particle-preloader-overlay .preloader-skip-hint-bottom:hover {

@@ -15,25 +15,21 @@ The portfolio is built with modern vanilla web technologies (HTML5, Vanilla CSS3
 
 ```
 kuldeepshukla01.github.io/
-├── index.html              # Production landing page with integrated 3D particle preloader
+├── index.html              # Production landing page with chained 3D particle -> signature flow
 ├── loading.html            # Standalone 3D WebGL particle intro page & interactive portrait
+├── standalone-signature.html# Standalone cursive handwriting signature preloader
 ├── particle-preloader.css  # WebGL particle preloader layout, typography & animation styles
 ├── particle-preloader.js   # WebGL2 shader pipeline, mouse repulsion physics & GSAP sequencer
 ├── style.css               # Core design tokens, ThreeUI Sable theme, and responsive CSS
 ├── script.js               # Application controllers, WebGL canvas, and API integrations
 ├── three.min.js            # Bundled local Three.js engine for offline 3D WebGL rendering
 ├── Kuldeep_Shukla_CV.pdf   # Verified graduate resume / CV download
+├── full portfolio/         # Dedicated backup directory of full portfolio build
+├── full-portfolio/         # Web-safe backup directory of full portfolio build
 ├── my-portfolio/           # Dedicated standalone workspace build directory
-│   ├── index.html          # Modular portfolio markup
-│   ├── style.css           # Modular stylesheet
-│   ├── script.js           # Modular controllers
-│   ├── three.min.js        # Offline 3D library
-│   └── assets/             # Local certificates, badges, and media assets
 ├── assets/
 │   ├── kuldeep_portrait.png# High-resolution alpha portrait for WebGL particle cloud
 │   └── cyber_assets/       # Verified certificate scans, institution badges, and graphics
-│       ├── certs/          # High-resolution credentials (EC-Council, Cisco, CCT College)
-│       └── ...
 └── README.md               # Technical documentation and project specification
 ```
 
@@ -41,14 +37,19 @@ kuldeepshukla01.github.io/
 
 ## 2. Key Interactive Features
 
-### 1. Cinematic 3D WebGL Particle Intro Experience (`loading.html`)
-- **Bouncing Particle Light & Kinetic Typing**: A high-energy particle of light bounces dynamically, instantly typing the name **KULDEEP SHUKLA** with fluid acceleration.
-- **Glitch Morph & Split Typography**: The typography undergoes a cyber-glitch transition into **PORTFOLIO**, splitting seamlessly into `PORT` and `FOLIO` to reveal the main stage.
-- **WebGL2 3D Particle Cloud Portrait**: Thousands of individual interactive particles render Kuldeep Shukla's portrait in true 3D space, featuring cursor repulsion physics, depth parallax, and ambient wave harmonics.
-- **Side Credentials Card**: An elegant, non-overlapping glass badge card highlighting verified credentials:
-  - *Aspiring Cybersecurity Analyst | Ethical Hacker (Cisco) | Android Bug Bounty | NIDS Builder | BSc Computing & IT, CCT Dublin*
-  - Replay and instant portfolio entry actions.
-- **Integrated Contact & Connect Dock**: Radial expandable dock providing direct access to LinkedIn, GitHub, Email, CV Download, and URL Copying with responsive geometry on any screen size.
+### 1. Two-Stage Cinematic Loading Sequence
+1. **Stage 1 — 3D WebGL Particle Intro**:
+   - High-energy light impact ripples across the screen, energetically typing **KULDEEP SHUKLA**.
+   - Cyber-glitch morphs into **PORTFOLIO** and sweeps cleanly out to the flanks before fading into deep space, preventing any stuck word fragments.
+   - Thousands of interactive 3D WebGL particles construct Kuldeep Shukla's portrait with real-time cursor repulsion and soft organic edge feathering (dissolving box borders on mobile devices).
+   - Side credentials card displays verified graduate status, certifications, and the **Explore Full Portfolio** action.
+   - **Tap Anywhere to Enter**: Tapping or clicking anywhere on the screen (or pressing <kbd>Enter</kbd> / <kbd>Space</kbd>) instantly advances to the handwriting signature animation.
+2. **Stage 2 — Calligraphy Signature Name Animation**:
+   - Tapping anywhere or clicking **Explore Full Portfolio** triggers the authentic cursive ink handwriting animation.
+   - Built with high-performance SVG clipping stencils (`<clipPath>`) and dual GSAP + CSS attribute drivers, ensuring 100% smooth rendering across iOS Safari, macOS Safari, Firefox, and Chromium browsers.
+   - Solid white cursive ink flows progressively from left to right (*Great Vibes* cursive) writing **Kuldeep Shukla**.
+   - A pure white swirl flourish sweeps underneath to complete the signature before smoothly fading and unmasking the full portfolio.
+   - Quick-skip is available at any time by tapping or pressing any key.
 
 ### 2. ThreeUI Animated Top Dock (Sable Physics)
 - **Fluid Spring Physics**: Centered glass capsule inspired by modern dock physics with dynamic pointer distance magnification and elastic settling.
@@ -56,7 +57,7 @@ kuldeepshukla01.github.io/
 - **Glassmorphism Styling**: Backdrop blur with subtle border glow and active section indicators.
 
 ### 3. Calligraphy Signature Preloader
-- **Authentic Handwriting Ink Flow**: Built with an SVG luminance pen-stroke mask (`<mask id="penMask">`) unmasking solid white cursive text (*Great Vibes* typography) progressively from left to right.
+- **Authentic Handwriting Ink Flow**: Built with progressive SVG clipping paths (`<clipPath id="clipFirst">`, `<clipPath id="clipLast">`) unmasking solid white cursive text (*Great Vibes* typography) from left to right.
 - **Zero Premature Borders**: Pitch-black canvas initialization prevents any ghost outlines or character borders from showing before the pen arrives.
 - **Pure White Flourish Underline**: A smooth, curved pen stroke swoops underneath to complete the signature before transitioning into the portfolio view.
 - **Quick-Skip Support**: Users can tap or press any key to enter immediately.
